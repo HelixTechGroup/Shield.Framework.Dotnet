@@ -3,18 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Ninject;
 using Ninject.Activation.Caching;
 using Ninject.Modules;
-using Ninject.Parameters;
-using Ninject.Planning.Bindings;
-using Ninject.Syntax;
 using Shield.Framework.Collections;
-using Shield.Framework.IoC.Ninject.Extensions.ChildKernel;
+using Shield.Framework.IoC.Extensions.ChildKernel;
 #endregion
 
-namespace Shield.Framework.IoC.Ninject
+namespace Shield.Framework.IoC
 {
     public sealed class NinjectContainer : IIoCContainer
     {

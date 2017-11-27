@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Parameters;
 
-namespace Shield.Framework.IoC.Ninject
+namespace Shield.Framework.IoC
 {
     public static class NinjectKernelExtensions
     {

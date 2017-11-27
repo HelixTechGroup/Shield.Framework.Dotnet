@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Shield.Framework.Platform</RootNamespace>
     <AssemblyName>Shield.Framework.Platform.MonoGame</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -34,11 +34,13 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Shield.Framework.Platform.MonoGame.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\MonoGame.Framework.Portable.3.6.0.1625\lib\portable-net45+win8+wpa81\MonoGame.Framework.dll</HintPath>
+      <HintPath>..\..\..\..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,26 +52,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedAssemblyInfo.cs">
+    <Compile Include="..\..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="GameTimeEventArgs.cs" />
-    <Compile Include="MonoGameBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShieldGame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Shield.Framework.Platform.MonoGame.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shield.Framework.Core\Shield.Framework,Core.csproj">
+    <ProjectReference Include="..\..\..\Shield.Framework.Core\Shield.Framework.Core.csproj">
       <Project>{8a526556-5b67-439d-a9a9-49e769663b11}</Project>
-      <Name>Shield.Framework,Core</Name>
+      <Name>Shield.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.csproj">
+      <Project>{8137f413-a2f8-4039-b7d2-b08bee246f03}</Project>
+      <Name>Shield.Framework.Platform.Windows</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Storage\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="..\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

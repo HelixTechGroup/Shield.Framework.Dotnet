@@ -8,10 +8,25 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Shield.Sandbox.MonoGame.Windows</RootNamespace>
     <AssemblyName>Shield.Sandbox.MonoGame.Windows</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,6 +54,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\CommonServiceLocator.2.0.1\lib\net45\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
       <Private>True</Private>
@@ -63,21 +81,33 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Platform\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.csproj">
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Windows\Shield.Framework.Platform.MonoGame.Windows.csproj">
       <Project>{5e467272-a8b3-4bc7-a999-570f160a42da}</Project>
-      <Name>Shield.Framework.Platform.MonoGame</Name>
+      <Name>Shield.Framework.Platform.MonoGame.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Platform\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.csproj">
       <Project>{8137f413-a2f8-4039-b7d2-b08bee246f03}</Project>
       <Name>Shield.Framework.Platform.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Shield.Framework.Core\Shield.Framework,Core.csproj">
+    <ProjectReference Include="..\..\Shield.Framework.Core\Shield.Framework.Core.csproj">
       <Project>{8a526556-5b67-439d-a9a9-49e769663b11}</Project>
-      <Name>Shield.Framework,Core</Name>
+      <Name>Shield.Framework.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

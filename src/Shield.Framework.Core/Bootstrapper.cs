@@ -1,6 +1,6 @@
 ﻿#region Usings
 using System;
-using Microsoft.Practices.ServiceLocation;
+using CommonServiceLocator;
 using Shield.Framework.Extensibility;
 using Shield.Framework.IoC;
 using Shield.Framework.IoC.Default;

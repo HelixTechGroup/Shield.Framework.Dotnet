@@ -22,7 +22,7 @@ using Ninject.Activation;
 using Ninject.Planning.Targets;
 using Ninject.Selection.Heuristics;
 
-namespace Shield.Framework.IoC.Ninject.Extensions.ChildKernel
+namespace Shield.Framework.IoC.Extensions.ChildKernel
 {
     /// <summary>
     /// Scores constructors by either looking for the existence of an injection marker

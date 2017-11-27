@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\SharedAssemblyInfo.cs = src\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework,Core", "src\Shield.Framework.Core\Shield.Framework,Core.csproj", "{8A526556-5B67-439D-A9A9-49E769663B11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Core", "src\Shield.Framework.Core\Shield.Framework.Core.csproj", "{8A526556-5B67-439D-A9A9-49E769663B11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}"
 EndProject
@@ -19,15 +19,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ioc", "Ioc", "{83A057B0-EB7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.IoC.Ninject", "src\IoC\Shield.Framework.IoC.Ninject\Shield.Framework.IoC.Ninject.csproj", "{53D48941-7ACA-42B1-B2B5-F466460AC0E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.MonoGame", "src\Platform\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.csproj", "{5E467272-A8B3-4BC7-A999-570F160A42DA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.Windows", "src\Platform\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.csproj", "{8137F413-A2F8-4039-B7D2-B08BEE246F03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{FCB0080E-6C85-4036-BEB8-35E45F63B365}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Sandbox.MonoGame.Windows", "src\Sandbox\Shield.Sandbox.MonoGame.Windows\Shield.Sandbox.MonoGame.Windows.csproj", "{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{07C6E766-C9A4-4BDC-81D8-61E5565C2B16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoGame", "MonoGame", "{2DCF410E-AF1F-481D-96F1-06FF15FF4154}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.MonoGame", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.shproj", "{D76606D1-60C3-41E4-8931-870700D9FF29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.MonoGame.Windows", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Windows\Shield.Framework.Platform.MonoGame.Windows.csproj", "{5E467272-A8B3-4BC7-A999-570F160A42DA}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{d76606d1-60c3-41e4-8931-870700d9ff29}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -51,14 +61,6 @@ Global
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|x86.Build.0 = Release|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.Build.0 = Debug|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.ActiveCfg = Release|Any CPU
-		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.Build.0 = Release|Any CPU
 		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -75,15 +77,26 @@ Global
 		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.ActiveCfg = Release|Any CPU
 		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.Build.0 = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2} = {83A057B0-EB72-49E9-A253-AC82D7FFD38F}
-		{5E467272-A8B3-4BC7-A999-570F160A42DA} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
 		{8137F413-A2F8-4039-B7D2-B08BEE246F03} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
 		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F} = {FCB0080E-6C85-4036-BEB8-35E45F63B365}
+		{07C6E766-C9A4-4BDC-81D8-61E5565C2B16} = {2D7074C5-8CF4-40B5-A7EB-5A30E53406EE}
+		{2DCF410E-AF1F-481D-96F1-06FF15FF4154} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{D76606D1-60C3-41E4-8931-870700D9FF29} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
+		{5E467272-A8B3-4BC7-A999-570F160A42DA} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44BFD568-0EBB-4A03-B460-D4B1E1B52753}

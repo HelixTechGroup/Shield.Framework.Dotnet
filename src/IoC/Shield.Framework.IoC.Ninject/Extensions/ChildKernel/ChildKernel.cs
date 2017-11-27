@@ -17,7 +17,6 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using Ninject;
 using Ninject.Activation;
@@ -26,7 +25,7 @@ using Ninject.Modules;
 using Ninject.Selection.Heuristics;
 using Ninject.Syntax;
 
-namespace Shield.Framework.IoC.Ninject.Extensions.ChildKernel
+namespace Shield.Framework.IoC.Extensions.ChildKernel
 {
     /// <summary>
     /// This is a kernel with a parent kernel. Any binding that can not be resolved by this kernel is forwarded to the

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Shield.Framework.IoC.Ninject
+namespace Shield.Framework.IoC
 {
     public class ModuleNotFoundException : Exception
     {

@@ -17,10 +17,11 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
+using Ninject;
 using Ninject.Activation.Caching;
 using Ninject.Components;
 
-namespace Shield.Framework.IoC.Ninject.Extensions.ChildKernel
+namespace Shield.Framework.IoC.Extensions.ChildKernel
 {
     /// <summary>
     /// The activation cache of child kernels.

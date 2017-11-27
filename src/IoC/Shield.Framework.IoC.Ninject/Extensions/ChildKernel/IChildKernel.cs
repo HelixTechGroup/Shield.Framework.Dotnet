@@ -20,7 +20,7 @@
 using Ninject;
 using Ninject.Syntax;
 
-namespace Shield.Framework.IoC.Ninject.Extensions.ChildKernel
+namespace Shield.Framework.IoC.Extensions.ChildKernel
 {
     /// <summary>
     /// A kernel that has a parent for fall back.

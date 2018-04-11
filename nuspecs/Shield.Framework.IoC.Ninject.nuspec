@@ -6,8 +6,8 @@
     <title>Ninject for the Shield.Framework (PCL)</title>
     <authors>Bryan M. Longacre</authors>
     <owners>Bryan M. Longacre</owners>
-    <licenseUrl>https://github.com/PrismLibrary/Prism/blob/master/LICENSE</licenseUrl>
-    <projectUrl>http://prismlibrary.com/</projectUrl>
+    <licenseUrl>https://github.com/HelixDesign/Shield.Framework/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/HelixDesign/Shield.Framework</projectUrl>
     <iconUrl>http://prismlibrary.github.io/images/prism-logo-graphic-128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Use these extensions to build Shield.Framework applications based on Ninject.</description>

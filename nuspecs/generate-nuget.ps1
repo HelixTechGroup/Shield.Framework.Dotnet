@@ -1,6 +1,6 @@
 ﻿$nugetOutputDirectory = '../build/nuget'
 
-$releaseNotesUri = 'https://github.com/PrismLibrary/Prism/wiki/Release-Notes-'
+$releaseNotesUri = ''
 $coreFileVersion = '1.0.0'
 $nugetFileName = 'nuget.exe'
 
@@ -39,8 +39,8 @@ function ConvertTo-NuGetExpression
     # {
         # $fileVersion = $uwpVersion
     # }
-
-    $expression = ".\$($nugetFileName) pack $($nuspecPath) -OutputDirectory $nugetOutputDirectory -Prop 'version=$($fileVersion)' -Prop 'coreVersion=$($fileVersion)' -Prop 'releaseNotes=$($releaseNotesUri)$fileVersion'"
+	#-Prop 'releaseNotes=$($releaseNotesUri)$fileVersion'
+    $expression = ".\$($nugetFileName) pack $($nuspecPath) -OutputDirectory $nugetOutputDirectory -Prop 'version=$($fileVersion)' -Prop 'coreVersion=$($fileVersion)'"
 
     if($wpfVersion)
     {

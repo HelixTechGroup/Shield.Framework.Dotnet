@@ -1,5 +1,6 @@
 ﻿#region Usings
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Threading;
 #endregion
@@ -25,6 +26,13 @@ namespace Shield.Framework.Extensions
         }
 
         public static void Raise(this PropertyChangedEventHandler handler, object sender, PropertyChangedEventArgs args)
+        {
+            var tmp = Interlocked.CompareExchange(ref handler, null, null);
+            if (tmp != null)
+                tmp(sender, args);
+        }
+
+        public static void Raise(this NotifyCollectionChangedEventHandler handler, object sender, NotifyCollectionChangedEventArgs args)
         {
             var tmp = Interlocked.CompareExchange(ref handler, null, null);
             if (tmp != null)

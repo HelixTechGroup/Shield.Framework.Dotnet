@@ -11,6 +11,11 @@ namespace Shield.Framework.Extensions
             return test.GetType() == t || test.GetType().IsSubclassOf(t);
         }
 
+        public static bool ContainsType<T>(this object test)
+        {
+            return test.ContainsType(typeof(T));
+        }
+
         public static bool ContainsInterface(this object test, Type t)
         {
             if (!t.IsInterface)
@@ -18,6 +23,11 @@ namespace Shield.Framework.Extensions
 
             var allInterfaces = test.GetType().GetInterfaces();
             return allInterfaces.Any(i => i == t);
+        }
+
+        public static bool ContainsInterface<T>(this object test)
+        {
+            return test.ContainsInterface(typeof(T));
         }
 
         public static IEnumerable<Type> GetTopLevelInterfaces(this Type t)

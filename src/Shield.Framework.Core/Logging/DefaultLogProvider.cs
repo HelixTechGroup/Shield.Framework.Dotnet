@@ -10,7 +10,7 @@ using Shield.Framework.Platform;
 
 namespace Shield.Framework.Logging
 {
-    public sealed class DefaultLogger : ILogger
+    public sealed class DefaultLogProvider : ILogProvider
     {
         public event Action<IDispose> OnDispose;
 
@@ -19,33 +19,33 @@ namespace Shield.Framework.Logging
         private readonly ConcurrentQueue<ILogEntry> m_logQueue;
         private Task m_LogTask;
         private readonly object m_logLock;
-        private readonly ConcurrentList<ILogProvider> m_logProviders;
+        private readonly ConcurrentList<ILogger> m_loggers;
 
         public bool Disposed
         {
             get { return m_disposed; }
         }
 
-        public DefaultLogger()
+        public DefaultLogProvider()
         {
             m_logQueue = new ConcurrentQueue<ILogEntry>();
             m_logLock = new object();
-            m_logProviders = new ConcurrentList<ILogProvider>();
+            m_loggers = new ConcurrentList<ILogger>();
             m_LogTask = Task.CompletedTask;
             //m_LogThread = new BackgroundWorker();
             //m_LogThread.WorkerSupportsCancellation = false;
             //m_LogThread.DoWork += (s, e) => Flush();
         }
 
-        ~DefaultLogger()
+        ~DefaultLogProvider()
         {
             Dispose(false);
         }
 
-        public void AddProvider(ILogProvider logProvider)
+        public void AddLogger(ILogger logProvider)
         {
-            if (!m_logProviders.Contains(logProvider))
-                m_logProviders.Add(logProvider);
+            if (!m_loggers.Contains(logProvider))
+                m_loggers.Add(logProvider);
         }
 
         public void LogInfo(string message)
@@ -96,7 +96,7 @@ namespace Shield.Framework.Logging
             if (m_disposed)
                 return;
 
-            m_logProviders.Dispose();
+            m_loggers.Dispose();
             
             if (OnDispose != null)
                 OnDispose(this);
@@ -119,7 +119,7 @@ namespace Shield.Framework.Logging
             lock(m_LogTask)
             {
                 if (m_LogTask.IsCompleted)
-                    m_LogTask = PlatformProvider.BackgroundDispatcher.RunAsync(Flush);
+                    m_LogTask = PlatformProvider.Services.Dispatcher.BackgroundDispatcher.RunAsync(Flush);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Shield.Framework.Logging
                 {
                     ILogEntry entry;
                     m_logQueue.TryDequeue(out entry);
-                    foreach (var provider in m_logProviders)
+                    foreach (var provider in m_loggers)
                         provider.Flush(entry);
 
                     entry.Dispose();

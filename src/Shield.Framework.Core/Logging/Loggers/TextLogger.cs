@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Shield.Framework.Logging.Providers
+namespace Shield.Framework.Logging.Loggers
 {
-    public abstract class TextLogProvider : LogProvider
+    public abstract class TextLogger : Logger
     {
         protected TextWriter m_writer;
 

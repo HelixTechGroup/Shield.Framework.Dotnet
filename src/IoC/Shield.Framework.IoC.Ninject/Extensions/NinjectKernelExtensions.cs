@@ -4,7 +4,7 @@ using Ninject;
 using Ninject.Modules;
 using Ninject.Parameters;
 
-namespace Shield.Framework.IoC
+namespace Shield.Framework.IoC.Extensions
 {
     public static class NinjectKernelExtensions
     {

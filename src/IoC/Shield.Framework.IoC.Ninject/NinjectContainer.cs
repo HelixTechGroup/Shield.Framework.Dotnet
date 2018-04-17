@@ -7,6 +7,8 @@ using Ninject;
 using Ninject.Activation.Caching;
 using Ninject.Modules;
 using Shield.Framework.Collections;
+using Shield.Framework.IoC.Exceptions;
+using Shield.Framework.IoC.Extensions;
 using Shield.Framework.IoC.Extensions.ChildKernel;
 #endregion
 
@@ -37,7 +39,7 @@ namespace Shield.Framework.IoC
             }
             catch (FileLoadException fex)
             {
-                throw new ModuleNotFoundException(string.Format("Could not load module: {0}", fex.FileName));
+                throw new NinjectModuleNotFoundException(string.Format("Could not load module: {0}", fex.FileName));
             }
 
             m_kernel.RegisterTypeWithValue<IIoCContainer>(this, true);
@@ -54,7 +56,7 @@ namespace Shield.Framework.IoC
             }
             catch (FileLoadException fex)
             {
-                throw new ModuleNotFoundException(string.Format("Could not load module: {0}", fex.FileName));
+                throw new NinjectModuleNotFoundException(string.Format("Could not load module: {0}", fex.FileName));
             }
 
             m_kernel.RegisterTypeWithValue<IIoCContainer>(this, true);
@@ -93,12 +95,12 @@ namespace Shield.Framework.IoC
             m_kernel.RegisterType(T, asSingleton, key, overrideExisting);
         }
 
-        public void Register<T, C>(C value, bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T, new()
+        public void Register<T, C>(C value, bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T
         {
             m_kernel.RegisterTypeWithValue<T, C>(value as C, asSingleton, key, overrideExisting);
         }
 
-        public void Register<T, C>(bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T, new()
+        public void Register<T, C>(bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T
         {
             m_kernel.RegisterType<T, C>(asSingleton, key, overrideExisting);
         }

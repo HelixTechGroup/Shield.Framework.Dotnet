@@ -9,6 +9,7 @@
     <AssemblyName>Shield.Framework.IoC</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
     <Compile Include="..\..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

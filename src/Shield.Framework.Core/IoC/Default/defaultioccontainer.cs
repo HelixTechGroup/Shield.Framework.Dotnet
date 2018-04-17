@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Shield.Framework.Extensions;
+using Shield.Framework.IoC.Exceptions;
 
 namespace Shield.Framework.IoC.Default
 {
@@ -41,6 +42,8 @@ namespace Shield.Framework.IoC.Default
             m_injectablePropertyDictionary = new ConcurrentDictionary<Type, List<PropertyInfo>>();
             m_propertyActionDictionary = new ConcurrentDictionary<string, Action<object, object>>();
             m_propertyDictionary = new ConcurrentDictionary<Type, PropertyInfo[]>();
+
+            Register<IIoCContainer>(this);
         }
 
         ~DefaultIoCContainer()
@@ -88,12 +91,12 @@ namespace Shield.Framework.IoC.Default
             CreateResolver(T, () => Instantiate(T), key, asSingleton, overrideExisting);
         }
 
-        public void Register<T, C>(C value, bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T, new()
+        public void Register<T, C>(C value, bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T
         {
             CreateResolver(typeof(T), () => value, key, asSingleton, overrideExisting);
         }
 
-        public void Register<T, C>(bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T, new()
+        public void Register<T, C>(bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T
         {
             CreateResolver<T>(() => Instantiate(typeof(C)), key, asSingleton, overrideExisting);
         }
@@ -466,9 +469,7 @@ namespace Shield.Framework.IoC.Default
         private object BuildUp(Type type, string key)
         {
             if (type == null)
-            {
                 throw new IoCResolutionException("type cannot not be null.");
-            }
 
             object instance = null;
 

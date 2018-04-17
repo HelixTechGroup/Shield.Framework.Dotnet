@@ -24,9 +24,9 @@ namespace Shield.Framework.IoC
 
         void Register(Type T, bool asSingleton = true, string key = null, bool overrideExisting = false);
 
-        void Register<T, C>(C value, bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T, new();
+        void Register<T, C>(C value, bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T;
 
-        void Register<T, C>(bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T, new();
+        void Register<T, C>(bool asSingleton = true, string key = null, bool overrideExisting = false) where C : class, T;
 
         void Register(Type T, Type C, bool asSingleton = true, string key = null, bool overrideExisting = false);
 

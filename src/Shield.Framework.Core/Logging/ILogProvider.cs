@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shield.Framework.Logging
 {
-    public interface ILogProvider : IDispose
+    public interface ILogger : IDispose
     {
         void Flush(ILogEntry entry);
     }

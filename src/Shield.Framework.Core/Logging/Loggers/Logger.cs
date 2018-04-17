@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Shield.Framework.Logging.Providers
+namespace Shield.Framework.Logging.Loggers
 {
-    public abstract class LogProvider : ILogProvider
+    public abstract class Logger : ILogger
     {
         public event Action<IDispose> OnDispose;
 

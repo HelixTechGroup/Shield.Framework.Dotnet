@@ -15,7 +15,8 @@ namespace Shield.Framework.Logging
         private bool m_disposed;
         private string m_logDate;
         private string m_logTime;
-        private string m_message;        
+        private string m_message;
+        private readonly Priority m_priority;
         #endregion
 
         #region Properties
@@ -60,20 +61,29 @@ namespace Shield.Framework.Logging
             }
         }
 
-        public Priority Priority => throw new NotImplementedException();
-
+        public Priority Priority
+        {
+            get { return m_priority; }
+        }
         #endregion
 
-        public LogEntry() : this("", Category.Info) {}
+        public LogEntry() : this("", Category.Info, Priority.None) {}
 
-        public LogEntry(Category level) : this("", level) {}
+        public LogEntry(Category level) : this("", level, Priority.None) {}
 
-        public LogEntry(string message, Category level)
+        public LogEntry(Category level, Priority priority) : this("", level, priority) { }
+
+        public LogEntry(Priority priority) : this("", Category.Info, priority) { }
+
+        public LogEntry(string message, Category level) : this(message, level, Priority.None) { }
+
+        public LogEntry(string message, Category level, Priority priority)
         {
             m_id = Guid.NewGuid();
             m_entryLock = new object();
             m_message = message;
             m_category = level;
+            m_priority = priority;
             SetLogDate();
         }
 
@@ -121,13 +131,17 @@ namespace Shield.Framework.Logging
 
         public bool Equals(LogEntry other)
         {
-            return other != null;
+            return !(other is null)
+                && (ReferenceEquals(this, other) 
+                    || m_id == other.Id);
         }
         
         public override bool Equals(object obj)
         {
-            var svc = obj as LogEntry;
-            return svc != null && Equals(svc);
+            return !(obj is null)
+                && (ReferenceEquals(this, obj) 
+                    || obj.GetType() == GetType() 
+                    && Equals((LogEntry)obj));
         }
 
         private void SetLogDate()

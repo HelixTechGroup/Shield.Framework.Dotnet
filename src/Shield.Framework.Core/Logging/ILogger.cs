@@ -2,9 +2,9 @@
 
 namespace Shield.Framework.Logging
 {
-    public interface ILogger : IDispose
+    public interface ILogProvider: IDispose
     {
-        void AddProvider(ILogProvider logProvider);
+        void AddLogger(ILogger logProvider);
 
         void LogInfo(string message);
 

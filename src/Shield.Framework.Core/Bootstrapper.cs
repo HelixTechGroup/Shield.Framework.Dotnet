@@ -1,12 +1,14 @@
 ﻿#region Usings
 using System;
-using CommonServiceLocator;
+using System.Linq;
+//using CommonServiceLocator;
 using Shield.Framework.Extensibility;
 using Shield.Framework.IoC;
 using Shield.Framework.IoC.Default;
 using Shield.Framework.Logging;
-using Shield.Framework.Logging.Providers;
+using Shield.Framework.Logging.Loggers;
 using Shield.Framework.Messaging;
+using Shield.Framework.Platform;
 #endregion
 
 namespace Shield.Framework
@@ -16,7 +18,7 @@ namespace Shield.Framework
         public event Action<IDispose> OnDispose;
 
         protected bool m_disposed;
-        protected ILogger m_logger;
+        protected ILogProvider m_logger;
         protected IModuleLibrary m_library;
         protected IIoCContainer m_container;
 
@@ -33,19 +35,16 @@ namespace Shield.Framework
         #region Methods        
         public virtual void Run()
         {
-            CreateLogger();
-
-            CreatePlatform();
-            ConfigurePlatform();            
-
-            CreateModuleLibrary();
-            ConfigureModuleLibrary();
-
-            CreateContainer();
-            ConfigureContainer();
-            ConfigureServiceLocator();
-
             RegisterFrameworkExceptionTypes();
+
+            CreateLogger();
+            CreateContainer();
+            CreateModuleLibrary();
+            CreatePlatform();
+
+            ConfigureContainer();
+            ConfigureModuleLibrary();            
+            ConfigurePlatform();                                                                                             
 
             InitializePlatform();
             InitializeModules();            
@@ -53,37 +52,59 @@ namespace Shield.Framework
 
         protected virtual void CreateLogger()
         {
-            m_logger = new DefaultLogger();
+            m_logger = new DefaultLogProvider();
 #if DEBUG
-            m_logger.AddProvider(new ConsoleLogProvider());
+            m_logger.AddLogger(new ConsoleLogger());
 #endif
         }
 
-        protected abstract void CreatePlatform();
+	    protected virtual void CreatePlatform() { }
 
-        protected abstract void ConfigurePlatform();
+        protected virtual void ConfigurePlatform()
+        {
+            PlatformProvider.Services = m_container.Resolve<IPlatformServices>();
+            PlatformProvider.Environment = m_container.Resolve<IPlatformEnvironment>();
+            PlatformProvider.Environment.DetectPlatform();
+        }
 
         protected virtual void CreateModuleLibrary()
         {
+            m_library = new ModuleLibrary();
         }
 
-        protected virtual void ConfigureModuleLibrary() { }
+        protected virtual void ConfigureModuleLibrary()
+        {
+            var manager = m_container.Resolve<IModuleManager>();
+            if (manager == null)
+                throw new InvalidOperationException("Could not resolve IModuleManager");
+
+            var loaders = m_container.ResolveAll<IModuleLoader>();
+            var moduleLoaders = loaders as IModuleLoader[] ?? loaders.ToArray();
+            if (loaders != null && !moduleLoaders.Any())
+                throw new InvalidOperationException("Could not resolve IModuleLoader");
+
+            foreach (var loader in moduleLoaders)
+                manager.AddLoader(loader);
+        }
 
         protected virtual void CreateContainer()
         {
-            m_container = new DefaultIoCContainer();
+            m_container = new DefaultIoCContainer();	        
         }
 
         protected virtual void ConfigureContainer()
         {
-            m_container.Register(m_logger);
-            m_container.Register<IMessageAggregator, MessageAggregator>();
-        }
+	        IoCProvider.Container = m_container;
+            //ServiceLocator.SetLocatorProvider(() => m_container.Resolve<IServiceLocator>());
 
-        protected virtual void ConfigureServiceLocator()
-        {
-            ServiceLocator.SetLocatorProvider(() => m_container.Resolve<IServiceLocator>());
-        }        
+            m_container.Register(m_logger);
+            m_container.Register(m_library);
+            m_container.Register<IModuleInitializer, ModuleInitializer>();
+            m_container.Register<IModuleManager, ModuleManager>();
+            m_container.Register<IMessageAggregator, MessageAggregator>();
+            m_container.Register<IPlatformServices, PlatformServices>();
+            m_container.Register<IPlatformEnvironment, PlatformEnvironment>();
+        }       
 
         protected virtual void RegisterFrameworkExceptionTypes() { }        
 
@@ -97,7 +118,14 @@ namespace Shield.Framework
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
 
-        protected virtual void InitializeModules() { }
+        protected virtual void InitializeModules()
+        {
+            var manager = m_container.Resolve<IModuleManager>();
+            if (manager == null)
+                throw new InvalidOperationException("Could not resolve IModuleManager");
+
+            manager.Run();
+        }
 
         protected virtual void OnApplicationStartup(object sender, EventArgs e) { }
 

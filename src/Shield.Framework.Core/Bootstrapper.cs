@@ -5,10 +5,10 @@ using System.Linq;
 using Shield.Framework.Extensibility;
 using Shield.Framework.IoC;
 using Shield.Framework.IoC.Default;
-using Shield.Framework.Logging;
-using Shield.Framework.Logging.Loggers;
 using Shield.Framework.Messaging;
 using Shield.Framework.Platform;
+using Shield.Framework.Platform.Logging;
+using Shield.Framework.Platform.Logging.Loggers;
 #endregion
 
 namespace Shield.Framework

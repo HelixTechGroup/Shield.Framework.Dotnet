@@ -10,7 +10,7 @@ namespace Shield.Framework.Messaging.Subscriptions
 
         protected override void InvokeAction(Action action)
         {
-            PlatformProvider.BackgroundDispatcher.Run(action);
+            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action);
         }
     }
 
@@ -21,7 +21,7 @@ namespace Shield.Framework.Messaging.Subscriptions
 
         protected override void InvokeAction(Action<TPayload> action, TPayload argument)
         {
-            PlatformProvider.BackgroundDispatcher.Run(action, argument);
+            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action, argument);
         }        
     }
 }

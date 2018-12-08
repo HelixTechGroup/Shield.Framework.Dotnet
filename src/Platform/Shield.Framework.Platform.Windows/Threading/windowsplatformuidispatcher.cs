@@ -8,7 +8,7 @@ namespace Shield.Framework.Platform.Threading
 {
     public sealed class WindowsPlatformUIDispatcher : PlatformDispatcher
     {
-        private Dispatcher m_dispatcher;
+        private readonly Dispatcher m_dispatcher;
 
         public WindowsPlatformUIDispatcher()
         {

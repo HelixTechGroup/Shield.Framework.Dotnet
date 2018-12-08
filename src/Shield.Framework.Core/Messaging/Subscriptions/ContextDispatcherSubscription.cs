@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Shield.Framework.Platform;
+using Shield.Framework.Platform.Threading;
 
 namespace Shield.Framework.Messaging.Subscriptions
 {
@@ -16,8 +17,8 @@ namespace Shield.Framework.Messaging.Subscriptions
 
         protected override void InvokeAction(Action action)
         {
-            ((IPlatformContextDispatcher)PlatformProvider.ContextDispatcher).SetContext(m_context);
-            PlatformProvider.ContextDispatcher.Run(action);
+            ((IPlatformContextDispatcher)PlatformProvider.Services.Dispatcher.ContextDispatcher).SetContext(m_context);
+            PlatformProvider.Services.Dispatcher.ContextDispatcher.Run(action);
             //m_context.Post((o) => action(), null);
         }
     }
@@ -34,8 +35,8 @@ namespace Shield.Framework.Messaging.Subscriptions
 
         protected override void InvokeAction(Action<TPayload> action, TPayload argument)
         {
-            ((IPlatformContextDispatcher)PlatformProvider.ContextDispatcher).SetContext(m_context);
-            PlatformProvider.ContextDispatcher.Run(action, argument);
+            ((IPlatformContextDispatcher)PlatformProvider.Services.Dispatcher.ContextDispatcher).SetContext(m_context);
+            PlatformProvider.Services.Dispatcher.ContextDispatcher.Run(action, argument);
            //m_context.Post((o) => action((TPayload)o), argument);
         }
     }

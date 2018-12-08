@@ -12,44 +12,44 @@ namespace Shield.Framework.Extensions
         #region UIThread
         public static void OnUIThread(this Action action, Action callback = null)
         {
-            PlatformProvider.UIDispatcher.Run(action, callback);
+            PlatformProvider.Services.Dispatcher.UIDispatcher.Run(action, callback);
         }
 
         public static Task OnUIThreadAsync(this Action action, Action<Task> callback = null)
         {
-            return PlatformProvider.UIDispatcher.RunAsync(action, callback);
+            return PlatformProvider.Services.Dispatcher.UIDispatcher.RunAsync(action, callback);
         }        
 
         public static void OnUIThread<T>(this Action<T> action, T parameter, Action callback = null)
         {
-            PlatformProvider.UIDispatcher.Run(action, parameter, callback);
+            PlatformProvider.Services.Dispatcher.UIDispatcher.Run(action, parameter, callback);
         }
 
         public static Task OnUIThreadAsync<T>(this Action<T> action, T parameter, Action<Task> callback = null)
         {
-            return PlatformProvider.UIDispatcher.RunAsync(action, parameter, callback);
+            return PlatformProvider.Services.Dispatcher.UIDispatcher.RunAsync(action, parameter, callback);
         }
         #endregion
 
         #region BackgroundThread
         public static void OnNewThread(this Action action, Action callback = null)
         {
-            PlatformProvider.BackgroundDispatcher.Run(action, callback);
+            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action, callback);
         }
 
         public static Task OnNewThreadAsync(this Action action, Action<Task> callback = null)
         {
-            return PlatformProvider.BackgroundDispatcher.RunAsync(action, callback);
+            return PlatformProvider.Services.Dispatcher.BackgroundDispatcher.RunAsync(action, callback);
         }
 
         public static void OnNewThread<T>(this Action<T> action, T parameter, Action callback = null)
         {
-            PlatformProvider.BackgroundDispatcher.Run(action, parameter, callback);
+            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action, parameter, callback);
         }
 
         public static Task OnNewThreadAsync<T>(this Action<T> action, T parameter, Action<Task> callback = null)
         {
-            return PlatformProvider.BackgroundDispatcher.RunAsync(action, parameter, callback);
+            return PlatformProvider.Services.Dispatcher.BackgroundDispatcher.RunAsync(action, parameter, callback);
         }
         #endregion
     }

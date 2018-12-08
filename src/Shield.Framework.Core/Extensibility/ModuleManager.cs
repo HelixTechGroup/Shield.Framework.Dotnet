@@ -5,7 +5,7 @@ using System.Linq;
 using Shield.Framework.Extensibility.Exceptions;
 using Shield.Framework.Extensions;
 using Shield.Framework.IoC;
-using Shield.Framework.Logging;
+using Shield.Framework.Platform.Logging;
 
 namespace Shield.Framework.Extensibility
 {
@@ -17,7 +17,7 @@ namespace Shield.Framework.Extensibility
 
         private readonly IModuleLibrary m_library;
         private readonly IModuleInitializer m_moduleInitializer;
-        private readonly ILogger m_logger;
+        private readonly ILogProvider m_logger;
         private IList<IModuleLoader> m_loaders;
         private HashSet<IModuleLoader> m_subscribedLoaders;
         private bool m_disposed;
@@ -27,7 +27,7 @@ namespace Shield.Framework.Extensibility
             get { return m_disposed; }
         }
 
-        public ModuleManager(/*IModuleLoader[] loaders,*/ IModuleInitializer moduleInitializer, IModuleLibrary moduleCatalog, ILogger loggerFacade)
+        public ModuleManager(/*IModuleLoader[] loaders,*/ IModuleInitializer moduleInitializer, IModuleLibrary moduleCatalog, ILogProvider logger)
         {
             if (moduleInitializer == null)
                 throw new ArgumentNullException(nameof(moduleInitializer));
@@ -35,12 +35,12 @@ namespace Shield.Framework.Extensibility
             if (moduleCatalog == null)
                 throw new ArgumentNullException(nameof(moduleCatalog));
 
-            if (loggerFacade == null)
-                throw new ArgumentNullException(nameof(loggerFacade));
+            if (logger == null)
+                throw new ArgumentNullException(nameof(logger));
 
             m_moduleInitializer = moduleInitializer;
             m_library = moduleCatalog;
-            m_logger = loggerFacade;
+            m_logger = logger;
             m_subscribedLoaders = new HashSet<IModuleLoader>();
             m_loaders = new List<IModuleLoader>(/*loaders*/);
         }

@@ -46,7 +46,7 @@ Supported features:
 		* Network
 		* Virtual filesystem aggregation (VFS)
 			* Ability to mount storage points
-			* Access all storage under one filesystem
+			* Access all storage under one directory structure
 
 
 Supported Platforms:
@@ -68,9 +68,13 @@ The included sandboxes show a default/empty application for each platform
 ### Installing
 * To-do
 
+## Code of Conduct
+
+Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for details on our code of conduct.
+
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on the process for submitting pull requests to us.
 
 ## Versioning
 

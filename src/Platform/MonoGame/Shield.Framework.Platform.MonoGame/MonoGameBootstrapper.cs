@@ -19,14 +19,14 @@ namespace Shield.Framework.Platform
 
         protected override void CreatePlatform()
         {
+            base.CreatePlatform();
             m_game = new ShieldGame(m_contentRootDirectory);            
         }
-
-        protected override void ConfigurePlatform() { }
 
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            m_container.Register<IServiceProvider>(m_game.Services);
             m_container.Register(m_game);
             m_container.Register(m_game.DeviceManager);
         }
@@ -66,12 +66,6 @@ namespace Shield.Framework.Platform
             m_game.OnPreDeactivate += OnGamePreDeactivate;
             m_game.OnDeactivate += OnGameDeactivate;
             m_game.OnPostDeactivate += OnGamePostDeactivate;
-        }
-
-        protected override void ConfigureServiceLocator()
-        {
-            m_container.Register<IServiceProvider>(m_game.Services);
-            base.ConfigureServiceLocator();
         }
 
         public override void Run()

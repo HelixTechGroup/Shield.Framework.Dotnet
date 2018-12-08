@@ -1,31 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D7074C5-8CF4-40B5-A7EB-5A30E53406EE}"
 	ProjectSection(SolutionItems) = preProject
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		src\GlobalSuppressions.cs = src\GlobalSuppressions.cs
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 		src\SharedAssemblyInfo.cs = src\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Core", "src\Shield.Framework.Core\Shield.Framework.Core.csproj", "{8A526556-5B67-439D-A9A9-49E769663B11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.Core", "src\Shield.Framework.Core\Shield.Framework.Core.csproj", "{8A526556-5B67-439D-A9A9-49E769663B11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ioc", "Ioc", "{83A057B0-EB72-49E9-A253-AC82D7FFD38F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.IoC.Ninject", "src\IoC\Shield.Framework.IoC.Ninject\Shield.Framework.IoC.Ninject.csproj", "{53D48941-7ACA-42B1-B2B5-F466460AC0E2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.Windows", "src\Platform\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.csproj", "{8137F413-A2F8-4039-B7D2-B08BEE246F03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.IoC.Ninject", "src\IoC\Shield.Framework.IoC.Ninject\Shield.Framework.IoC.Ninject.csproj", "{53D48941-7ACA-42B1-B2B5-F466460AC0E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{FCB0080E-6C85-4036-BEB8-35E45F63B365}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Sandbox.MonoGame.Windows", "src\Sandbox\Shield.Sandbox.MonoGame.Windows\Shield.Sandbox.MonoGame.Windows.csproj", "{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{07C6E766-C9A4-4BDC-81D8-61E5565C2B16}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoGame", "MonoGame", "{2DCF410E-AF1F-481D-96F1-06FF15FF4154}"
 EndProject
@@ -33,10 +29,49 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.MonoGame.Windows", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Windows\Shield.Framework.Platform.MonoGame.Windows.csproj", "{5E467272-A8B3-4BC7-A999-570F160A42DA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{52595DA4-E21D-420D-A1D5-B18D4CE43839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Core.Tests", "src\Tests\Shield.Framework.Core.Tests\Shield.Framework.Core.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{8CB278CB-FC0A-4C24-8AC3-4258B9023EB0}"
+	ProjectSection(SolutionItems) = preProject
+		licenses\Ensure.That.LICENSE.md = licenses\Ensure.That.LICENSE.md
+		licenses\Prism.LICENSE.md = licenses\Prism.LICENSE.md
+		licenses\Valit.LICENSE.md = licenses\Valit.LICENSE.md
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.MonoGame.Desktop", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.shproj", "{1634DF77-AAFF-4313-9DA3-453C7AF270BF}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.Windows", "src\Platform\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.shproj", "{E4609D0B-3A70-4AE1-9462-042A72263376}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Sandbox.MonoGame.Windows", "sandbox\Shield.Sandbox.MonoGame.Windows\Shield.Sandbox.MonoGame.Windows.csproj", "{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.Desktop", "src\Platform\Shield.Framework.Platform.Desktop\Shield.Framework.Platform.Desktop.shproj", "{6E5462B8-0293-4944-8229-DF5D4FDF1183}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspec", "Nuspec", "{E29884B7-2DA2-4A32-89A3-811409C9CF71}"
+	ProjectSection(SolutionItems) = preProject
+		nuspecs\generate-nuget.ps1 = nuspecs\generate-nuget.ps1
+		nuspecs\projects.json = nuspecs\projects.json
+		nuspecs\Shield.Framework.Core.nuspec = nuspecs\Shield.Framework.Core.nuspec
+		nuspecs\Shield.Framework.IoC.Ninject.nuspec = nuspecs\Shield.Framework.IoC.Ninject.nuspec
+		nuspecs\Shield.Framework.Platform.MonoGame.Windows.nuspec = nuspecs\Shield.Framework.Platform.MonoGame.Windows.nuspec
+		nuspecs\Shield.Framework.Platform.Windows.nuspec = nuspecs\Shield.Framework.Platform.Windows.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{F515222E-59E6-42B4-BCCF-B59FAC06DBF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.MonoGame.Windows.Tests", "src\Tests\Platform\Shield.Framework.Platform.MonoGame.Windows.Tests\Shield.Framework.Platform.MonoGame.Windows.Tests.csproj", "{B68969D3-16FE-4569-A934-61B02044CF21}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{1634df77-aaff-4313-9da3-453c7af270bf}*SharedItemsImports = 13
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
+		src\Platform\Shield.Framework.Platform.Desktop\Shield.Framework.Platform.Desktop.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
+		src\Platform\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
+		src\Platform\Shield.Framework.Platform.Desktop\Shield.Framework.Platform.Desktop.projitems*{6e5462b8-0293-4944-8229-df5d4fdf1183}*SharedItemsImports = 13
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{d76606d1-60c3-41e4-8931-870700d9ff29}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.projitems*{e4609d0b-3a70-4ae1-9462-042a72263376}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,22 +96,6 @@ Global
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|x86.Build.0 = Release|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Debug|x86.Build.0 = Debug|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Release|x86.ActiveCfg = Release|Any CPU
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03}.Release|x86.Build.0 = Release|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|x86.Build.0 = Debug|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.ActiveCfg = Release|Any CPU
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.Build.0 = Release|Any CPU
 		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -85,18 +104,47 @@ Global
 		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.ActiveCfg = Release|Any CPU
 		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|x86.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|x86.Build.0 = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|x86.Build.0 = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.Build.0 = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|x86.Build.0 = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|x86.ActiveCfg = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{53D48941-7ACA-42B1-B2B5-F466460AC0E2} = {83A057B0-EB72-49E9-A253-AC82D7FFD38F}
-		{8137F413-A2F8-4039-B7D2-B08BEE246F03} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
-		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F} = {FCB0080E-6C85-4036-BEB8-35E45F63B365}
-		{07C6E766-C9A4-4BDC-81D8-61E5565C2B16} = {2D7074C5-8CF4-40B5-A7EB-5A30E53406EE}
 		{2DCF410E-AF1F-481D-96F1-06FF15FF4154} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
 		{D76606D1-60C3-41E4-8931-870700D9FF29} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
 		{5E467272-A8B3-4BC7-A999-570F160A42DA} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
+		{8EDF4429-251A-416D-BB68-93F227191BCF} = {52595DA4-E21D-420D-A1D5-B18D4CE43839}
+		{8CB278CB-FC0A-4C24-8AC3-4258B9023EB0} = {2D7074C5-8CF4-40B5-A7EB-5A30E53406EE}
+		{1634DF77-AAFF-4313-9DA3-453C7AF270BF} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
+		{E4609D0B-3A70-4AE1-9462-042A72263376} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F} = {FCB0080E-6C85-4036-BEB8-35E45F63B365}
+		{6E5462B8-0293-4944-8229-DF5D4FDF1183} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{F515222E-59E6-42B4-BCCF-B59FAC06DBF0} = {52595DA4-E21D-420D-A1D5-B18D4CE43839}
+		{B68969D3-16FE-4569-A934-61B02044CF21} = {F515222E-59E6-42B4-BCCF-B59FAC06DBF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44BFD568-0EBB-4A03-B460-D4B1E1B52753}

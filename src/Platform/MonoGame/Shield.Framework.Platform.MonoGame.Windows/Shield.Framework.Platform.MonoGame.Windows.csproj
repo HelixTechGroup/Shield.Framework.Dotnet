@@ -50,11 +50,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="MonoGameWindowsBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,17 +67,13 @@
       <Project>{8a526556-5b67-439d-a9a9-49e769663b11}</Project>
       <Name>Shield.Framework.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.csproj">
-      <Project>{8137f413-a2f8-4039-b7d2-b08bee246f03}</Project>
-      <Name>Shield.Framework.Platform.Windows</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Storage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems" Label="Shared" />
+  <Import Project="..\..\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.projitems" Label="Shared" />
+  <Import Project="..\..\Shield.Framework.Platform.Desktop\Shield.Framework.Platform.Desktop.projitems" Label="Shared" />
+  <Import Project="..\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

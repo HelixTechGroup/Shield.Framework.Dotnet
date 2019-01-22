@@ -6,18 +6,18 @@ namespace Shield.Framework.Platform
 {
 	public class PlatformServices : IPlatformServices
 	{
-		protected ILogProvider m_logger;
+		protected IPlatformLogProvider m_logger;
 		protected IPlatformDispatcherProvider m_dispatcher;
 		protected IPlatformStorageProvider m_storage;
 
-		public PlatformServices(ILogProvider logger, IPlatformDispatcherProvider dispatcher, IPlatformStorageProvider storage)
+		public PlatformServices(IPlatformLogProvider logger, IPlatformDispatcherProvider dispatcher, IPlatformStorageProvider storage)
 		{
 			m_logger = logger;
 			m_dispatcher = dispatcher;
 			m_storage = storage;
 		}
 
-		public ILogProvider Logger
+		public IPlatformLogProvider Logger
 		{
 			get { return m_logger; }
 		}

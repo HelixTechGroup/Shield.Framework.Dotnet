@@ -17,7 +17,7 @@ namespace Shield.Framework.Extensibility
 
         private readonly IModuleLibrary m_library;
         private readonly IModuleInitializer m_moduleInitializer;
-        private readonly ILogProvider m_logger;
+        private readonly IPlatformLogProvider m_logger;
         private IList<IModuleLoader> m_loaders;
         private HashSet<IModuleLoader> m_subscribedLoaders;
         private bool m_disposed;
@@ -27,7 +27,7 @@ namespace Shield.Framework.Extensibility
             get { return m_disposed; }
         }
 
-        public ModuleManager(/*IModuleLoader[] loaders,*/ IModuleInitializer moduleInitializer, IModuleLibrary moduleCatalog, ILogProvider logger)
+        public ModuleManager(/*IModuleLoader[] loaders,*/ IModuleInitializer moduleInitializer, IModuleLibrary moduleCatalog, IPlatformLogProvider logger)
         {
             if (moduleInitializer == null)
                 throw new ArgumentNullException(nameof(moduleInitializer));
@@ -216,7 +216,7 @@ namespace Shield.Framework.Extensibility
             var moduleLoadingException = exception as ModuleLoadingException 
                 ?? new ModuleLoadingException(moduleInfo.Name, exception.Message, exception);
 
-            m_logger.Log(moduleLoadingException.Message, Category.Exception, Priority.High);
+            m_logger.Log(moduleLoadingException.Message, PlatformLogCategory.Exception, PlatformLogPriority.High);
 
             throw moduleLoadingException;
         }

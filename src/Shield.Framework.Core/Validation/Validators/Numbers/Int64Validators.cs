@@ -1,158 +1,140 @@
-﻿using Shield.Framework.Extensions;
+﻿#region Usings
+using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
+#endregion
 
 namespace Shield.Framework.Validation.Validators.Numbers
 {
     public static class Int64Validators
     {
-        public static ValidationRule<long> IsInRange(this ValidationRule<long> rule, long minValue, long maxValue)
+        #region Methods
+        public static IValidationTarget<long> IsInRange(this IValidationTarget<long> target, long minValue, long maxValue)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v > minValue, 
-                                                       ExceptionMessages.NumbersIsInRangeTooLowFailed.Inject(rule.Value, minValue)));
-
-            rule.AddValidator(new RuleValidator<long>(v => v < maxValue,
-                                                       ExceptionMessages.NumbersIsInRangeTooHighFailed.Inject(rule.Value, maxValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<long>(v => v > minValue,
+                                                                      ExceptionMessages.NumbersIsInRangeTooLowFailed.Inject(
+                                                                                                                            target.Value,
+                                                                                                                            minValue)))
+                         .And(new OutOfRangeValidationPredicate<long>(v => v < maxValue,
+                                                                      ExceptionMessages.NumbersIsInRangeTooHighFailed
+                                                                                       .Inject(target.Value, maxValue)));
         }
 
-        public static ValidationRule<long> IsNotInRange(this ValidationRule<long> rule, long minValue, long maxValue)
+        public static IValidationTarget<long> IsNotInRange(this IValidationTarget<long> target, long minValue, long maxValue)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v < minValue,
-                                                       ExceptionMessages.NumbersIsNotInRangeTooLowFailed.Inject(rule.Value, minValue)));
-
-            rule.AddValidator(new RuleValidator<long>(v => v > maxValue,
-                                                       ExceptionMessages.NumbersIsNotInRangeTooHighFailed.Inject(rule.Value, maxValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<long>(v => v < minValue,
+                                                                      ExceptionMessages.NumbersIsNotInRangeTooLowFailed.Inject(
+                                                                                                                               target.Value,
+                                                                                                                               minValue)))
+                         .And(new OutOfRangeValidationPredicate<long>(v => v > maxValue,
+                                                                      ExceptionMessages.NumbersIsNotInRangeTooHighFailed.Inject(
+                                                                                                                                target.Value,
+                                                                                                                                maxValue)));
         }
 
-        public static ValidationRule<long> IsGreaterThan(this ValidationRule<long> rule, long minValue)
+        public static IValidationTarget<long> IsGreaterThan(this IValidationTarget<long> target, long minValue)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v > minValue,
-                                                       ExceptionMessages.NumbersIsGtFailed.Inject(rule.Value, minValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<long>(v => v > minValue,
+                                                                      ExceptionMessages.NumbersIsGtFailed.Inject(target.Value, minValue)));
         }
 
-        public static ValidationRule<long> IsGreaterThanOrEqual(this ValidationRule<long> rule, long minValue)
+        public static IValidationTarget<long> IsGreaterThanOrEqual(this IValidationTarget<long> target, long minValue)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v >= minValue,
-                                                       ExceptionMessages.NumbersIsGteFailed.Inject(rule.Value, minValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<long>(v => v >= minValue,
+                                                                      ExceptionMessages.NumbersIsGteFailed.Inject(target.Value, minValue)));
         }
 
-        public static ValidationRule<long> IsLessThan(this ValidationRule<long> rule, long maxValue)
+        public static IValidationTarget<long> IsLessThan(this IValidationTarget<long> target, long maxValue)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v < maxValue,
-                                                       ExceptionMessages.NumbersIsLtFailed.Inject(rule.Value, maxValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<long>(v => v < maxValue,
+                                                                      ExceptionMessages.NumbersIsLtFailed.Inject(target.Value, maxValue)));
         }
 
-        public static ValidationRule<long> IsLessThanOrEqual(this ValidationRule<long> rule, long maxValue)
+        public static IValidationTarget<long> IsLessThanOrEqual(this IValidationTarget<long> target, long maxValue)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v <= maxValue,
-                                                       ExceptionMessages.NumbersIsLteFailed.Inject(rule.Value, maxValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<long>(v => v <= maxValue,
+                                                                      ExceptionMessages.NumbersIsLteFailed.Inject(target.Value, maxValue)));
         }
 
-        public static ValidationRule<long> IsEqualTo(this ValidationRule<long> rule, long expected)
+        public static IValidationTarget<long> IsEqualTo(this IValidationTarget<long> target, long expected)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v == expected,
-                                                       ExceptionMessages.NumbersIsFailed.Inject(rule.Value, expected)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v == expected,
+                                                                   ExceptionMessages.NumbersIsFailed.Inject(target.Value, expected)));
         }
 
-        public static ValidationRule<long> IsNotEqualToOrEqual(this ValidationRule<long> rule, long expected)
+        public static IValidationTarget<long> IsNotEqualToOrEqual(this IValidationTarget<long> target, long expected)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v >= expected,
-                                                       ExceptionMessages.NumbersIsNotFailed.Inject(rule.Value, expected)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v >= expected,
+                                                                   ExceptionMessages.NumbersIsNotFailed.Inject(target.Value, expected)));
         }
 
-        public static ValidationRule<long> IsPositive(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsPositive(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v > 0,
-                                                       ExceptionMessages.NumbersIsPositiveFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v > 0,
+                                                                   ExceptionMessages.NumbersIsPositiveFailed.Inject(target.Value)));
         }
 
-        public static ValidationRule<long> IsNegative(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsNegative(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v < 0,
-                                                       ExceptionMessages.NumbersIsNegativeFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v < 0,
+                                                                   ExceptionMessages.NumbersIsNegativeFailed.Inject(target.Value)));
         }
 
-        public static ValidationRule<long> IsNonZero(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsNonZero(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v != 0,
-                                                       ExceptionMessages.NumbersIsNonZeroFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v != 0,
+                                                                   ExceptionMessages.NumbersIsNonZeroFailed.Inject(target.Value)));
         }
 
-        public static ValidationRule<long> IsZero(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsZero(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v == 0,
-                                                       ExceptionMessages.NumbersIsZeroFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v == 0,
+                                                                   ExceptionMessages.NumbersIsZeroFailed.Inject(target.Value)));
         }
 
-        public static ValidationRule<long> IsMaximumValue(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsMaximumValue(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v == long.MaxValue,
-                                                       ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, long.MaxValue)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v == long.MaxValue,
+                                                                   ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                                                                    target.Value,
+                                                                                                                    long.MaxValue)));
         }
 
-        public static ValidationRule<long> IsMinimumValue(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsMinimumValue(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v == long.MinValue,
-                                                       ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, long.MinValue)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v == long.MinValue,
+                                                                   ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                                                                    target.Value,
+                                                                                                                    long.MinValue)));
         }
 
-        public static ValidationRule<long> IsNotMaximumValue(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsNotMaximumValue(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v != long.MaxValue,
-                                                       ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, long.MaxValue)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v != long.MaxValue,
+                                                                   ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                                                                    target.Value,
+                                                                                                                    long.MaxValue)));
         }
 
-        public static ValidationRule<long> IsNotMinimumValue(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsNotMinimumValue(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v != long.MinValue,
-                                                       ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, long.MinValue)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v != long.MinValue,
+                                                                   ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                                                                    target.Value,
+                                                                                                                    long.MinValue)));
         }
 
-        public static ValidationRule<long> IsEven(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsEven(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v % 2 == 0,
-                                                       ExceptionMessages.NumbersIsEvenFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v % 2 == 0,
+                                                                   ExceptionMessages.NumbersIsEvenFailed.Inject(target.Value)));
         }
 
-        public static ValidationRule<long> IsOdd(this ValidationRule<long> rule)
+        public static IValidationTarget<long> IsOdd(this IValidationTarget<long> target)
         {
-            rule.AddValidator(new RuleValidator<long>(v => v % 2 != 0,
-                                                       ExceptionMessages.NumbersIsOddFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<long>(v => v % 2 != 0,
+                                                                   ExceptionMessages.NumbersIsOddFailed.Inject(target.Value)));
         }
+        #endregion
     }
 }

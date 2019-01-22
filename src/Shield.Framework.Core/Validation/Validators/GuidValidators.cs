@@ -1,42 +1,35 @@
 ﻿using System;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
 
 namespace Shield.Framework.Validation.Validators
 {
     public static class GuidValidators
     {
 
-        public static ValidationRule<Guid> IsEmpty(this ValidationRule<Guid> rule)
+        public static IValidationTarget<Guid> IsEmpty(this IValidationTarget<Guid> target)
         {
-            rule.AddValidator(new RuleValidator<Guid>(v => v.Equals(Guid.Empty),
+            return target.And(new DefaultValidationPredicate<Guid>(v => v.Equals(Guid.Empty),
                                                       ExceptionMessages.GuidsIsEmptyFailed));
-
-            return rule;
         }
 
-        public static ValidationRule<Guid> IsNotEmpty(this ValidationRule<Guid> rule)
+        public static IValidationTarget<Guid> IsNotEmpty(this IValidationTarget<Guid> target)
         {
-            rule.AddValidator(new RuleValidator<Guid>(v => !v.Equals(Guid.Empty), 
+            return target.And(new NullValidationPredicate<Guid>(v => !v.Equals(Guid.Empty), 
                                                       ExceptionMessages.GuidsIsNotEmptyFailed));
-
-            return rule;
         }
 
-        public static ValidationRule<Guid> IsEqual(this ValidationRule<Guid> rule, Guid guid)
+        public static IValidationTarget<Guid> IsEqual(this IValidationTarget<Guid> target, Guid guid)
         {
-            rule.AddValidator(new RuleValidator<Guid>(v => v.Equals(guid),
-                                                      ExceptionMessages.GuidsIsEqualToFailed.Inject(rule.Value, guid)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<Guid>(v => v.Equals(guid),
+                                                      ExceptionMessages.GuidsIsEqualToFailed.Inject(target.Value, guid)));
         }
 
-        public static ValidationRule<Guid> IsNotEqual(this ValidationRule<Guid> rule, Guid guid)
+        public static IValidationTarget<Guid> IsNotEqual(this IValidationTarget<Guid> target, Guid guid)
         {
-            rule.AddValidator(new RuleValidator<Guid>(v => !v.Equals(guid),
-                                                      ExceptionMessages.GuidsIsNotEqualToFailed.Inject(rule.Value, guid)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<Guid>(v => !v.Equals(guid),
+                                                      ExceptionMessages.GuidsIsNotEqualToFailed.Inject(target.Value, guid)));
         }
     }
 }

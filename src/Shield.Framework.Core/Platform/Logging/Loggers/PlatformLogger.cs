@@ -2,7 +2,7 @@
 
 namespace Shield.Framework.Platform.Logging.Loggers
 {
-    public abstract class Logger : ILogger
+    public abstract class PlatformLogger : IPlatformLogger
     {
         public event Action<IDispose> OnDispose;
 
@@ -29,6 +29,6 @@ namespace Shield.Framework.Platform.Logging.Loggers
             GC.SuppressFinalize(this);
         }
 
-        public abstract void Flush(ILogEntry entry);
+        public abstract void Flush(IPlatformLogEntry entry);
     }
 }

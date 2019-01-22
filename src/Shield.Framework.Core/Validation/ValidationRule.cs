@@ -1,195 +1,98 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using Shield.Framework.Exceptions;
+using Shield.Framework.Collections;
 using Shield.Framework.Extensions;
+using Shield.Framework.Validation.Collections;
 using Shield.Framework.Validation.Exceptions;
+#endregion
 
 namespace Shield.Framework.Validation
 {
-    public class ValidationRule<TType>
+    public sealed class ValidationRule<TType> : IValidationRule<TType>
     {
-        protected TType m_value;
-        protected string m_name;
-        protected string m_file;
-        protected string m_source;
-        protected int m_line;
-        protected IDictionary<string, string> m_exceptionData;
-        protected IList<Predicate<TType>> m_conditions;
-        protected IList<RuleValidator<TType>> m_validators;
-        protected bool m_throwErrors;
-        protected ValidationResult m_results;
+        #region Members
+        private readonly IList<Predicate<TType>> m_conditions;
+        private readonly ValidationPredicateSet<TType> m_predicates;
+        private readonly IValidationTarget<TType> m_target;
+        #endregion
 
-        public TType Value
+        #region Properties
+        public IEnumerable<IValidationPredicate<TType>> Predicates
         {
-            get { return m_value; }
+            get { return m_predicates; }
         }
 
-        public string Name
+        public IValidationTarget<TType> Target
         {
-            get { return m_name; }
+            get { return m_target; }
+        }
+        #endregion
+
+        public ValidationRule(IValidationTarget<TType> target)
+        {
+            target.ThrowIfNull();
+
+            m_target = target;
+            m_conditions = new ConcurrentList<Predicate<TType>>();
+            m_predicates = new ValidationPredicateSet<TType>(this);
         }
 
-        public string File
+        #region Methods
+        private static bool CheckConditions(IValidationTarget<TType> target, IEnumerable<Predicate<TType>> conditions)
         {
-            get { return m_file; }
+            return conditions.Aggregate(true,
+                                        (current, condition) =>
+                                            condition != null && current && condition(target.Value));
         }
 
-        public string Source
+        public Exception Throw()
         {
-            get { return m_source; }
+            return !CheckConditions(m_target, m_conditions) ? null : m_predicates.Throw();
         }
 
-        public int Line
+        public TException Throw<TException>(string message = null) where TException : Exception, new()
         {
-            get { return m_line; }
-        }        
+            return !CheckConditions(m_target, m_conditions) ? null : m_predicates.Throw<TException>();
+        }
 
-        public ValidationRule()
+        public ValidationException ThrowAll()
         {
-            m_conditions = new List<Predicate<TType>>();
-            m_validators = new List<RuleValidator<TType>>();
+            return !CheckConditions(m_target, m_conditions) ? null : m_predicates.ThrowAll();
+        }
+
+        public IValidationRule<TType> AddPredicate(IValidationPredicate<TType> predicate)
+        {
+            predicate.ThrowIfNull();
+
+            m_predicates.Add(predicate);
+            return this;
+        }
+
+        public ValidationExceptionSelector<TType> WithException()
+        {
+            return new ValidationExceptionSelector<TType>(this);
+        }
+
+        public IValidate<TType> WithException<TNewException>() where TNewException : Exception, new()
+        {
+            m_predicates.WithException<TNewException>();
+            return this;
+        }
+
+        public IValidate<TType> WithMessage(string message)
+        {
+            message.ThrowIfNull();
+
+            m_predicates.WithMessage(message);
+            return this;
         }
 
         public ValidationResult Validate()
         {
-            m_value.ThrowIfNull();
-            m_validators.ThrowIfNull();
-            m_conditions.ThrowIfNull();      
-
-            var conditionsFullfilled = m_conditions.Aggregate(true,
-                                                (current, condition) => 
-                                                condition != null && 
-                                                current & condition(m_value));
-
-            var result = ValidationResult.Success;
-            if (conditionsFullfilled)
-                result = m_validators.Aggregate(result, (current, validator) => current & validator.Validate(m_value));
-
-            ThrowErrors();            
-            return result;
+            return CheckConditions(m_target, m_conditions) ? m_predicates.Validate() : ValidationResult.Success;
         }
-
-        public ValidationRule<TType> For(TType value, string name,
-                               [CallerFilePath] string file = null,
-                               [CallerMemberName] string source = null,
-                               [CallerLineNumber] int line = -1)
-        {
-            m_value = value;
-            m_name = name;
-            m_file = file;
-            m_source = source;
-            m_line = line;            
-            SetDefaultData();
-
-            return this;
-        }
-
-        public ValidationRule<TType> For(Expression<Func<TType>> memberExpression,
-                               [CallerFilePath] string file = null,
-                               [CallerMemberName] string source = null,
-                               [CallerLineNumber] int line = -1)
-        {
-            m_name = memberExpression.GetMemberName();
-            m_value = memberExpression.Compile()();
-            m_file = file;
-            m_source = source;
-            m_line = line;
-            SetDefaultData();
-
-            return this;
-
-        }
-
-        public ValidationRule<TType> IsRequired(bool throwError = false)
-        {
-            m_validators.Add(new RuleValidator<TType>(v => v != null 
-                                                      && !v.Equals(default(TType)), 
-                                                      ExceptionMessages.CommonIsRequiredFailed));
-
-            return this;
-        }
-
-        public ValidationRule<TType> IsNotNull(bool throwError = false)
-        {
-            m_validators.Add(new RuleValidator<TType>(v => v != null, 
-                                                      ExceptionMessages.CommonIsNotNullFailed));                                                
-
-            return this;
-        }
-
-        public ValidationRule<TType> IsNotDefault(bool throwError = false)
-        {
-            m_validators.Add(new RuleValidator<TType>(v => !v.Equals(default(TType)), 
-                                                      ExceptionMessages.CommonIsNotNullFailed));
-
-            return this;
-        }        
-
-        public static bool IsOfType(object value, bool throwError = false)
-        {
-            if (value.ContainsType<TType>())
-                return true;
-
-            if (!throwError)
-                return false;
-
-            var ruleType = typeof(TType).FullName;
-            var valueType = value.GetType().FullName;
-            throw ExceptionFactory.ArgumentException("",
-                                                     ExceptionMessages.TypesIsOfTypeFailed.Inject(ruleType, valueType));
-        }
-
-        public static bool IsNotOfType(object value, bool throwError = false)
-        {
-            if (!value.ContainsType<TType>())
-                return true;
-
-            if (!throwError)
-                return false;
-
-            var ruleType = typeof(TType).FullName;
-            throw ExceptionFactory.ArgumentException("",
-                                                     ExceptionMessages.TypesIsNotOfTypeFailed.Inject(ruleType));
-        }
-
-        public ValidationRule<TType> AddValidator(RuleValidator<TType> validator)
-        {
-            validator.ThrowIfNull();
-
-            m_validators.Add(validator);
-            return this;
-        }
-
-        protected void SetDefaultData()
-        {
-            m_exceptionData = new ConcurrentDictionary<string, string>();
-            m_exceptionData.Add("Value", m_value.ToString());
-            m_exceptionData.Add("Name", m_name);
-            m_exceptionData.Add("File", m_file);
-            m_exceptionData.Add("Source", m_source);
-            m_exceptionData.Add("Line", m_line.ToString());
-        }
-
-        protected void ThrowErrors()
-        {
-            m_name.ThrowIfNull();
-
-            if (!m_throwErrors)
-                return;
-
-            var exceptions = m_results.ErrorMessages.Select(error =>
-                                                                ExceptionFactory.ArgumentException(m_name,
-                                                                                                   error,
-                                                                                                   m_exceptionData.ToArray()));
-
-            throw ExceptionFactory.ValidationException(m_name, 
-                                                       "Validation of {0} Failed.".Inject(m_name), 
-                                                       exceptions, m_exceptionData.ToArray());
-        }
+        #endregion
     }
 }

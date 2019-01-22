@@ -1,148 +1,141 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
+#endregion
 
 namespace Shield.Framework.Validation.Validators.Collections
 {
     public static class DictionaryValidators
     {
-        public static ValidationRule<TType> ContainsValue<TType>(this ValidationRule<TType> rule, object value) where TType : IDictionary
+        #region Methods
+        public static IValidationTarget<TType> ContainsValue<TType>(this IValidationTarget<TType> target, object value)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Contains(value), 
-                                                       ExceptionMessages.CollectionsContainsValueFailed.Inject(value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Contains(value),
+                                                                    ExceptionMessages.CollectionsContainsValueFailed.Inject(value)));
         }
 
-        public static ValidationRule<TType> DoesNotContainValue<TType>(this ValidationRule<TType> rule, object value) where TType : IDictionary
+        public static IValidationTarget<TType> DoesNotContainValue<TType>(this IValidationTarget<TType> target, object value)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v => !v.Contains(value),
-                                                       ExceptionMessages.CollectionsDoesNotContainValueFailed.Inject(value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => !v.Contains(value),
+                                                                    ExceptionMessages.CollectionsDoesNotContainValueFailed.Inject(value)));
         }
 
-        public static ValidationRule<TType> ContainsValue<TType>(this ValidationRule<TType> rule, Func<object, bool> predicate) where TType : IDictionary
+        public static IValidationTarget<TType> ContainsValue<TType>(this IValidationTarget<TType> target, Func<object, bool> predicate)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Cast<object>().Any(predicate),
-                                                       ExceptionMessages.CollectionsAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Cast<object>().Any(predicate),
+                                                                    ExceptionMessages.CollectionsAnyFailed));
         }
 
-        public static ValidationRule<TType> DoesNotContainValue<TType>(this ValidationRule<TType> rule, Func<object, bool> predicate) where TType : IDictionary
+        public static IValidationTarget<TType> DoesNotContainValue<TType>(this IValidationTarget<TType> target, Func<object, bool> predicate)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v => !v.Cast<object>().Any(predicate),
-                                                       ExceptionMessages.CollectionsNotAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => !v.Cast<object>().Any(predicate),
+                                                                    ExceptionMessages.CollectionsNotAnyFailed));
         }
 
-        public static ValidationRule<TType> ContainsKey<TType>(this ValidationRule<TType> rule, object key) where TType : IDictionary
+        public static IValidationTarget<TType> ContainsKey<TType>(this IValidationTarget<TType> target, object key) where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v =>
-            {
-                return v.Keys.Cast<object>().Any(k => k == key);
-            }, ExceptionMessages.DictionariesContainsKeyFailed.Inject(key)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => { return v.Keys.Cast<object>().Any(k => k == key); },
+                                                                    ExceptionMessages.DictionariesContainsKeyFailed.Inject(key)));
         }
 
-        public static ValidationRule<TType> DoesNotContainKey<TType>(this ValidationRule<TType> rule, object key) where TType : IDictionary
+        public static IValidationTarget<TType> DoesNotContainKey<TType>(this IValidationTarget<TType> target, object key)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v =>
-            {
-                return v.Keys.Cast<object>().All(k => k != key);
-            }, ExceptionMessages.DictionariesDoesNotContainKeyFailed.Inject(key)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => { return v.Keys.Cast<object>().All(k => k != key); },
+                                                                    ExceptionMessages.DictionariesDoesNotContainKeyFailed.Inject(key)));
         }
 
-        public static ValidationRule<TType> ContainsKey<TType>(this ValidationRule<TType> rule, Func<object, bool> predicate) where TType : IDictionary
+        public static IValidationTarget<TType> ContainsKey<TType>(this IValidationTarget<TType> target, Func<object, bool> predicate)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Keys.Cast<object>().Any(predicate), 
-                                                       ExceptionMessages.DictionaryAnyKeyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Keys.Cast<object>().Any(predicate),
+                                                                    ExceptionMessages.DictionaryAnyKeyFailed));
         }
 
-        public static ValidationRule<TType> DoesNotContainKey<TType>(this ValidationRule<TType> rule, Func<object, bool> predicate) where TType : IDictionary
+        public static IValidationTarget<TType> DoesNotContainKey<TType>(this IValidationTarget<TType> target, Func<object, bool> predicate)
+            where TType : IDictionary
         {
-            rule.AddValidator(new RuleValidator<TType>(v => !v.Keys.Cast<object>().All(predicate), 
-                                                       ExceptionMessages.DictionaryNotAnyKeyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => !v.Keys.Cast<object>().All(predicate),
+                                                                    ExceptionMessages.DictionaryNotAnyKeyFailed));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> ContainsValue<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, TType value)
+        public static IValidationTarget<IDictionary<TKey, TType>> ContainsValue<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            TType value)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v => v.Values.Contains(value),
-                                                       ExceptionMessages.CollectionsContainsValueFailed.Inject(value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => v.Values.Contains(value),
+                                                                                       ExceptionMessages.CollectionsContainsValueFailed
+                                                                                           .Inject(value)));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> DoesNotContainValue<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, TType value)
+        public static IValidationTarget<IDictionary<TKey, TType>> DoesNotContainValue<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            TType value)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v => !v.Values.Contains(value),
-                                                       ExceptionMessages.CollectionsDoesNotContainValueFailed.Inject(value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => !v.Values.Contains(value),
+                                                                                       ExceptionMessages
+                                                                                           .CollectionsDoesNotContainValueFailed
+                                                                                           .Inject(value)));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> ContainsValue<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, Func<TType, bool> predicate)
+        public static IValidationTarget<IDictionary<TKey, TType>> ContainsValue<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            Func<TType, bool> predicate)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v => v.Values.Any(predicate),
-                                                       ExceptionMessages.CollectionsAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => v.Values.Any(predicate),
+                                                                                       ExceptionMessages.CollectionsAnyFailed));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> DoesNotContainValue<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, Func<TType, bool> predicate)
+        public static IValidationTarget<IDictionary<TKey, TType>> DoesNotContainValue<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            Func<TType, bool> predicate)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v => !v.Values.Any(predicate),
-                                                       ExceptionMessages.CollectionsNotAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => !v.Values.Any(predicate),
+                                                                                       ExceptionMessages.CollectionsNotAnyFailed));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> ContainsKey<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, TKey key)
+        public static IValidationTarget<IDictionary<TKey, TType>> ContainsKey<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            TKey key)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v =>
-            {
-                return v.Keys.Any(k => k.Equals(key));
-            }, ExceptionMessages.DictionariesContainsKeyFailed.Inject(key)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => { return v.Keys.Any(k => k.Equals(key)); },
+                                                                                       ExceptionMessages.DictionariesContainsKeyFailed
+                                                                                           .Inject(key)));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> DoesNotContainKey<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, TKey key)
+        public static IValidationTarget<IDictionary<TKey, TType>> DoesNotContainKey<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            TKey key)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v =>
-            {
-                return v.Keys.All(k => !k.Equals(key));
-            }, ExceptionMessages.DictionariesDoesNotContainKeyFailed.Inject(key)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => { return v.Keys.All(k => !k.Equals(key)); },
+                                                                                       ExceptionMessages.DictionariesDoesNotContainKeyFailed
+                                                                                           .Inject(key)));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> ContainsKey<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, Func<TKey, bool> predicate)
+        public static IValidationTarget<IDictionary<TKey, TType>> ContainsKey<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            Func<TKey, bool> predicate)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v => v.Keys.Any(predicate),
-                                                       ExceptionMessages.DictionaryAnyKeyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => v.Keys.Any(predicate),
+                                                                                       ExceptionMessages.DictionaryAnyKeyFailed));
         }
 
-        public static ValidationRule<IDictionary<TKey, TType>> DoesNotContainKey<TKey, TType>(this ValidationRule<IDictionary<TKey, TType>> rule, Func<TKey, bool> predicate)
+        public static IValidationTarget<IDictionary<TKey, TType>> DoesNotContainKey<TKey, TType>(
+            this IValidationTarget<IDictionary<TKey, TType>> target,
+            Func<TKey, bool> predicate)
         {
-            rule.AddValidator(new RuleValidator<IDictionary<TKey, TType>>(v => !v.Keys.All(predicate),
-                                                       ExceptionMessages.DictionaryNotAnyKeyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IDictionary<TKey, TType>>(v => !v.Keys.All(predicate),
+                                                                                       ExceptionMessages.DictionaryNotAnyKeyFailed));
         }
+        #endregion
     }
 }

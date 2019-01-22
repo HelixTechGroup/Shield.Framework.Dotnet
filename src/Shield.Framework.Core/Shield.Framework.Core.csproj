@@ -8,10 +8,15 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Validation\CollectionsGuard.cs" />
+    <Compile Remove="Validation\NumbersGuard.cs" />
+    <Compile Remove="Validation\TimeGuard.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
     <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CommonServiceLocator" Version="2.0.1" />
+    <PackageReference Include="CommonServiceLocator" Version="2.0.4" />
   </ItemGroup>
 </Project>

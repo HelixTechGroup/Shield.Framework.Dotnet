@@ -1,8 +1,9 @@
-﻿using System;
+﻿#region Usings
+using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Shield.Framework.Platform;
+#endregion
 
 namespace Shield.Sandbox.MonoGame.Windows
 {
@@ -35,6 +36,6 @@ namespace Shield.Sandbox.MonoGame.Windows
         {
             m_game.GraphicsDevice.Clear(Color.CornflowerBlue);
             base.OnGameDraw(sender, e);
-        }                
+        }
     }
 }

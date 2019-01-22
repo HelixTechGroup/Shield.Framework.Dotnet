@@ -3,41 +3,41 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Shield.Framework.Collections;
 
-namespace Shield.Framework.Platform.Logging
+namespace Shield.Framework.Platform.Logging.Default
 {
-    public sealed class DefaultLogProvider : ILogProvider
+    public sealed class DefaultPlatformLogProvider : IPlatformLogProvider
     {
         public event Action<IDispose> OnDispose;
 
         private const int m_queueSize = 2;
         private bool m_disposed;
-        private readonly ConcurrentQueue<ILogEntry> m_logQueue;
+        private readonly ConcurrentQueue<IPlatformLogEntry> m_logQueue;
         private Task m_LogTask;
         private readonly object m_logLock;
-        private readonly ConcurrentList<ILogger> m_loggers;
+        private readonly ConcurrentList<IPlatformLogger> m_loggers;
 
         public bool Disposed
         {
             get { return m_disposed; }
         }
 
-        public DefaultLogProvider()
+        public DefaultPlatformLogProvider()
         {
-            m_logQueue = new ConcurrentQueue<ILogEntry>();
+            m_logQueue = new ConcurrentQueue<IPlatformLogEntry>();
             m_logLock = new object();
-            m_loggers = new ConcurrentList<ILogger>();
+            m_loggers = new ConcurrentList<IPlatformLogger>();
             m_LogTask = Task.CompletedTask;
             //m_LogThread = new BackgroundWorker();
             //m_LogThread.WorkerSupportsCancellation = false;
             //m_LogThread.DoWork += (s, e) => Flush();
         }
 
-        ~DefaultLogProvider()
+        ~DefaultPlatformLogProvider()
         {
             Dispose(false);
         }
 
-        public void AddLogger(ILogger logProvider)
+        public void AddLogger(IPlatformLogger logProvider)
         {
             if (!m_loggers.Contains(logProvider))
                 m_loggers.Add(logProvider);
@@ -45,22 +45,22 @@ namespace Shield.Framework.Platform.Logging
 
         public void LogInfo(string message)
         {
-            Log(new LogEntry(message, Category.Info));
+            Log(new PlatformLogEntry(message, PlatformLogCategory.Info));
         }
 
         public void LogWarn(string message)
         {
-            Log(new LogEntry(message, Category.Warn));
+            Log(new PlatformLogEntry(message, PlatformLogCategory.Warn));
         }
 
         public void LogError(string message)
         {
-            Log(new LogEntry(message, Category.Exception));
+            Log(new PlatformLogEntry(message, PlatformLogCategory.Exception));
         }
 
         public void LogDebug(string message)
         {
-            Log(new LogEntry(message, Category.Debug));
+            Log(new PlatformLogEntry(message, PlatformLogCategory.Debug));
         }
 
         public void LogException(Exception exception)
@@ -76,12 +76,12 @@ namespace Shield.Framework.Platform.Logging
                                      trace));
         }
 
-        public void Log(string message, Category category, Priority priority)
+        public void Log(string message, PlatformLogCategory category, PlatformLogPriority priority)
         {
-            Log(new LogEntry(message, category));
+            Log(new PlatformLogEntry(message, category));
         }
 
-        public void Log(ILogEntry entry)
+        public void Log(IPlatformLogEntry entry)
         {
             Enqueue(entry);
         }
@@ -104,7 +104,7 @@ namespace Shield.Framework.Platform.Logging
             GC.SuppressFinalize(this);
         }        
         
-        private void Enqueue(ILogEntry entry)
+        private void Enqueue(IPlatformLogEntry entry)
         {
             lock (m_logLock)
             {
@@ -127,7 +127,7 @@ namespace Shield.Framework.Platform.Logging
 
                 while (m_logQueue.Count > 0)
                 {
-                    ILogEntry entry;
+                    IPlatformLogEntry entry;
                     m_logQueue.TryDequeue(out entry);
                     foreach (var provider in m_loggers)
                         provider.Flush(entry);

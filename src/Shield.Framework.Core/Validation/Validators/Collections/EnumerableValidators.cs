@@ -1,25 +1,26 @@
-﻿using System.Collections.Generic;
+﻿#region Usings
+using System.Collections.Generic;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
+#endregion
 
 namespace Shield.Framework.Validation.Validators.Collections
 {
     public static class EnumerableValidators
     {
-        public static ValidationRule<IEnumerable<TType>> IsEmpty<TType>(this ValidationRule<IEnumerable<TType>> rule)
+        #region Methods
+        public static IValidationTarget<IEnumerable<TType>> IsEmpty<TType>(this IValidationTarget<IEnumerable<TType>> target)
         {
-            rule.AddValidator(new RuleValidator<IEnumerable<TType>>(v => v.IsEmpty(), 
-                                                                    ExceptionMessages.CollectionsIsEmptyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<IEnumerable<TType>>(v => v.IsEmpty(),
+                                                                                 ExceptionMessages.CollectionsIsEmptyFailed));
         }
 
-        public static ValidationRule<IEnumerable<TType>> IsNotEmpty<TType>(this ValidationRule<IEnumerable<TType>> rule)
+        public static IValidationTarget<IEnumerable<TType>> IsNotEmpty<TType>(this IValidationTarget<IEnumerable<TType>> target)
         {
-            rule.AddValidator(new RuleValidator<IEnumerable<TType>>(v => !v.IsEmpty(), 
-                                                                    ExceptionMessages.CollectionsHasItemsFailed));
-
-            return rule;
-        }        
+            return target.And(new DefaultValidationPredicate<IEnumerable<TType>>(v => !v.IsEmpty(),
+                                                                                 ExceptionMessages.CollectionsHasItemsFailed));
+        }
+        #endregion
     }
 }

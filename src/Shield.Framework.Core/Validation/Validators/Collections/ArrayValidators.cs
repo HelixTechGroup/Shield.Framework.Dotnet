@@ -1,57 +1,52 @@
-﻿using System;
+﻿#region Usings
+using System;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
+#endregion
 
 namespace Shield.Framework.Validation.Validators.Collections
 {
     public static class ArrayValidators
     {
-        public static ValidationRule<TType[]> IsNotReadOnly<TType>(this ValidationRule<TType[]> rule)
+        #region Methods
+        public static IValidationTarget<TType[]> IsNotReadOnly<TType>(this IValidationTarget<TType[]> target)
         {
-            rule.AddValidator(new RuleValidator<TType[]>(v => !v.IsReadOnly, 
-                                                         ExceptionMessages.CollectionsIsNotReadOnlyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType[]>(v => !v.IsReadOnly,
+                                                                      ExceptionMessages.CollectionsIsNotReadOnlyFailed));
         }
 
-        public static ValidationRule<TType[]> IsReadOnly<TType>(this ValidationRule<TType[]> rule)
+        public static IValidationTarget<TType[]> IsReadOnly<TType>(this IValidationTarget<TType[]> target)
         {
-            rule.AddValidator(new RuleValidator<TType[]>(v => v.IsReadOnly,
-                                                         ExceptionMessages.CollectionsIsReadOnlyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType[]>(v => v.IsReadOnly,
+                                                                      ExceptionMessages.CollectionsIsReadOnlyFailed));
         }
 
-        public static ValidationRule<TType[]> IsNotFixedSize<TType>(this ValidationRule<TType[]> rule)
+        public static IValidationTarget<TType[]> IsNotFixedSize<TType>(this IValidationTarget<TType[]> target)
         {
-            rule.AddValidator(new RuleValidator<TType[]>(v => !v.IsFixedSize, 
-                                                         ExceptionMessages.CollectionsIsNotFixedSizeFailed.Inject(rule.Value.Length)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType[]>(v => !v.IsFixedSize,
+                                                                      ExceptionMessages.CollectionsIsNotFixedSizeFailed.Inject(
+                                                                                                                               target.Value.Length)));
         }
 
-        public static ValidationRule<TType[]> IsFixedSize<TType>(this ValidationRule<TType[]> rule)
+        public static IValidationTarget<TType[]> IsFixedSize<TType>(this IValidationTarget<TType[]> target)
         {
-            rule.AddValidator(new RuleValidator<TType[]>(v => v.IsFixedSize,
-                                                         ExceptionMessages.CollectionsIsFixedSizeFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType[]>(v => v.IsFixedSize,
+                                                                      ExceptionMessages.CollectionsIsFixedSizeFailed));
         }
 
-        public static ValidationRule<TType[]> ContainsValue<TType>(this ValidationRule<TType[]> rule, Predicate<TType> predicate)
+        public static IValidationTarget<TType[]> ContainsValue<TType>(this IValidationTarget<TType[]> target, Predicate<TType> predicate)
         {
-            rule.AddValidator(new RuleValidator<TType[]>(v => Array.Exists(v, predicate), 
-                                                         ExceptionMessages.CollectionsAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType[]>(v => Array.Exists(v, predicate),
+                                                                      ExceptionMessages.CollectionsAnyFailed));
         }
 
-        public static ValidationRule<TType[]> DoesNotContainValue<TType>(this ValidationRule<TType[]> rule, Predicate<TType> predicate)
+        public static IValidationTarget<TType[]> DoesNotContainValue<TType>(this IValidationTarget<TType[]> target,
+                                                                            Predicate<TType> predicate)
         {
-            rule.AddValidator(new RuleValidator<TType[]>(v => !Array.Exists(v, predicate),
-                                                         ExceptionMessages.CollectionsNotAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType[]>(v => !Array.Exists(v, predicate),
+                                                                      ExceptionMessages.CollectionsNotAnyFailed));
         }
+        #endregion
     }
 }

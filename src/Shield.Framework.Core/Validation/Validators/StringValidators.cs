@@ -3,6 +3,7 @@ using System;
 using System.Text.RegularExpressions;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
 #endregion
 
 namespace Shield.Framework.Validation.Validators
@@ -10,98 +11,84 @@ namespace Shield.Framework.Validation.Validators
     public static class StringValidators
     {
         #region Methods
-        public static ValidationRule<string> IsNotNullOrWhiteSpace(this ValidationRule<string> rule)
+        public static IValidationTarget<string> IsNotNullOrWhiteSpace(this IValidationTarget<string> target)
         {
-            rule.AddValidator(new RuleValidator<string>(v => !string.IsNullOrWhiteSpace(v),
-                                                        ExceptionMessages.StringsIsNotNullOrWhiteSpaceFailed));
-
-            return rule;
+            return target.And(new NullValidationPredicate<string>(v => !string.IsNullOrWhiteSpace(v),
+                                                                  ExceptionMessages.StringsIsNotNullOrWhiteSpaceFailed));
         }
 
-        public static ValidationRule<string> IsNotNullOrEmpty(this ValidationRule<string> rule)
+        public static IValidationTarget<string> IsNotNullOrEmpty(this IValidationTarget<string> target)
         {
-            rule.AddValidator(new RuleValidator<string>(v => !string.IsNullOrWhiteSpace(v),
-                                                        ExceptionMessages.StringsIsNotNullOrEmptyFailed));
-
-            return rule;
+            return target.And(new NullValidationPredicate<string>(v => !string.IsNullOrWhiteSpace(v),
+                                                                  ExceptionMessages.StringsIsNotNullOrEmptyFailed));
         }
 
-        public static ValidationRule<string> IsNotEmpty(this ValidationRule<string> rule)
+        public static IValidationTarget<string> IsNotEmpty(this IValidationTarget<string> target)
         {
-            rule.AddValidator(new RuleValidator<string>(v => v.Length > 0,
-                                                        ExceptionMessages.StringsIsNotNullOrEmptyFailed));
-
-            return rule;
+            return target.And(new NullValidationPredicate<string>(v => v.Length > 0,
+                                                                  ExceptionMessages.StringsIsNotNullOrEmptyFailed));
         }
 
-        public static ValidationRule<string> HasLengthBetween(this ValidationRule<string> rule, int minLength, int maxLength)
+        public static IValidationTarget<string> HasLengthBetween(this IValidationTarget<string> target, int minLength, int maxLength)
         {
-            rule.AddValidator(new RuleValidator<string>(v => v.Length > minLength,
-                                                        ExceptionMessages.StringsHasLengthBetweenFailedTooShort.Inject(
-                                                            minLength,
-                                                            maxLength,
-                                                            rule.Value.Length)));
-
-            rule.AddValidator(new RuleValidator<string>(v => v.Length < maxLength,
-                                                        ExceptionMessages.StringsHasLengthBetweenFailedTooLong.Inject(
-                                                            minLength,
-                                                            maxLength,
-                                                            rule.Value.Length)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<string>(v => v.Length > minLength,
+                                                                        ExceptionMessages.StringsHasLengthBetweenFailedTooShort.Inject(
+                                                                            minLength,
+                                                                            maxLength,
+                                                                            target.Value.Length)))
+                .And(new OutOfRangeValidationPredicate<string>(v => v.Length < maxLength,
+                                                               ExceptionMessages.StringsHasLengthBetweenFailedTooLong.Inject(
+                                                                   minLength,
+                                                                   maxLength,
+                                                                   target.Value.Length)));
         }
 
-        public static ValidationRule<string> Matches(this ValidationRule<string> rule, string pattern)
+        public static IValidationTarget<string> Matches(this IValidationTarget<string> target, string pattern)
         {
-            return Matches(rule, new Regex(pattern));
+            return Matches(target, new Regex(pattern));
         }
 
-        public static ValidationRule<string> Matches(this ValidationRule<string> rule, Regex pattern)
+        public static IValidationTarget<string> Matches(this IValidationTarget<string> target, Regex pattern)
         {
-            rule.AddValidator(new RuleValidator<string>(pattern.IsMatch,
-                                                        ExceptionMessages.StringsMatchesFailed.Inject(rule.Value, pattern)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<string>(pattern.IsMatch,
+                                                                     ExceptionMessages.StringsMatchesFailed.Inject(target.Value, pattern)));
         }
 
-        public static ValidationRule<string> IsLength(this ValidationRule<string> rule, int size)
+        public static IValidationTarget<string> IsLength(this IValidationTarget<string> target, int size)
         {
-            rule.AddValidator(new RuleValidator<string>(v =>
-                                                        {
-                                                            var length = v.Length;
-                                                            return length == size;
-                                                        },
-                                                        ExceptionMessages.StringsSizeIsFailed.Inject(size, rule.Value.Length)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<string>(v =>
+                                                                        {
+                                                                            var length = v.Length;
+                                                                            return length == size;
+                                                                        },
+                                                                        ExceptionMessages.StringsSizeIsFailed.Inject(
+                                                                            size,
+                                                                            target.Value.Length)));
         }
 
-        public static ValidationRule<string> IsGuid(this ValidationRule<string> rule)
+        public static IValidationTarget<string> IsGuid(this IValidationTarget<string> target)
         {
-            rule.AddValidator(new RuleValidator<string>(v => Guid.TryParse(v, out _),
-                                                        ExceptionMessages.StringsIsGuidFailed.Inject(rule.Value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<string>(v => Guid.TryParse(v, out _),
+                                                                     ExceptionMessages.StringsIsGuidFailed.Inject(target.Value)));
         }
 
-        public static ValidationRule<string> IsEqualTo(this ValidationRule<string> rule,
-                                                       string expected,
-                                                       StringComparison? comparison = null)
+        public static IValidationTarget<string> IsEqualTo(this IValidationTarget<string> target,
+                                                         string expected,
+                                                         StringComparison? comparison = null)
         {
-            rule.AddValidator(new RuleValidator<string>(v => StringEquals(v, expected, comparison),
-                                                        ExceptionMessages.StringsIsEqualToFailed.Inject(rule.Value, expected)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<string>(v => StringEquals(v, expected, comparison),
+                                                                     ExceptionMessages.StringsIsEqualToFailed
+                                                                         .Inject(target.Value, expected)));
         }
 
-        public static ValidationRule<string> IsNotEqualTo(this ValidationRule<string> rule,
-                                                          string expected,
-                                                          StringComparison? comparison = null)
+        public static IValidationTarget<string> IsNotEqualTo(this IValidationTarget<string> target,
+                                                            string expected,
+                                                            StringComparison? comparison = null)
         {
-            rule.AddValidator(new RuleValidator<string>(v => !StringEquals(v, expected, comparison),
-                                                        ExceptionMessages.StringsIsNotEqualToFailed.Inject(rule.Value, expected)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<string>(v => !StringEquals(v, expected, comparison),
+                                                                     ExceptionMessages.StringsIsNotEqualToFailed.Inject(
+                                                                         target.Value,
+                                                                         expected)));
         }
 
         private static bool StringEquals(string x, string y, StringComparison? comparison = null)

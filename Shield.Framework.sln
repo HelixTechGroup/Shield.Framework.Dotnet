@@ -36,6 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{8CB278CB-FC0A-4C24-8AC3-4258B9023EB0}"
 	ProjectSection(SolutionItems) = preProject
 		licenses\Ensure.That.LICENSE.md = licenses\Ensure.That.LICENSE.md
+		licenses\Guard.LICENSE.md = licenses\Guard.LICENSE.md
 		licenses\Prism.LICENSE.md = licenses\Prism.LICENSE.md
 		licenses\Valit.LICENSE.md = licenses\Valit.LICENSE.md
 	EndProjectSection

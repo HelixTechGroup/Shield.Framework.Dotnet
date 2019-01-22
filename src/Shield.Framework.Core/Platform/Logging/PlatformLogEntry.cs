@@ -4,19 +4,19 @@ using System;
 
 namespace Shield.Framework.Platform.Logging
 {
-    public sealed class LogEntry : ILogEntry, IEquatable<LogEntry>
+    public sealed class PlatformLogEntry : IPlatformLogEntry, IEquatable<PlatformLogEntry>
     {
         public event Action<IDispose> OnDispose;
 
         #region Members
         private readonly object m_entryLock;
         private readonly Guid m_id;
-        private readonly Category m_category;
+        private readonly PlatformLogCategory m_category;
         private bool m_disposed;
         private string m_logDate;
         private string m_logTime;
         private string m_message;
-        private readonly Priority m_priority;
+        private readonly PlatformLogPriority m_priority;
         #endregion
 
         #region Properties
@@ -30,7 +30,7 @@ namespace Shield.Framework.Platform.Logging
             get { return m_id; }
         }
 
-        public Category Category
+        public PlatformLogCategory Category
         {
             get { return m_category; }
         }
@@ -61,23 +61,23 @@ namespace Shield.Framework.Platform.Logging
             }
         }
 
-        public Priority Priority
+        public PlatformLogPriority Priority
         {
             get { return m_priority; }
         }
         #endregion
 
-        public LogEntry() : this("", Category.Info, Priority.None) {}
+        public PlatformLogEntry() : this("", PlatformLogCategory.Info, PlatformLogPriority.None) {}
 
-        public LogEntry(Category level) : this("", level, Priority.None) {}
+        public PlatformLogEntry(PlatformLogCategory level) : this("", level, PlatformLogPriority.None) {}
 
-        public LogEntry(Category level, Priority priority) : this("", level, priority) { }
+        public PlatformLogEntry(PlatformLogCategory level, PlatformLogPriority priority) : this("", level, priority) { }
 
-        public LogEntry(Priority priority) : this("", Category.Info, priority) { }
+        public PlatformLogEntry(PlatformLogPriority priority) : this("", PlatformLogCategory.Info, priority) { }
 
-        public LogEntry(string message, Category level) : this(message, level, Priority.None) { }
+        public PlatformLogEntry(string message, PlatformLogCategory level) : this(message, level, PlatformLogPriority.None) { }
 
-        public LogEntry(string message, Category level, Priority priority)
+        public PlatformLogEntry(string message, PlatformLogCategory level, PlatformLogPriority priority)
         {
             m_id = Guid.NewGuid();
             m_entryLock = new object();
@@ -87,18 +87,18 @@ namespace Shield.Framework.Platform.Logging
             SetLogDate();
         }
 
-        ~LogEntry()
+        ~PlatformLogEntry()
         {
             Dispose(false);
         }
 
         #region Methods
-        public static bool operator ==(LogEntry left, LogEntry right)
+        public static bool operator ==(PlatformLogEntry left, PlatformLogEntry right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(LogEntry left, LogEntry right)
+        public static bool operator !=(PlatformLogEntry left, PlatformLogEntry right)
         {
             return !Equals(left, right);
         }
@@ -129,7 +129,7 @@ namespace Shield.Framework.Platform.Logging
             }
         }
 
-        public bool Equals(LogEntry other)
+        public bool Equals(PlatformLogEntry other)
         {
             return !(other is null)
                 && (ReferenceEquals(this, other) 
@@ -141,7 +141,7 @@ namespace Shield.Framework.Platform.Logging
             return !(obj is null)
                 && (ReferenceEquals(this, obj) 
                     || obj.GetType() == GetType() 
-                    && Equals((LogEntry)obj));
+                    && Equals((PlatformLogEntry)obj));
         }
 
         private void SetLogDate()

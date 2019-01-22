@@ -1,243 +1,265 @@
 ﻿using System;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
 
 namespace Shield.Framework.Validation.Validators.Time
 {
     public static class DateTimeOffsetOffsetValidators
     {
-        public static ValidationRule<DateTimeOffset> IsAfter(this ValidationRule<DateTimeOffset> rule, DateTimeOffset offset)
+        #region Methods
+        public static IValidationTarget<DateTimeOffset> IsAfter(this IValidationTarget<DateTimeOffset> target, DateTimeOffset offset)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v > offset,
-                                                          ExceptionMessages.DateTimeIsAfterFailed.Inject(rule.Value, offset)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v > offset,
+                                                                      ExceptionMessages.DateTimeIsAfterFailed
+                                                                          .Inject(target.Value, offset)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsAfterNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v > DateTimeOffset.Now,
-                                                                ExceptionMessages.DateTimeIsAfterFailed.Inject(rule.Value, DateTimeOffset.Now)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v > DateTimeOffset.Now,
+                                                                      ExceptionMessages.DateTimeIsAfterFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterUtcNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsAfterUtcNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v > DateTimeOffset.UtcNow,
-                                                                ExceptionMessages.DateTimeIsAfterFailed.Inject(rule.Value, DateTimeOffset.UtcNow)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v > DateTimeOffset.UtcNow,
+                                                                      ExceptionMessages.DateTimeIsAfterFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.UtcNow)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterToday(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsAfterToday(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v.Date > DateTimeOffset.Now.Date,
-                                                                ExceptionMessages.DateTimeIsAfterFailed.Inject(rule.Value, DateTimeOffset.Now.Date)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v.Date > DateTimeOffset.Now.Date,
+                                                                      ExceptionMessages.DateTimeIsAfterFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now.Date)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterOrSame(this ValidationRule<DateTimeOffset> rule, DateTimeOffset offset)
+        public static IValidationTarget<DateTimeOffset> IsAfterOrSame(this IValidationTarget<DateTimeOffset> target, DateTimeOffset offset)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v >= offset,
-                                                          ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(rule.Value, offset)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v >= offset,
+                                                                      ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          offset)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterOrSameAsNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsAfterOrSameAsNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v >= DateTimeOffset.Now,
-                                                                ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(rule.Value, DateTimeOffset.Now)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v >= DateTimeOffset.Now,
+                                                                      ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterOrSameAsUtcNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsAfterOrSameAsUtcNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v >= DateTimeOffset.UtcNow,
-                                                                ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(rule.Value, DateTimeOffset.UtcNow)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v >= DateTimeOffset.UtcNow,
+                                                                      ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.UtcNow)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsAfterOrSameAsToday(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsAfterOrSameAsToday(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v.Date >= DateTimeOffset.Now.Date,
-                                                                ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(rule.Value, DateTimeOffset.Now.Date)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v.Date >= DateTimeOffset.Now.Date,
+                                                                      ExceptionMessages.DateTimeIsAfterOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now.Date)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBefore(this ValidationRule<DateTimeOffset> rule, DateTimeOffset offset)
+        public static IValidationTarget<DateTimeOffset> IsBefore(this IValidationTarget<DateTimeOffset> target, DateTimeOffset offset)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v < offset,
-                                                          ExceptionMessages.DateTimeIsBeforeFailed.Inject(rule.Value, offset)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v < offset,
+                                                                      ExceptionMessages.DateTimeIsBeforeFailed
+                                                                          .Inject(target.Value, offset)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsBeforeNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v < DateTimeOffset.Now,
-                                                                ExceptionMessages.DateTimeIsBeforeFailed.Inject(rule.Value, DateTimeOffset.Now)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v < DateTimeOffset.Now,
+                                                                      ExceptionMessages.DateTimeIsBeforeFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeUtcNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsBeforeUtcNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v < DateTimeOffset.UtcNow,
-                                                                ExceptionMessages.DateTimeIsBeforeFailed.Inject(rule.Value, DateTimeOffset.UtcNow)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v < DateTimeOffset.UtcNow,
+                                                                      ExceptionMessages.DateTimeIsBeforeFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.UtcNow)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeToday(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsBeforeToday(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v.Date < DateTimeOffset.Now.Date,
-                                                                ExceptionMessages.DateTimeIsBeforeFailed.Inject(rule.Value, DateTimeOffset.Now.Date)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v.Date < DateTimeOffset.Now.Date,
+                                                                      ExceptionMessages.DateTimeIsBeforeFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now.Date)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeOrSame(this ValidationRule<DateTimeOffset> rule, DateTimeOffset offset)
+        public static IValidationTarget<DateTimeOffset> IsBeforeOrSame(this IValidationTarget<DateTimeOffset> target, DateTimeOffset offset)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v <= offset,
-                                                          ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(rule.Value, offset)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v <= offset,
+                                                                      ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          offset)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeOrSameAsNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsBeforeOrSameAsNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v >= DateTimeOffset.Now,
-                                                                ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(rule.Value, DateTimeOffset.Now)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v >= DateTimeOffset.Now,
+                                                                      ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeOrSameAsUtcNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsBeforeOrSameAsUtcNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v >= DateTimeOffset.UtcNow,
-                                                                ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(rule.Value, DateTimeOffset.UtcNow)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v >= DateTimeOffset.UtcNow,
+                                                                      ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.UtcNow)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsBeforeOrSameAsToday(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsBeforeOrSameAsToday(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v.Date >= DateTimeOffset.Now.Date,
-                                                                ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(rule.Value, DateTimeOffset.Now.Date)));
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v.Date >= DateTimeOffset.Now.Date,
+                                                                      ExceptionMessages.DateTimeIsBeforeOrSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now.Date)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsEqual(this ValidationRule<DateTimeOffset> rule, DateTimeOffset offset)
+        public static IValidationTarget<DateTimeOffset> IsEqual(this IValidationTarget<DateTimeOffset> target, DateTimeOffset offset)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v == offset,
-                                                          ExceptionMessages.DateTimeIsSameAsFailed.Inject(rule.Value, offset)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v == offset,
+                                                                      ExceptionMessages.DateTimeIsSameAsFailed
+                                                                          .Inject(target.Value, offset)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsEqualToNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsEqualToNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v == DateTimeOffset.Now,
-                                                                ExceptionMessages.DateTimeIsSameAsFailed.Inject(rule.Value, DateTimeOffset.Now)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v == DateTimeOffset.Now,
+                                                                      ExceptionMessages.DateTimeIsSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsEqualToUtcNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsEqualToUtcNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v == DateTimeOffset.UtcNow,
-                                                                ExceptionMessages.DateTimeIsSameAsFailed.Inject(rule.Value, DateTimeOffset.UtcNow)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v == DateTimeOffset.UtcNow,
+                                                                      ExceptionMessages.DateTimeIsSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.UtcNow)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsEqualToToday(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsEqualToToday(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v.Date == DateTimeOffset.Now.Date,
-                                                                ExceptionMessages.DateTimeIsSameAsFailed.Inject(rule.Value, DateTimeOffset.Now.Date)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v.Date == DateTimeOffset.Now.Date,
+                                                                      ExceptionMessages.DateTimeIsSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now.Date)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsNotEqual(this ValidationRule<DateTimeOffset> rule, DateTimeOffset offset)
+        public static IValidationTarget<DateTimeOffset> IsNotEqual(this IValidationTarget<DateTimeOffset> target, DateTimeOffset offset)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v != offset,
-                                                          ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(rule.Value, offset)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v != offset,
+                                                                      ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          offset)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsNotEqualToNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsNotEqualToNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v != DateTimeOffset.Now,
-                                                                ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(rule.Value, DateTimeOffset.Now)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v != DateTimeOffset.Now,
+                                                                      ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsNotEqualToUtcNow(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsNotEqualToUtcNow(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v != DateTimeOffset.UtcNow,
-                                                                ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(rule.Value, DateTimeOffset.UtcNow)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v != DateTimeOffset.UtcNow,
+                                                                      ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.UtcNow)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsNotEqualToToday(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsNotEqualToToday(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v.Date != DateTimeOffset.Now.Date,
-                                                                ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(rule.Value, DateTimeOffset.Now.Date)));
-            return rule;
+            return target.And(new DefaultValidationPredicate<DateTimeOffset>(v => v.Date != DateTimeOffset.Now.Date,
+                                                                      ExceptionMessages.DateTimeIsNotSameAsFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.Now.Date)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsMaximumValue(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsMaximumValue(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v == DateTimeOffset.MaxValue,
-                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, DateTimeOffset.MaxValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v == DateTimeOffset.MaxValue,
+                                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.MaxValue)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsMinimumValue(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsMinimumValue(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v == DateTimeOffset.MinValue,
-                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, DateTimeOffset.MinValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v == DateTimeOffset.MinValue,
+                                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.MinValue)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsNotMaximumValue(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsNotMaximumValue(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v != DateTimeOffset.MaxValue,
-                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, DateTimeOffset.MaxValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v != DateTimeOffset.MaxValue,
+                                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.MaxValue)));
         }
 
-        public static ValidationRule<DateTimeOffset> IsNotMinimumValue(this ValidationRule<DateTimeOffset> rule)
+        public static IValidationTarget<DateTimeOffset> IsNotMinimumValue(this IValidationTarget<DateTimeOffset> target)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v != DateTimeOffset.MinValue,
-                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(rule.Value, DateTimeOffset.MinValue)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v != DateTimeOffset.MinValue,
+                                                                      ExceptionMessages.NumbersIsMaxValueFailed.Inject(
+                                                                          target.Value,
+                                                                          DateTimeOffset.MinValue)));
         }
 
-        public static ValidationRule<DateTimeOffset> HasRangeBetween(this ValidationRule<DateTimeOffset> rule, DateTimeOffset minLength, DateTimeOffset maxLength)
+        public static IValidationTarget<DateTimeOffset> HasRangeBetween(this IValidationTarget<DateTimeOffset> target,
+                                                                       DateTimeOffset minLength,
+                                                                       DateTimeOffset maxLength)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v > minLength,
-                                                        ExceptionMessages.DateTimeHasRangeBetweenFailedTooEarly.Inject(
-                                                            minLength,
-                                                            maxLength,
-                                                            rule.Value)));
-
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v < maxLength,
-                                                        ExceptionMessages.DateTimeHasRangeBetweenFailedTooLate.Inject(
-                                                            minLength,
-                                                            maxLength,
-                                                            rule.Value)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v > minLength,
+                                                                      ExceptionMessages.DateTimeHasRangeBetweenFailedTooEarly.Inject(
+                                                                          minLength,
+                                                                          maxLength,
+                                                                          target.Value)))
+                .And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v < maxLength,
+                                                             ExceptionMessages.DateTimeHasRangeBetweenFailedTooLate.Inject(
+                                                                 minLength,
+                                                                 maxLength,
+                                                                 target.Value)));
         }
 
-        public static ValidationRule<DateTimeOffset> HasRangeNotBetween(this ValidationRule<DateTimeOffset> rule, DateTimeOffset minLength, DateTimeOffset maxLength)
+        public static IValidationTarget<DateTimeOffset> HasRangeNotBetween(this IValidationTarget<DateTimeOffset> target,
+                                                                          DateTimeOffset minLength,
+                                                                          DateTimeOffset maxLength)
         {
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v < minLength,
-                                                          ExceptionMessages.DateTimeHasRangeNotBetweenFailedTooEarly.Inject(
-                                                              minLength,
-                                                              maxLength,
-                                                              rule.Value)));
-
-            rule.AddValidator(new RuleValidator<DateTimeOffset>(v => v > maxLength,
-                                                          ExceptionMessages.DateTimeHasRangeNotBetweenFailedTooLate.Inject(
-                                                              minLength,
-                                                              maxLength,
-                                                              rule.Value)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v < minLength,
+                                                                      ExceptionMessages.DateTimeHasRangeNotBetweenFailedTooEarly.Inject(
+                                                                          minLength,
+                                                                          maxLength,
+                                                                          target.Value)))
+                .And(new OutOfRangeValidationPredicate<DateTimeOffset>(v => v > maxLength,
+                                                             ExceptionMessages.DateTimeHasRangeNotBetweenFailedTooLate.Inject(
+                                                                 minLength,
+                                                                 maxLength,
+                                                                 target.Value)));
         }
+        #endregion
     }
 }

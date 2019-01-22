@@ -1,43 +1,39 @@
-﻿using System;
+﻿#region Usings
+using System;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using Shield.Framework.Validation;
+#endregion
 
 namespace Shield.Framework
 {
     public static class Guard
     {
-        public static ValidationRule<T> Type<T>()
+        #region Methods
+        public static IValidationTarget<T> Target<T>(T value,
+                                                     [CallerFilePath] string file = null,
+                                                     [CallerMemberName] string source = null,
+                                                     [CallerLineNumber] int line = -1)
         {
-            return new ValidationRule<T>();
+            return Target(value, typeof(T).Name, file, source, line);
         }
 
-        public static ValidationRule<bool> Bool
+        public static IValidationTarget<T> Target<T>(T value,
+                                                     string name,
+                                                     [CallerFilePath] string file = null,
+                                                     [CallerMemberName] string source = null,
+                                                     [CallerLineNumber] int line = -1)
         {
-            get { return new ValidationRule<bool>(); }
+            return new ValidationTarget<T>(value, name, file, source, line);
         }
 
-        public static CollectionsGuard Collections
+        public static IValidationTarget<T> Target<T>(Expression<Func<T>> memberExpression,
+                                                     [CallerFilePath] string file = null,
+                                                     [CallerMemberName] string source = null,
+                                                     [CallerLineNumber] int line = -1)
         {
-            get { return new CollectionsGuard(); }
-        }                
-
-        public static ValidationRule<Guid> Guid
-        {
-            get { return new ValidationRule<Guid>(); }
+            return new ValidationTarget<T>(memberExpression, file, source, line);
         }
-
-        public static NumbersGuard Numbers
-        {
-            get { return new NumbersGuard(); }
-        }
-
-        public static ValidationRule<string> String
-        {
-            get { return new ValidationRule<string>(); }
-        }
-
-        public static TimeGuard Time
-        {
-            get { return new TimeGuard(); }
-        }
+        #endregion
     }
 }

@@ -4,9 +4,9 @@
 namespace Shield.Framework.Platform.Logging
 {
     /// <summary>
-    /// Defines values for the categories used by <see cref="ILogger"/>.
+    /// Defines values for the categories used by <see cref="IPlatformLogger"/>.
     /// </summary>
-    public enum Category
+    public enum PlatformLogCategory
     {
         /// <summary>
         /// Debug category.

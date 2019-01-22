@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿#region Usings
+using System.Linq;
+#endregion
 
 namespace Shield.Framework.Extensions
 {
     public static class StringExtensions
     {
+        #region Methods
         public static string Inject(this string format, params object[] formattingArgs)
         {
             return string.Format(format, formattingArgs);
@@ -13,5 +16,6 @@ namespace Shield.Framework.Extensions
         {
             return string.Format(format, formattingArgs.Select(a => a as object).ToArray());
         }
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ using Shield.Framework.Collections;
 
 namespace Shield.Framework.Platform.IO
 {
-	public abstract class PlatformStorageManager : IPlatformStorage, IEquatable<PlatformStorageManager>
+	public abstract class PlatformStorage : IPlatformStorage, IEquatable<PlatformStorage>
 	{
 		public event Action<IDispose> OnDispose;
 
@@ -36,26 +36,26 @@ namespace Shield.Framework.Platform.IO
 	        get { return m_rootDirectory; }
 	    }
 
-	    protected PlatformStorageManager() : this("") { }
+	    protected PlatformStorage() : this("") { }
 
-		protected PlatformStorageManager(string rootDirectory)
+		protected PlatformStorage(string rootDirectory)
 		{
 			m_id = Guid.NewGuid();
 			m_rootDirectory = rootDirectory;
 			m_streams = new ConcurrentList<Stream>();
 		}
 
-		~PlatformStorageManager()
+		~PlatformStorage()
 		{
 			Dispose(false);
 		}
 
-		public static bool operator ==(PlatformStorageManager left, PlatformStorageManager right)
+		public static bool operator ==(PlatformStorage left, PlatformStorage right)
 		{
 			return Equals(left, right);
 		}
 
-		public static bool operator !=(PlatformStorageManager left, PlatformStorageManager right)
+		public static bool operator !=(PlatformStorage left, PlatformStorage right)
 		{
 			return !Equals(left, right);
 		}
@@ -139,13 +139,13 @@ namespace Shield.Framework.Platform.IO
 			return left.Equals(right);
 		}
 
-		public static bool Equals(PlatformStorageManager left, PlatformStorageManager right)
+		public static bool Equals(PlatformStorage left, PlatformStorage right)
 		{
 			return left.Equals(right);
 
 		}
 
-		public bool Equals(PlatformStorageManager other)
+		public bool Equals(PlatformStorage other)
 		{
 			if (other == null)				
 				return false;
@@ -163,7 +163,7 @@ namespace Shield.Framework.Platform.IO
 
 		public override bool Equals(object obj)
 		{
-			var p = obj as PlatformStorageManager;
+			var p = obj as PlatformStorage;
 			return p != null && Equals(p);
 		}		
 	}

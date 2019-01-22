@@ -4,9 +4,9 @@
 namespace Shield.Framework.Platform.Logging
 {
     /// <summary>
-    /// Defines values for the priorities used by <see cref="ILogger"/>.
+    /// Defines values for the priorities used by <see cref="IPlatformLogger"/>.
     /// </summary>
-    public enum Priority
+    public enum PlatformLogPriority
     {
         /// <summary>
         /// No priority specified.

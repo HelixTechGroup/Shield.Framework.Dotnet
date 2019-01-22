@@ -12,7 +12,6 @@ namespace Shield.Framework.Collections
         #region Members
         private readonly HashSet<T> m_hashSet;
         private readonly ReaderWriterLockSlim m_lock;
-        private bool m_isReadOnly;
         #endregion
 
         #region Properties
@@ -35,7 +34,7 @@ namespace Shield.Framework.Collections
 
         public bool IsReadOnly
         {
-            get { return m_isReadOnly; }
+            get { return false; }
         }
         #endregion
 

@@ -4,14 +4,14 @@ using System;
 
 namespace Shield.Framework.Platform.Logging
 {
-    public interface ILogEntry : IDispose
+    public interface IPlatformLogEntry : IDispose
     {
         #region Properties
         Guid Id { get; }
 
-        Category Category { get; }
+        PlatformLogCategory Category { get; }
 
-        Priority Priority { get; }
+        PlatformLogPriority Priority { get; }
 
         string LogDate { get; }
 

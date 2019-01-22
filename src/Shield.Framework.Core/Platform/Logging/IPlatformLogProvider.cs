@@ -2,9 +2,9 @@
 
 namespace Shield.Framework.Platform.Logging
 {
-    public interface ILogProvider: IDispose
+    public interface IPlatformLogProvider: IDispose
     {
-        void AddLogger(ILogger logProvider);
+        void AddLogger(IPlatformLogger logProvider);
 
         void LogInfo(string message);
 
@@ -16,8 +16,8 @@ namespace Shield.Framework.Platform.Logging
 
         void LogException(Exception exception);
 
-        void Log(string message, Category category, Priority priority);
+        void Log(string message, PlatformLogCategory category, PlatformLogPriority priority);
 
-        void Log(ILogEntry entry);
+        void Log(IPlatformLogEntry entry);
     }    
 }

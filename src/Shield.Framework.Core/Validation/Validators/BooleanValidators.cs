@@ -1,23 +1,32 @@
-﻿using Shield.Framework.Validation.Exceptions;
+﻿#region Usings
+using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
+#endregion
 
 namespace Shield.Framework.Validation.Validators
 {
     public static class BooleanValidators
     {
-        public static ValidationRule<bool> IsTrue(this ValidationRule<bool> rule)
+        #region Methods
+        public static IValidationTarget<bool> IsTrue(this IValidationTarget<bool> target)
         {
-            rule.AddValidator(new RuleValidator<bool>(v => v, 
-                                                      ExceptionMessages.BooleansIsTrueFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<bool>(v => v, ExceptionMessages.BooleansIsTrueFailed));
         }
 
-        public static ValidationRule<bool> IsFalse(this ValidationRule<bool> rule)
+        public static IValidationTarget<bool> IsFalse(this IValidationTarget<bool> target)
         {
-            rule.AddValidator(new RuleValidator<bool>(v => !v, 
-                                                      ExceptionMessages.BooleansIsFalseFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<bool>(v => !v, ExceptionMessages.BooleansIsFalseFailed));
         }
+
+        public static IValidationTarget<bool?> IsTrue(this IValidationTarget<bool?> target)
+        {
+            return target.And(new DefaultValidationPredicate<bool?>(v => v.HasValue && (bool)v, ExceptionMessages.BooleansIsTrueFailed));
+        }
+
+        public static IValidationTarget<bool?> IsFalse(this IValidationTarget<bool?> target)
+        {
+            return target.And(new DefaultValidationPredicate<bool?>(v => v.HasValue && (bool)!v, ExceptionMessages.BooleansIsFalseFailed));
+        }
+        #endregion
     }
 }

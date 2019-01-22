@@ -7,7 +7,7 @@ using Shield.Framework.Utility;
 
 namespace Shield.Framework.Platform.IO.Default
 {
-    public class DefaultPlatformPrivateStorage : PlatformStorageManager
+    public class DefaultPlatformPrivateStorage : PlatformStorage
     {
         private IsolatedStorageFile m_container;
 

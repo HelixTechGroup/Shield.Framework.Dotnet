@@ -3,11 +3,11 @@ using System.IO;
 
 namespace Shield.Framework.Platform.Logging.Loggers
 {
-    public abstract class TextLogger : Logger
+    public abstract class TextLogger : PlatformLogger
     {
         protected TextWriter m_writer;
 
-        public override void Flush(ILogEntry entry)
+        public override void Flush(IPlatformLogEntry entry)
         {
             var message = string.Format("[{2}]:{0}:{1}", entry.LogTime, entry.Message, 
                 entry.Category.ToString().ToUpper(CultureInfo.InvariantCulture));

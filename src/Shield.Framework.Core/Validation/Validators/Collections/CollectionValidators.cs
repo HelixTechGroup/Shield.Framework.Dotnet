@@ -1,186 +1,196 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Shield.Framework.Extensions;
 using Shield.Framework.Validation.Exceptions;
+using Shield.Framework.Validation.Predicates;
+#endregion
 
 namespace Shield.Framework.Validation.Validators.Collections
 {
     public static class CollectionValidators
     {
-        public static ValidationRule<TType> IsEmpty<TType>(this ValidationRule<TType> rule) where TType : ICollection
+        #region Methods
+        public static IValidationTarget<TType> IsEmpty<TType>(this IValidationTarget<TType> target) where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count == 0, 
-                                                       ExceptionMessages.CollectionsIsEmptyFailed));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> IsNotEmpty<TType>(this ValidationRule<TType> rule) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count > 0, 
-                                                       ExceptionMessages.CollectionsHasItemsFailed));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> IsSize<TType>(this ValidationRule<TType> rule, int expected) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count == expected, 
-                                                       ExceptionMessages.CollectionsSizeIsFailed.Inject(expected, rule.Value.Count)));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> HasMininumCount <TType>(this ValidationRule<TType> rule, int minCount) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count >= minCount, 
-                                                       ExceptionMessages.CollectionsMinimumSizeIsFailed.Inject(minCount, rule.Value.Count)));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> HasMaximumCount<TType>(this ValidationRule<TType> rule, int maxCount) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count <= maxCount, 
-                                                       ExceptionMessages.CollectionsMaximumSizeIsFailed.Inject(maxCount, rule.Value.Count)));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> HasCountBetween<TType>(this ValidationRule<TType> rule, int minCount, int maxCount) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count < minCount, 
-                                                       ExceptionMessages.CollectionsHasSizeBetweenFailedToShort.Inject(minCount, maxCount, rule.Value.Count)));
-
-            rule.AddValidator(new RuleValidator<TType>(v => v.Count > maxCount,
-                                                       ExceptionMessages.CollectionsHasSizeBetweenFailedToLong.Inject(minCount, maxCount, rule.Value.Count)));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> ContainsValue<TType>(this ValidationRule<TType> rule, Func<object, bool> predicate) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.Cast<object>().Any(predicate), 
-                                                       ExceptionMessages.CollectionsAnyFailed));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> DoesNotContainValue<TType>(this ValidationRule<TType> rule, Func<object, bool> predicate) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => !v.Cast<object>().Any(predicate),
-                                                       ExceptionMessages.CollectionsNotAnyFailed));
-
-            return rule;
-        }
-
-        public static ValidationRule<TType> IsSynchronized<TType>(this ValidationRule<TType> rule) where TType : ICollection
-        {
-            rule.AddValidator(new RuleValidator<TType>(v => v.IsSynchronized, 
-                                                       ExceptionMessages.CollectionsSynchronizationFailed));     
-
-            return rule;
-        }        
-
-        public static ValidationRule<ICollection<TType>> IsEmpty<TType>(this ValidationRule<ICollection<TType>> rule)
-        {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count == 0,
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Count == 0,
                                                                     ExceptionMessages.CollectionsIsEmptyFailed));
-
-            return rule;
         }
 
-        public static ValidationRule<ICollection<TType>> IsNotEmpty<TType>(this ValidationRule<ICollection<TType>> rule)
+        public static IValidationTarget<TType> IsNotEmpty<TType>(this IValidationTarget<TType> target) where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count > 0,
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Count > 0,
                                                                     ExceptionMessages.CollectionsHasItemsFailed));
-
-            return rule;
         }
 
-        public static ValidationRule<ICollection<TType>> IsSize<TType>(this ValidationRule<ICollection<TType>> rule, int expected)
+        public static IValidationTarget<TType> IsSize<TType>(this IValidationTarget<TType> target, int expected) where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count == expected,
-                                                                    ExceptionMessages.CollectionsSizeIsFailed.Inject(expected, rule.Value.Count)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Count == expected,
+                                                                    ExceptionMessages.CollectionsSizeIsFailed.Inject(
+                                                                                                                     expected,
+                                                                                                                     target.Value.Count)));
         }
 
-        public static ValidationRule<ICollection<TType>> HasMininumCount<TType>(this ValidationRule<ICollection<TType>> rule, int minCount)
+        public static IValidationTarget<TType> HasMininumCount<TType>(this IValidationTarget<TType> target, int minCount)
+            where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count >= minCount,
-                                                                    ExceptionMessages.CollectionsMinimumSizeIsFailed.Inject(minCount, rule.Value.Count)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<TType>(v => v.Count >= minCount,
+                                                                       ExceptionMessages.CollectionsMinimumSizeIsFailed.Inject(
+                                                                                                                               minCount,
+                                                                                                                               target.Value.Count)));
         }
 
-        public static ValidationRule<ICollection<TType>> HasMaximumCount<TType>(this ValidationRule<ICollection<TType>> rule, int maxCount)
+        public static IValidationTarget<TType> HasMaximumCount<TType>(this IValidationTarget<TType> target, int maxCount)
+            where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count <= maxCount,
-                                                                    ExceptionMessages.CollectionsMaximumSizeIsFailed.Inject(maxCount, rule.Value.Count)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<TType>(v => v.Count <= maxCount,
+                                                                       ExceptionMessages.CollectionsMaximumSizeIsFailed.Inject(
+                                                                                                                               maxCount,
+                                                                                                                               target.Value.Count)));
         }
 
-        public static ValidationRule<ICollection<TType>> HasCountBetween<TType>(this ValidationRule<ICollection<TType>> rule, int minCount, int maxCount)
+        public static IValidationTarget<TType> HasCountBetween<TType>(this IValidationTarget<TType> target, int minCount, int maxCount)
+            where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count < minCount,
-                                                                    ExceptionMessages.CollectionsHasSizeBetweenFailedToShort.Inject(minCount, maxCount, rule.Value.Count)));
-
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Count > maxCount,
-                                                                    ExceptionMessages.CollectionsHasSizeBetweenFailedToLong.Inject(minCount, maxCount, rule.Value.Count)));
-
-            return rule;
+            return target.And(new OutOfRangeValidationPredicate<TType>(v => v.Count < minCount,
+                                                                       ExceptionMessages.CollectionsHasSizeBetweenFailedToShort.Inject(
+                                                                                                                                       minCount,
+                                                                                                                                       maxCount,
+                                                                                                                                       target
+                                                                                                                                           .Value
+                                                                                                                                           .Count)))
+                         .And(new OutOfRangeValidationPredicate<TType>(v => v.Count > maxCount,
+                                                                       ExceptionMessages.CollectionsHasSizeBetweenFailedToLong.Inject(
+                                                                                                                                      minCount,
+                                                                                                                                      maxCount,
+                                                                                                                                      target
+                                                                                                                                          .Value
+                                                                                                                                          .Count)));
         }
 
-        public static ValidationRule<ICollection<TType>> ContainsValue<TType>(this ValidationRule<ICollection<TType>> rule, Func<TType, bool> predicate)
+        public static IValidationTarget<TType> ContainsValue<TType>(this IValidationTarget<TType> target, Func<object, bool> predicate)
+            where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Any(predicate),
-                                                       ExceptionMessages.CollectionsAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => v.Cast<object>().Any(predicate),
+                                                                    ExceptionMessages.CollectionsAnyFailed));
         }
 
-        public static ValidationRule<ICollection<TType>> DoesNotContainValue<TType>(this ValidationRule<ICollection<TType>> rule, Func<TType, bool> predicate)
+        public static IValidationTarget<TType> DoesNotContainValue<TType>(this IValidationTarget<TType> target, Func<object, bool> predicate)
+            where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => !v.Any(predicate),
-                                                       ExceptionMessages.CollectionsNotAnyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => !v.Cast<object>().Any(predicate),
+                                                                    ExceptionMessages.CollectionsNotAnyFailed));
         }
 
-        public static ValidationRule<ICollection<TType>> ContainsValue<TType>(this ValidationRule<ICollection<TType>> rule, TType value)
+        public static IValidationTarget<TType> IsSynchronized<TType>(this IValidationTarget<TType> target) where TType : ICollection
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.Contains(value),
-                                                                    ExceptionMessages.CollectionsContainsValueFailed.Inject(value)));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<TType>(v => v.IsSynchronized,
+                                                                    ExceptionMessages.CollectionsSynchronizationFailed));
         }
 
-        public static ValidationRule<ICollection<TType>> DoesNotContainValue<TType>(this ValidationRule<ICollection<TType>> rule, TType value)
+        public static IValidationTarget<ICollection<TType>> IsEmpty<TType>(this IValidationTarget<ICollection<TType>> target)
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => !v.Contains(value),
-                                                                    ExceptionMessages.CollectionsDoesNotContainValueFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => v.Count == 0,
+                                                                                 ExceptionMessages.CollectionsIsEmptyFailed));
         }
 
-        public static ValidationRule<ICollection<TType>> IsReadOnly<TType>(this ValidationRule<ICollection<TType>> rule)
+        public static IValidationTarget<ICollection<TType>> IsNotEmpty<TType>(this IValidationTarget<ICollection<TType>> target)
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => v.IsReadOnly,
-                                                                    ExceptionMessages.CollectionsIsReadOnlyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => v.Count > 0,
+                                                                                 ExceptionMessages.CollectionsHasItemsFailed));
         }
 
-        public static ValidationRule<ICollection<TType>> IsNotReadOnly<TType>(this ValidationRule<ICollection<TType>> rule)
+        public static IValidationTarget<ICollection<TType>> IsSize<TType>(this IValidationTarget<ICollection<TType>> target, int expected)
         {
-            rule.AddValidator(new RuleValidator<ICollection<TType>>(v => !v.IsReadOnly,
-                                                                    ExceptionMessages.CollectionsIsNotReadOnlyFailed));
-
-            return rule;
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => v.Count == expected,
+                                                                                 ExceptionMessages.CollectionsSizeIsFailed.Inject(
+                                                                                                                                  expected,
+                                                                                                                                  target
+                                                                                                                                      .Value.Count)));
         }
+
+        public static IValidationTarget<ICollection<TType>> HasMininumCount<TType>(this IValidationTarget<ICollection<TType>> target,
+                                                                                   int minCount)
+        {
+            return target.And(new OutOfRangeValidationPredicate<ICollection<TType>>(v => v.Count >= minCount,
+                                                                                    ExceptionMessages.CollectionsMinimumSizeIsFailed.Inject(
+                                                                                                                                            minCount,
+                                                                                                                                            target
+                                                                                                                                                .Value
+                                                                                                                                                .Count)));
+        }
+
+        public static IValidationTarget<ICollection<TType>> HasMaximumCount<TType>(this IValidationTarget<ICollection<TType>> target,
+                                                                                   int maxCount)
+        {
+            return target.And(new OutOfRangeValidationPredicate<ICollection<TType>>(v => v.Count <= maxCount,
+                                                                                    ExceptionMessages.CollectionsMaximumSizeIsFailed.Inject(
+                                                                                                                                            maxCount,
+                                                                                                                                            target
+                                                                                                                                                .Value
+                                                                                                                                                .Count)));
+        }
+
+        public static IValidationTarget<ICollection<TType>> HasCountBetween<TType>(this IValidationTarget<ICollection<TType>> target,
+                                                                                   int minCount,
+                                                                                   int maxCount)
+        {
+            return target.And(new OutOfRangeValidationPredicate<ICollection<TType>>(v => v.Count < minCount,
+                                                                                    ExceptionMessages.CollectionsHasSizeBetweenFailedToShort
+                                                                                                     .Inject(minCount, maxCount, target.Value.Count)))
+                         .And(new OutOfRangeValidationPredicate<ICollection<TType>>(v => v.Count > maxCount,
+                                                                                    ExceptionMessages.CollectionsHasSizeBetweenFailedToLong.Inject(
+                                                                                                                                                   minCount,
+                                                                                                                                                   maxCount,
+                                                                                                                                                   target
+                                                                                                                                                       .Value
+                                                                                                                                                       .Count)));
+        }
+
+        public static IValidationTarget<ICollection<TType>> ContainsValue<TType>(this IValidationTarget<ICollection<TType>> target,
+                                                                                 Func<TType, bool> predicate)
+        {
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => v.Any(predicate),
+                                                                                 ExceptionMessages.CollectionsAnyFailed));
+        }
+
+        public static IValidationTarget<ICollection<TType>> DoesNotContainValue<TType>(
+            this IValidationTarget<ICollection<TType>> target,
+            Func<TType, bool> predicate)
+        {
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => !v.Any(predicate),
+                                                                                 ExceptionMessages.CollectionsNotAnyFailed));
+        }
+
+        public static IValidationTarget<ICollection<TType>> ContainsValue<TType>(this IValidationTarget<ICollection<TType>> target,
+                                                                                 TType value)
+        {
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => v.Contains(value),
+                                                                                 ExceptionMessages.CollectionsContainsValueFailed.Inject(
+                                                                                                                                         value)));
+        }
+
+        public static IValidationTarget<ICollection<TType>> DoesNotContainValue<TType>(
+            this IValidationTarget<ICollection<TType>> target,
+            TType value)
+        {
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => !v.Contains(value),
+                                                                                 ExceptionMessages.CollectionsDoesNotContainValueFailed));
+        }
+
+        public static IValidationTarget<ICollection<TType>> IsReadOnly<TType>(this IValidationTarget<ICollection<TType>> target)
+        {
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => v.IsReadOnly,
+                                                                                 ExceptionMessages.CollectionsIsReadOnlyFailed));
+        }
+
+        public static IValidationTarget<ICollection<TType>> IsNotReadOnly<TType>(this IValidationTarget<ICollection<TType>> target)
+        {
+            return target.And(new DefaultValidationPredicate<ICollection<TType>>(v => !v.IsReadOnly,
+                                                                                 ExceptionMessages.CollectionsIsNotReadOnlyFailed));
+        }
+        #endregion
     }
 }

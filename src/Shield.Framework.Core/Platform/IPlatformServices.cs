@@ -6,7 +6,7 @@ namespace Shield.Framework.Platform
 {
 	public interface IPlatformServices
 	{		
-		ILogProvider Logger { get; }
+		IPlatformLogProvider Logger { get; }
 
 		IPlatformDispatcherProvider Dispatcher { get; }
 

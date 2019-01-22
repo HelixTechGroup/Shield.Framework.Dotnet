@@ -1,22 +1,99 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Generic;
+#endregion
 
 namespace Shield.Framework.Collections
 {
     public sealed class ListDictionary<TKey, TValue> : IDictionary<TKey, IList<TValue>>
     {
-        Dictionary<TKey, IList<TValue>> innerValues = new Dictionary<TKey, IList<TValue>>();
+        #region Members
+        readonly Dictionary<TKey, IList<TValue>> m_innerValues = new Dictionary<TKey, IList<TValue>>();
+        #endregion
 
-        #region Public Methods
+        #region Properties
+        /// <summary>
+        /// Gets the number of lists in the dictionary.
+        /// </summary>
+        /// <value>Value indicating the values count.</value>
+        public int Count
+        {
+            get { return m_innerValues.Count; }
+        }
 
+        /// <summary>
+        /// See <see cref="ICollection{TValue}.IsReadOnly"/> for more information.
+        /// </summary>
+        bool ICollection<KeyValuePair<TKey, IList<TValue>>>.IsReadOnly
+        {
+            get { return ((ICollection<KeyValuePair<TKey, IList<TValue>>>)m_innerValues).IsReadOnly; }
+        }
+
+        /// <summary>
+        /// Gets or sets the list associated with the given key. The
+        /// access always succeeds, eventually returning an empty list.
+        /// </summary>
+        /// <param name="key">The key of the list to access.</param>
+        /// <returns>The list associated with the key.</returns>
+        public IList<TValue> this[TKey key]
+        {
+            get
+            {
+                if (!m_innerValues.ContainsKey(key))
+                {
+                    m_innerValues.Add(key, new List<TValue>());
+                }
+                return m_innerValues[key];
+            }
+            set { m_innerValues[key] = value; }
+        }
+
+        /// <summary>
+        /// Gets the list of keys in the dictionary.
+        /// </summary>
+        /// <value>Collection of keys.</value>
+        public ICollection<TKey> Keys
+        {
+            get { return m_innerValues.Keys; }
+        }
+
+        /// <summary>
+        /// Gets a shallow copy of all values in all lists.
+        /// </summary>
+        /// <value>List of values.</value>
+        public IList<TValue> Values
+        {
+            get
+            {
+                List<TValue> values = new List<TValue>();
+                foreach (IEnumerable<TValue> list in m_innerValues.Values)
+                {
+                    values.AddRange(list);
+                }
+
+                return values;
+            }
+        }
+
+        /// <summary>
+        /// See <see cref="IDictionary{TKey,TValue}.Values"/> for more information.
+        /// </summary>
+        ICollection<IList<TValue>> IDictionary<TKey, IList<TValue>>.Values
+        {
+            get { return m_innerValues.Values; }
+        }
+        #endregion
+
+        #region Methods
         /// <summary>
         /// If a list does not already exist, it will be created automatically.
         /// </summary>
         /// <param name="key">The key of the list that will hold the value.</param>
         public void Add(TKey key)
         {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            Guard.Target(key)
+                .IsRequired()
+                .Throw();
 
             CreateNewList(key);
         }
@@ -29,15 +106,17 @@ namespace Shield.Framework.Collections
         /// <param name="value">The value to add to the list under the given key.</param>
         public void Add(TKey key, TValue value)
         {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            Guard.Target(key)
+                .IsRequired()
+                .Throw();
 
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.Target(value)
+                .IsRequired()
+                .Throw();
 
-            if (innerValues.ContainsKey(key))
+            if (m_innerValues.ContainsKey(key))
             {
-                innerValues[key].Add(value);
+                m_innerValues[key].Add(value);
             }
             else
             {
@@ -46,20 +125,12 @@ namespace Shield.Framework.Collections
             }
         }
 
-        private List<TValue> CreateNewList(TKey key)
-        {
-            List<TValue> values = new List<TValue>();
-            innerValues.Add(key, values);
-
-            return values;
-        }
-
         /// <summary>
         /// Removes all entries in the dictionary.
         /// </summary>
         public void Clear()
         {
-            innerValues.Clear();
+            m_innerValues.Clear();
         }
 
         /// <summary>
@@ -69,7 +140,7 @@ namespace Shield.Framework.Collections
         /// <returns>true if the dictionary contains the value in any list; otherwise, false.</returns>
         public bool ContainsValue(TValue value)
         {
-            foreach (KeyValuePair<TKey, IList<TValue>> pair in innerValues)
+            foreach (KeyValuePair<TKey, IList<TValue>> pair in m_innerValues)
             {
                 if (pair.Value.Contains(value))
                 {
@@ -87,10 +158,11 @@ namespace Shield.Framework.Collections
         /// <returns>true if the dictionary contains the given key; otherwise, false.</returns>
         public bool ContainsKey(TKey key)
         {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            Guard.Target(key)
+                .IsRequired()
+                .Throw();
 
-            return innerValues.ContainsKey(key);
+            return m_innerValues.ContainsKey(key);
         }
 
         /// <summary>
@@ -139,10 +211,11 @@ namespace Shield.Framework.Collections
         /// <returns><see langword="true" /> if the element was removed.</returns>
         public bool Remove(TKey key)
         {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            Guard.Target(key)
+                .IsRequired()
+                .Throw();
 
-            return innerValues.Remove(key);
+            return m_innerValues.Remove(key);
         }
 
         /// <summary>
@@ -152,19 +225,18 @@ namespace Shield.Framework.Collections
         /// <param name="value">The value to remove.</param>
         public void Remove(TKey key, TValue value)
         {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            Guard.Target(key)
+                .IsRequired()
+                .Throw();
 
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.Target(value)
+                .IsRequired()
+                .Throw();
 
-            if (innerValues.ContainsKey(key))
+            if (m_innerValues.ContainsKey(key))
             {
-                List<TValue> innerList = (List<TValue>)innerValues[key];
-                innerList.RemoveAll(delegate (TValue item)
-                {
-                    return value.Equals(item);
-                });
+                List<TValue> innerList = (List<TValue>)m_innerValues[key];
+                innerList.RemoveAll(delegate(TValue item) { return value.Equals(item); });
             }
         }
 
@@ -174,87 +246,34 @@ namespace Shield.Framework.Collections
         /// <param name="value">The value to remove.</param>
         public void Remove(TValue value)
         {
-            foreach (KeyValuePair<TKey, IList<TValue>> pair in innerValues)
+            foreach (KeyValuePair<TKey, IList<TValue>> pair in m_innerValues)
             {
                 Remove(pair.Key, value);
             }
         }
 
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets a shallow copy of all values in all lists.
-        /// </summary>
-        /// <value>List of values.</value>
-        public IList<TValue> Values
+        private List<TValue> CreateNewList(TKey key)
         {
-            get
-            {
-                List<TValue> values = new List<TValue>();
-                foreach (IEnumerable<TValue> list in innerValues.Values)
-                {
-                    values.AddRange(list);
-                }
+            List<TValue> values = new List<TValue>();
+            m_innerValues.Add(key, values);
 
-                return values;
-            }
+            return values;
         }
-
-        /// <summary>
-        /// Gets the list of keys in the dictionary.
-        /// </summary>
-        /// <value>Collection of keys.</value>
-        public ICollection<TKey> Keys
-        {
-            get { return innerValues.Keys; }
-        }
-
-        /// <summary>
-        /// Gets or sets the list associated with the given key. The
-        /// access always succeeds, eventually returning an empty list.
-        /// </summary>
-        /// <param name="key">The key of the list to access.</param>
-        /// <returns>The list associated with the key.</returns>
-        public IList<TValue> this[TKey key]
-        {
-            get
-            {
-                if (innerValues.ContainsKey(key) == false)
-                {
-                    innerValues.Add(key, new List<TValue>());
-                }
-                return innerValues[key];
-            }
-            set { innerValues[key] = value; }
-        }
-
-        /// <summary>
-        /// Gets the number of lists in the dictionary.
-        /// </summary>
-        /// <value>Value indicating the values count.</value>
-        public int Count
-        {
-            get { return innerValues.Count; }
-        }
-
-        #endregion
-
-        #region IDictionary<TKey,List<TValue>> Members
 
         /// <summary>
         /// See <see cref="IDictionary{TKey,TValue}.Add"/> for more information.
         /// </summary>
         void IDictionary<TKey, IList<TValue>>.Add(TKey key, IList<TValue> value)
         {
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            Guard.Target(key)
+                .IsRequired()
+                .Throw();
 
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            Guard.Target(value)
+                .IsRequired()
+                .Throw();
 
-            innerValues.Add(key, value);
+            m_innerValues.Add(key, value);
         }
 
         /// <summary>
@@ -267,23 +286,11 @@ namespace Shield.Framework.Collections
         }
 
         /// <summary>
-        /// See <see cref="IDictionary{TKey,TValue}.Values"/> for more information.
-        /// </summary>
-        ICollection<IList<TValue>> IDictionary<TKey, IList<TValue>>.Values
-        {
-            get { return innerValues.Values; }
-        }
-
-        #endregion
-
-        #region ICollection<KeyValuePair<TKey,List<TValue>>> Members
-
-        /// <summary>
         /// See <see cref="ICollection{TValue}.Add"/> for more information.
         /// </summary>
         void ICollection<KeyValuePair<TKey, IList<TValue>>>.Add(KeyValuePair<TKey, IList<TValue>> item)
         {
-            ((ICollection<KeyValuePair<TKey, IList<TValue>>>)innerValues).Add(item);
+            ((ICollection<KeyValuePair<TKey, IList<TValue>>>)m_innerValues).Add(item);
         }
 
         /// <summary>
@@ -291,7 +298,7 @@ namespace Shield.Framework.Collections
         /// </summary>
         bool ICollection<KeyValuePair<TKey, IList<TValue>>>.Contains(KeyValuePair<TKey, IList<TValue>> item)
         {
-            return ((ICollection<KeyValuePair<TKey, IList<TValue>>>)innerValues).Contains(item);
+            return ((ICollection<KeyValuePair<TKey, IList<TValue>>>)m_innerValues).Contains(item);
         }
 
         /// <summary>
@@ -299,15 +306,7 @@ namespace Shield.Framework.Collections
         /// </summary>
         void ICollection<KeyValuePair<TKey, IList<TValue>>>.CopyTo(KeyValuePair<TKey, IList<TValue>>[] array, int arrayIndex)
         {
-            ((ICollection<KeyValuePair<TKey, IList<TValue>>>)innerValues).CopyTo(array, arrayIndex);
-        }
-
-        /// <summary>
-        /// See <see cref="ICollection{TValue}.IsReadOnly"/> for more information.
-        /// </summary>
-        bool ICollection<KeyValuePair<TKey, IList<TValue>>>.IsReadOnly
-        {
-            get { return ((ICollection<KeyValuePair<TKey, IList<TValue>>>)innerValues).IsReadOnly; }
+            ((ICollection<KeyValuePair<TKey, IList<TValue>>>)m_innerValues).CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -315,33 +314,24 @@ namespace Shield.Framework.Collections
         /// </summary>
         bool ICollection<KeyValuePair<TKey, IList<TValue>>>.Remove(KeyValuePair<TKey, IList<TValue>> item)
         {
-            return ((ICollection<KeyValuePair<TKey, IList<TValue>>>)innerValues).Remove(item);
+            return ((ICollection<KeyValuePair<TKey, IList<TValue>>>)m_innerValues).Remove(item);
         }
-
-        #endregion
-
-        #region IEnumerable<KeyValuePair<TKey,List<TValue>>> Members
 
         /// <summary>
         /// See <see cref="IEnumerable{TValue}.GetEnumerator"/> for more information.
         /// </summary>
         IEnumerator<KeyValuePair<TKey, IList<TValue>>> IEnumerable<KeyValuePair<TKey, IList<TValue>>>.GetEnumerator()
         {
-            return innerValues.GetEnumerator();
+            return m_innerValues.GetEnumerator();
         }
-
-        #endregion
-
-        #region IEnumerable Members
 
         /// <summary>
         /// See <see cref="System.Collections.IEnumerable.GetEnumerator"/> for more information.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return innerValues.GetEnumerator();
+            return m_innerValues.GetEnumerator();
         }
-
         #endregion
     }
 }

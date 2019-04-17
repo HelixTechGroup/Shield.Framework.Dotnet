@@ -13,9 +13,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Environement\WindowsOperatingSystemInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensibility\FileAssemblyResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensibility\FileModuleLoader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IO\WindowsStorageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Threading\WindowsDispatcherProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Threading\WindowsPlatformUIDispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Threading\WindowsPlatformUiDispatcher.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WindowsRegistry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)IO\" />
   </ItemGroup>
 </Project>

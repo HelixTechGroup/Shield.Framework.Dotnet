@@ -68,8 +68,7 @@ namespace Shield.Framework.Messaging
                     m_unsubscribeAction = null;
                 }
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 

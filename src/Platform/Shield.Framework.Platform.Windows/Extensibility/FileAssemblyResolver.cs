@@ -104,8 +104,7 @@ namespace Shield.Framework.Platform.Extensibility
                 handlesAssemblyResolve = false;
             }
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
     }

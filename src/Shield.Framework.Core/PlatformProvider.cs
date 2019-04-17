@@ -1,22 +1,26 @@
-﻿using Shield.Framework.Platform;
+﻿#region Usings
+#endregion
+
+#region Usings
+using Shield.Framework.Platform;
+#endregion
 
 namespace Shield.Framework
 {
-    public static class PlatformProvider
+    public abstract class PlatformProvider<TEnvironment, TServices>
+        where TServices : IPlatformServices
+        where TEnvironment : IPlatformEnvironment
     {
-	    private static IPlatformServices m_services;
-        private static IPlatformEnvironment m_environment;
-
-	    public static IPlatformServices Services
-	    {
-		    get { return m_services; }
-			internal set { m_services = value; }
-	    }
-
-        public static IPlatformEnvironment Environment
+        #region Properties
+        public static TEnvironment Environment
         {
-            get { return m_environment; }
-            set { m_environment = value; }
+            get { return IoCProvider.Container.Resolve<TEnvironment>(); }
         }
+
+        public static TServices Services
+        {
+            get { return IoCProvider.Container.Resolve<TServices>(); }
+        }
+        #endregion
     }
 }

@@ -32,8 +32,7 @@ namespace Shield.Framework.IoC.Default
                 foreach (var value in Values)
                     value.Dispose();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 

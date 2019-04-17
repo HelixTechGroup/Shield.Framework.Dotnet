@@ -54,8 +54,7 @@ namespace Shield.Framework.IoC.Default
                 CreateInstanceFunc = null;
             }
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 

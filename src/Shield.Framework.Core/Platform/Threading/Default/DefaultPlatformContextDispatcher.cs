@@ -1,59 +1,76 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+#endregion
 
 namespace Shield.Framework.Platform.Threading.Default
 {
     public sealed class DefaultPlatformContextDispatcher : PlatformDispatcher, IPlatformContextDispatcher
     {
-        private SynchronizationContext m_previousContext;
-        private SynchronizationContext m_currentContext;
+        #region Members
         private SynchronizationContext m_context;
+        private SynchronizationContext m_currentContext;
+        private SynchronizationContext m_previousContext;
+        #endregion
+
+        #region Properties
+        public SynchronizationContext CurrentContext
+        {
+            get { return m_currentContext; }
+        }
 
         public SynchronizationContext PreviousContext
         {
             get { return m_previousContext; }
         }
-
-        public SynchronizationContext CurrentContext
-        {
-            get { return m_currentContext; }
-        }
+        #endregion
 
         public DefaultPlatformContextDispatcher()
         {
             m_previousContext = m_currentContext = SynchronizationContext.Current;
         }
 
+        #region Methods
         public SynchronizationContext CreateContext()
         {
             m_context = new SynchronizationContext();
             return m_context;
         }
 
-        public void SetContext(SynchronizationContext context)
+        public IPlatformContextDispatcher SetContext(SynchronizationContext context)
         {
             m_context = context;
+            return this;
         }
 
-        public override void Run(Action action, Action callback = null)
+        public override void Run(Action action, Action callback = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (CheckAccess())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 action();
+
                 if (callback != null)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
                     callback();
+                }
             }
             else
-            {                
-                if (callback != null)
-                    RunAsync(action, (t) => callback());
-                else
-                    RunAsync(action);
-            }
+                RunAsync(action,
+                         t =>
+                         {
+                             if (callback != null)
+                             {
+                                 cancellationToken.ThrowIfCancellationRequested();
+                                 callback();
+                             }
+                         },
+                         cancellationToken);
         }
 
-        public override Task RunAsync(Action action, Action<Task> callback = null)
+        public override Task RunAsync(Action action, Action<Task> callback = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             VerifyDispatcher();
             Task task;
@@ -64,13 +81,13 @@ namespace Shield.Framework.Platform.Threading.Default
             {
                 SynchronizationContext.SetSynchronizationContext(m_currentContext);
                 task = Task.Factory.StartNew(
-                    action,
-                    CancellationToken.None,
-                    TaskCreationOptions.None,
-                    TaskScheduler.FromCurrentSynchronizationContext());
+                                             action,
+                                             cancellationToken,
+                                             TaskCreationOptions.None,
+                                             TaskScheduler.FromCurrentSynchronizationContext());
 
                 if (callback != null)
-                    task.ContinueWith(callback);
+                    task.ContinueWith(callback, cancellationToken);
             }
             finally
             {
@@ -82,24 +99,42 @@ namespace Shield.Framework.Platform.Threading.Default
             return task;
         }
 
-        public override void Run<T>(Action<T> action, T parameter, Action callback = null)
+        public override void Run<T>(Action<T> action,
+                                    T parameter,
+                                    Action callback = null,
+                                    CancellationToken cancellationToken = default(CancellationToken))
         {
             if (CheckAccess())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 action(parameter);
+
                 if (callback != null)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
                     callback();
+                }
             }
             else
             {
-                if (callback != null)
-                    RunAsync(action, parameter, (t) => callback());
-                else
-                    RunAsync(action, parameter);
+                RunAsync(action,
+                         parameter,
+                         t =>
+                         {
+                             if (callback != null)
+                             {
+                                 cancellationToken.ThrowIfCancellationRequested();
+                                 callback();
+                             }
+                         },
+                         cancellationToken);
             }
         }
 
-        public override Task RunAsync<T>(Action<T> action, T parameter, Action<Task> callback = null)
+        public override Task RunAsync<T>(Action<T> action,
+                                         T parameter,
+                                         Action<Task> callback = null,
+                                         CancellationToken cancellationToken = default(CancellationToken))
         {
             VerifyDispatcher();
             Task task;
@@ -110,13 +145,13 @@ namespace Shield.Framework.Platform.Threading.Default
             {
                 SynchronizationContext.SetSynchronizationContext(m_currentContext);
                 task = Task.Factory.StartNew(
-                    () => action(parameter),
-                    CancellationToken.None,
-                    TaskCreationOptions.None,
-                    TaskScheduler.FromCurrentSynchronizationContext());
+                                             () => action(parameter),
+                                             cancellationToken,
+                                             TaskCreationOptions.None,
+                                             TaskScheduler.FromCurrentSynchronizationContext());
 
                 if (callback != null)
-                    task.ContinueWith(callback);
+                    task.ContinueWith(callback, cancellationToken);
             }
             finally
             {
@@ -127,6 +162,7 @@ namespace Shield.Framework.Platform.Threading.Default
 
             return task;
         }
+        #endregion
 
         protected override void VerifyDispatcher()
         {

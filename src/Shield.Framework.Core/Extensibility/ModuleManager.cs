@@ -284,8 +284,7 @@ namespace Shield.Framework.Extensibility
             foreach (var loader in m_loaders)
                     loader.Dispose();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
     }

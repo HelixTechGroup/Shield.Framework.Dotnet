@@ -212,8 +212,7 @@ namespace Shield.Framework.IoC
             if (disposing)
                 Release();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;                
         }
 

@@ -2,10 +2,12 @@
 {
     public interface IPlatformDispatcherProvider
     {
-        IPlatformDispatcher BackgroundDispatcher { get; }
+        #region Properties
+        IPlatformBackgroundDispatcher BackgroundDispatcher { get; }
 
         IPlatformContextDispatcher ContextDispatcher { get; }
 
-        IPlatformDispatcher UIDispatcher { get; }
+        IPlatformUiDispatcher UiDispatcher { get; }
+        #endregion
     }
 }

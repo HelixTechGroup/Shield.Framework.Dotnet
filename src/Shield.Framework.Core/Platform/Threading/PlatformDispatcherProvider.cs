@@ -1,26 +1,25 @@
-﻿using Shield.Framework.Platform.Threading.Default;
+﻿#region Usings
+#endregion
 
 namespace Shield.Framework.Platform.Threading
 {
-	public abstract class PlatformDispatcherProvider : IPlatformDispatcherProvider
+    public abstract class PlatformDispatcherProvider : IPlatformDispatcherProvider
     {
-		protected IPlatformDispatcher m_uiDispatcher = new DefaultPlatformUIDispatcher();
-		protected IPlatformDispatcher m_backgroundDispatcher = new DefaultPlatformBackgroundDispatcher();
-		protected IPlatformContextDispatcher m_contextDispatcher = new DefaultPlatformContextDispatcher();
+        #region Properties
+        public IPlatformBackgroundDispatcher BackgroundDispatcher
+        {
+            get { return IoCProvider.Container.Resolve<IPlatformBackgroundDispatcher>(); }
+        }
 
-		public IPlatformDispatcher UIDispatcher
-		{
-			get { return m_uiDispatcher; }
-		}
+        public IPlatformContextDispatcher ContextDispatcher
+        {
+            get { return IoCProvider.Container.Resolve<IPlatformContextDispatcher>(); }
+        }
 
-		public IPlatformDispatcher BackgroundDispatcher
-		{
-			get { return m_backgroundDispatcher; }
-		}
-
-		public IPlatformContextDispatcher ContextDispatcher
-		{
-			get { return m_contextDispatcher; }
-		}
-	}
+        public IPlatformUiDispatcher UiDispatcher
+        {
+            get { return IoCProvider.Container.Resolve<IPlatformUiDispatcher>(); }
+        }
+        #endregion
+    }
 }

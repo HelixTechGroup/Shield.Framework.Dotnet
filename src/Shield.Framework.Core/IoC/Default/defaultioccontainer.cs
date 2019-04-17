@@ -1,34 +1,42 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Shield.Framework.Extensions;
 using Shield.Framework.IoC.Exceptions;
+#endregion
 
 namespace Shield.Framework.IoC.Default
 {
     public sealed class DefaultIoCContainer : IIoCContainer
     {
+        #region Events
         public event Action<IDispose> OnDispose;
+        #endregion
 
-        private bool m_disposed;
-        private ConcurrentDictionary<Type, ResolverDictionary> m_typeDictionary;
-        private ConcurrentDictionary<string, Type> m_keyDictionary;
+        #region Members
+        private readonly ReaderWriterLockSlim m_constructorDictionaryLockSlim;
         private readonly string m_defaultKey;
         private readonly ReaderWriterLockSlim m_lockSlim;
-        private ConcurrentDictionary<Type, List<string>> m_cycleDictionary;
         private ConcurrentDictionary<Type, ConstructorInvokeInfo> m_constructorDictionary;
+        private ConcurrentDictionary<Type, List<string>> m_cycleDictionary;
+
+        private bool m_disposed;
         private ConcurrentDictionary<Type, List<PropertyInfo>> m_injectablePropertyDictionary;
+        private ConcurrentDictionary<string, Type> m_keyDictionary;
         private ConcurrentDictionary<string, Action<object, object>> m_propertyActionDictionary;
         private ConcurrentDictionary<Type, PropertyInfo[]> m_propertyDictionary;
-        private readonly ReaderWriterLockSlim m_constructorDictionaryLockSlim;
+        private ConcurrentDictionary<Type, ResolverDictionary> m_typeDictionary;
+        #endregion
 
+        #region Properties
         public bool Disposed
         {
             get { return m_disposed; }
         }
+        #endregion
 
         public DefaultIoCContainer()
         {
@@ -51,6 +59,7 @@ namespace Shield.Framework.IoC.Default
             Dispose(false);
         }
 
+        #region Methods
         public IIoCContainer CreateChildContainer()
         {
             throw new NotImplementedException();
@@ -228,7 +237,7 @@ namespace Shield.Framework.IoC.Default
                 i.Dispose();
 
             m_typeDictionary = new ConcurrentDictionary<Type, ResolverDictionary>();
-            m_keyDictionary = new ConcurrentDictionary<string, Type>();            
+            m_keyDictionary = new ConcurrentDictionary<string, Type>();
             m_cycleDictionary = new ConcurrentDictionary<Type, List<string>>();
             m_constructorDictionary = new ConcurrentDictionary<Type, ConstructorInvokeInfo>();
             m_injectablePropertyDictionary = new ConcurrentDictionary<Type, List<PropertyInfo>>();
@@ -258,6 +267,12 @@ namespace Shield.Framework.IoC.Default
             return false;
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         private void Dispose(bool disposing)
         {
             if (m_disposed)
@@ -265,15 +280,8 @@ namespace Shield.Framework.IoC.Default
             if (disposing)
                 Release();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private object ResolveAux(Type type, string key = null, Dictionary<string, object> resolvedObjects = null)
@@ -337,7 +345,7 @@ namespace Shield.Framework.IoC.Default
                 if (m_typeDictionary.TryGetValue(type, out resolvers) && resolvers != null)
                 {
                     /* If the ResolveProperties method calls through here, it may be searching for a registration per
-					 * strongly-typed name that does not exist. In this case, just get the default registration. */
+                     * strongly-typed name that does not exist. In this case, just get the default registration. */
                     if (!resolvers.TryGetValue(key, out resolver))
                     {
                         key = GetKeyValueOrDefault(null);
@@ -504,7 +512,7 @@ namespace Shield.Framework.IoC.Default
                 if (parameter == null && !parameterInfo.IsOptional)
                 {
                     throw new IoCResolutionException(
-                        "Failed to instantiate parameter " + parameterInfo.Name);
+                                                     "Failed to instantiate parameter " + parameterInfo.Name);
                 }
 
                 parametersList[i] = parameter;
@@ -614,7 +622,7 @@ namespace Shield.Framework.IoC.Default
 
             if (constructor == null)
                 throw new IoCResolutionException(
-                    "Could not locate a constructor for " + type.FullName);
+                                                 "Could not locate a constructor for " + type.FullName);
 
             invokeInfo = new ConstructorInvokeInfo(constructor);
             m_constructorDictionaryLockSlim.EnterWriteLock();
@@ -652,15 +660,14 @@ namespace Shield.Framework.IoC.Default
                 ResolverDictionary resolverDictionary;
                 if (overrideExisting)
                     resolverDictionary = new ResolverDictionary();
-                else
-                    if (!m_typeDictionary.TryGetValue(T, out resolverDictionary))
-                        resolverDictionary = new ResolverDictionary();
+                else if (!m_typeDictionary.TryGetValue(T, out resolverDictionary))
+                    resolverDictionary = new ResolverDictionary();
 
                 var resolver = new TypeResolver
-                {
-                    CreateInstanceFunc = getInstanceFunc,
-                    Singleton = asSingleton
-                };
+                               {
+                                   CreateInstanceFunc = getInstanceFunc,
+                                   Singleton = asSingleton
+                               };
                 resolverDictionary[key] = resolver;
                 m_typeDictionary[T] = resolverDictionary;
                 m_keyDictionary[key] = T;
@@ -670,5 +677,6 @@ namespace Shield.Framework.IoC.Default
                 m_lockSlim.ExitWriteLock();
             }
         }
+        #endregion
     }
 }

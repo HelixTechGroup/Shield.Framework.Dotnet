@@ -69,7 +69,7 @@ namespace Shield.Framework.Exceptions
             if (!IsFrameworkExceptionRegistered<T>())
                 RegisterFrameworkException<T>();
 
-            return ExceptionFactory.GenerateException<T>(message);
+            return ExceptionProvider.GenerateException<T>(message);
         }
 
         private bool IsFrameworkException(Exception exception)

@@ -112,7 +112,7 @@ namespace Shield.Framework.Validation
 
             var ruleType = typeof(TType).FullName;
             var valueType = value.GetType().FullName;
-            throw ExceptionFactory.ArgumentException("",
+            throw ExceptionProvider.ArgumentException("",
                                                      ExceptionMessages.TypesIsOfTypeFailed.Inject(ruleType, valueType));
         }
 
@@ -125,7 +125,7 @@ namespace Shield.Framework.Validation
                 return false;
 
             var ruleType = typeof(TType).FullName;
-            throw ExceptionFactory.ArgumentException("",
+            throw ExceptionProvider.ArgumentException("",
                                                      ExceptionMessages.TypesIsNotOfTypeFailed.Inject(ruleType));
         }
 

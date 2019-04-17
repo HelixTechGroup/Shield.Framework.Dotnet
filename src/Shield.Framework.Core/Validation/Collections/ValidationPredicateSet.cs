@@ -63,7 +63,7 @@ namespace Shield.Framework.Validation.Collections
                 WithMessage(message);
 
             return (this.Where(validator => !validator.Validate())
-                        .Select(validator => ExceptionFactory.GenerateArgumentException<TException>(m_rule.Target.Name,
+                        .Select(validator => ExceptionProvider.GenerateArgumentException<TException>(m_rule.Target.Name,
                                                                                                     validator.ErrorMessage,
                                                                                                     m_rule.Target.ExceptionData)))
                 .FirstOrDefault();
@@ -73,7 +73,7 @@ namespace Shield.Framework.Validation.Collections
         {
             var exceptions = this.Where(predicate => !predicate.Validate())
                                  .Select(error =>
-                                             ExceptionFactory
+                                             ExceptionProvider
                                                  .ArgumentException(
                                                                     m_rule.Target.Name,
                                                                     error.ErrorMessage,
@@ -82,7 +82,7 @@ namespace Shield.Framework.Validation.Collections
             if (exceptions.IsEmpty())
                 return null;
 
-            return ExceptionFactory.ValidationException(m_rule.Target.Name,
+            return ExceptionProvider.ValidationException(m_rule.Target.Name,
                                                         "Validation of {0} Failed.".Inject(m_rule.Target.Name),
                                                         exceptions,
                                                         m_rule.Target.ExceptionData);

@@ -1,10 +1,11 @@
+#region Usings
 using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endregion
 
-[assembly: AssemblyCompany("HelixDesign,llc")]
-[assembly: AssemblyCopyright("Copyright © HelixDesign,llc 2017")]
+[assembly: AssemblyCompany("HelixTechGroup,llc")]
+[assembly: AssemblyCopyright("Copyright © HelixTechGroup,llc 2017-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyProduct("Shield.Framework")]

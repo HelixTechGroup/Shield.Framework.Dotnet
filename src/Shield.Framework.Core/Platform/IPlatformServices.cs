@@ -1,15 +1,23 @@
-﻿using Shield.Framework.Platform.IO;
+﻿#region Usings
+using Shield.Framework.Platform.IO;
 using Shield.Framework.Platform.Logging;
 using Shield.Framework.Platform.Threading;
+#endregion
 
 namespace Shield.Framework.Platform
 {
-	public interface IPlatformServices
-	{		
-		IPlatformLogProvider Logger { get; }
+    public interface IPlatformServices { }
 
-		IPlatformDispatcherProvider Dispatcher { get; }
-
-		IPlatformStorageProvider Storage { get; }
-	}
+    public interface IPlatformServices<out TLoggProvider, out TDispatcherProvider, out TStorageProvider>
+        : IPlatformServices
+        where TLoggProvider : IPlatformLogProvider
+        where TDispatcherProvider : IPlatformDispatcherProvider
+        where TStorageProvider : IPlatformStorageProvider
+    {
+        #region Properties
+        TDispatcherProvider Dispatcher { get; }
+        TLoggProvider Logger { get; }
+        TStorageProvider Storage { get; }
+        #endregion
+    }
 }

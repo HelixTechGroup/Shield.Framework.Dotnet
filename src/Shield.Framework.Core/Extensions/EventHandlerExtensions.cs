@@ -13,30 +13,22 @@ namespace Shield.Framework.Extensions
         public static void Raise<TEventArgs>(this EventHandler<TEventArgs> handler, object sender, TEventArgs args)
             where TEventArgs : EventArgs
         {
-            var tmp = Interlocked.CompareExchange(ref handler, null, null);
-            if (tmp != null)
-                tmp(sender, args);
+            Interlocked.CompareExchange(ref handler, null, null)?.Invoke(sender, args);
         }
 
         public static void Raise(this EventHandler handler, object sender, EventArgs args)
         {
-            var tmp = Interlocked.CompareExchange(ref handler, null, null);
-            if (tmp != null)
-                tmp(sender, args);
+            Interlocked.CompareExchange(ref handler, null, null)?.Invoke(sender, args);
         }
 
         public static void Raise(this PropertyChangedEventHandler handler, object sender, PropertyChangedEventArgs args)
         {
-            var tmp = Interlocked.CompareExchange(ref handler, null, null);
-            if (tmp != null)
-                tmp(sender, args);
+            Interlocked.CompareExchange(ref handler, null, null)?.Invoke(sender, args);
         }
 
         public static void Raise(this NotifyCollectionChangedEventHandler handler, object sender, NotifyCollectionChangedEventArgs args)
         {
-            var tmp = Interlocked.CompareExchange(ref handler, null, null);
-            if (tmp != null)
-                tmp(sender, args);
+            Interlocked.CompareExchange(ref handler, null, null)?.Invoke(sender, args);
         }
 
         public static void Dispose<TEventArgs>(this EventHandler<TEventArgs> handler)

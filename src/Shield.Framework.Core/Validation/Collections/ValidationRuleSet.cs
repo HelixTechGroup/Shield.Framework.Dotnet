@@ -86,7 +86,7 @@ namespace Shield.Framework.Validation.Collections
             if (exceptions.IsEmpty())
                 return null;
 
-            return ExceptionFactory.ValidationException(m_target.Name,
+            return ExceptionProvider.ValidationException(m_target.Name,
                                                         "Validation of {0} Failed.".Inject(m_target.Name),
                                                         exceptions,
                                                         m_target.ExceptionData);

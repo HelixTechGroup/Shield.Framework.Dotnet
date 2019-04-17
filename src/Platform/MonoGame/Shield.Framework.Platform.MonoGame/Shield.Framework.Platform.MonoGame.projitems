@@ -10,7 +10,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)GameTimeEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMonoGamePlatformServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\FileSystems\TitleContainerFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\IMonoGameStorageProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IO\MonoGameWindowsStorageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MonoGameBootstrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MonoGamePlatformServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ShieldGame.cs" />
   </ItemGroup>
 </Project>

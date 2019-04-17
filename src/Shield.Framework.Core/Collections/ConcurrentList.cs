@@ -1,11 +1,11 @@
 ﻿#region Header
 // // ----------------------------------------------------------------------
 // // filename: ConcurrentList.cs
-// // company: EmpireGaming, LLC
+// // company: HelixTechGroup, LLC
 // // date: 05-10-2017
-// // namespace: UniverseSol.Framework.System.Collections
-// // class: ConcurrentList<T> : IList<T>, IDisposable
-// // summary: Class representing a ConcurrentList<T> : IList<T>, IDisposable entity.
+// // namespace: Shield.Framework.Collections
+// // class: ConcurrentList<T> : IList<T>, IDispose
+// // summary: Class representing a ConcurrentList<T> : IList<T>, IDispose entity.
 // // legal: Copyright (c) 2017 All Right Reserved
 // // ------------------------------------------------------------------------
 // 
@@ -75,11 +75,7 @@ namespace Shield.Framework.Collections
 
         public bool IsFixedSize
         {
-            get
-            {
-                return m_arr.IsFixedSize;
-                ;
-            }
+            get { return m_arr.IsFixedSize; }
         }
 
         public virtual bool IsReadOnly
@@ -89,11 +85,7 @@ namespace Shield.Framework.Collections
 
         public bool IsSynchronized
         {
-            get
-            {
-                return m_arr.IsSynchronized;
-                ;
-            }
+            get { return m_arr.IsSynchronized; }
         }
 
         public virtual object this[int index]
@@ -103,8 +95,7 @@ namespace Shield.Framework.Collections
                 m_lock.EnterReadLock();
                 try
                 {
-                    if (index >= m_count)
-                        throw new ArgumentOutOfRangeException(nameof(index), m_count, "");
+                    Throw.If(index >= m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                     return m_arr[index];
                 }
@@ -118,12 +109,11 @@ namespace Shield.Framework.Collections
                 m_lock.EnterUpgradeableReadLock();
                 try
                 {
-                    if (index >= m_count)
-                        throw new ArgumentOutOfRangeException(nameof(index), m_count, "");
-
                     m_lock.EnterWriteLock();
                     try
                     {
+                        Throw.If(index >= m_count).ArgumentOutOfRangeException(nameof(index), m_count);
+
                         m_arr[index] = value;
                     }
                     finally
@@ -140,11 +130,7 @@ namespace Shield.Framework.Collections
 
         public object SyncRoot
         {
-            get
-            {
-                return m_arr.SyncRoot;
-                ;
-            }
+            get { return m_arr.SyncRoot; }
         }
         #endregion
 
@@ -173,8 +159,7 @@ namespace Shield.Framework.Collections
 
         public virtual void AddRange(ICollection items)
         {
-            if (items == null)
-                throw new ArgumentNullException(nameof(items));
+            Throw.IfNull(items).ArgumentNullException(nameof(items));
 
             m_lock.EnterWriteLock();
             try
@@ -224,8 +209,7 @@ namespace Shield.Framework.Collections
             m_lock.EnterReadLock();
             try
             {
-                if (m_count > array.Length - index)
-                    throw new ArgumentException("Destination array was not long enough.");
+                Throw.If(m_count > array.Length - index).ArgumentException(nameof(array), "Destination array was not long enough.");
 
                 Array.Copy(m_arr, 0, array, index, m_count);
             }
@@ -242,18 +226,17 @@ namespace Shield.Framework.Collections
 
             m_lock.Dispose();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 
         public virtual void DoSync(Action<ConcurrentList> action)
         {
             GetSync(l =>
-            {
-                action(l);
-                return 0;
-            });
+                    {
+                        action(l);
+                        return 0;
+                    });
         }
 
         public virtual IEnumerator GetEnumerator()
@@ -305,8 +288,7 @@ namespace Shield.Framework.Collections
 
             try
             {
-                if (index > m_count)
-                    throw new ArgumentOutOfRangeException(nameof(index));
+                Throw.If(index > m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                 m_lock.EnterWriteLock();
                 try
@@ -332,13 +314,13 @@ namespace Shield.Framework.Collections
             }
         }
 
-        public virtual void Remove(object item)
+        public virtual void Remove(object value)
         {
             m_lock.EnterUpgradeableReadLock();
 
             try
             {
-                var i = IndexOfInternal(item);
+                var i = IndexOfInternal(value);
 
                 if (i == -1)
                     return;
@@ -364,8 +346,7 @@ namespace Shield.Framework.Collections
             m_lock.EnterUpgradeableReadLock();
             try
             {
-                if (index >= m_count)
-                    throw new ArgumentOutOfRangeException("index");
+                Throw.If(index >= m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                 m_lock.EnterWriteLock();
                 try
@@ -514,8 +495,7 @@ namespace Shield.Framework.Collections
                 m_lock.EnterReadLock();
                 try
                 {
-                    if (index >= m_count)
-                        throw new ArgumentOutOfRangeException(nameof(index), m_count, "");
+                    Throw.If(index >= m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                     return m_arr[index];
                 }
@@ -529,8 +509,7 @@ namespace Shield.Framework.Collections
                 m_lock.EnterUpgradeableReadLock();
                 try
                 {
-                    if (index >= m_count)
-                        throw new ArgumentOutOfRangeException(nameof(index), m_count, "");
+                    Throw.If(index >= m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                     m_lock.EnterWriteLock();
                     try
@@ -574,8 +553,7 @@ namespace Shield.Framework.Collections
 
         public virtual void AddRange(IEnumerable<T> items)
         {
-            if (items == null)
-                throw new ArgumentNullException(nameof(items));
+            Throw.IfNull(items).ArgumentNullException(nameof(items));
 
             m_lock.EnterWriteLock();
             try
@@ -624,8 +602,7 @@ namespace Shield.Framework.Collections
             m_lock.EnterReadLock();
             try
             {
-                if (m_count > array.Length - arrayIndex)
-                    throw new ArgumentException("Destination array was not long enough.");
+                Throw.If(m_count > array.Length - arrayIndex).ArgumentException(nameof(array), "Destination array was not long enough.");
 
                 Array.Copy(m_arr, 0, array, arrayIndex, m_count);
             }
@@ -642,18 +619,17 @@ namespace Shield.Framework.Collections
 
             m_lock.Dispose();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 
         public virtual void DoSync(Action<ConcurrentList<T>> action)
         {
             GetSync(l =>
-            {
-                action(l);
-                return 0;
-            });
+                    {
+                        action(l);
+                        return 0;
+                    });
         }
 
         public virtual IEnumerator<T> GetEnumerator()
@@ -705,8 +681,7 @@ namespace Shield.Framework.Collections
 
             try
             {
-                if (index > m_count)
-                    throw new ArgumentOutOfRangeException(nameof(index));
+                Throw.If(index > m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                 m_lock.EnterWriteLock();
                 try
@@ -765,8 +740,7 @@ namespace Shield.Framework.Collections
             m_lock.EnterUpgradeableReadLock();
             try
             {
-                if (index >= m_count)
-                    throw new ArgumentOutOfRangeException("index");
+                Throw.If(index >= m_count).ArgumentOutOfRangeException(nameof(index), m_count);
 
                 m_lock.EnterWriteLock();
                 try

@@ -1,55 +1,77 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region Usings
+using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Shield.Framework.Platform;
+using Shield.Framework.Platform.Threading;
+#endregion
 
 namespace Shield.Framework.Extensions
 {
     public static class ActionExtensions
     {
         #region UIThread
-        public static void OnUIThread(this Action action, Action callback = null)
+        public static void OnUiThread(this Action action, Action callback = null)
         {
-            PlatformProvider.Services.Dispatcher.UIDispatcher.Run(action, callback);
+            IoCProvider.Container.Resolve<IPlatformUiDispatcher>().Run(action, callback);
         }
 
-        public static Task OnUIThreadAsync(this Action action, Action<Task> callback = null)
+        public static Task OnUiThreadAsync(this Action action, Action<Task> callback = null)
         {
-            return PlatformProvider.Services.Dispatcher.UIDispatcher.RunAsync(action, callback);
-        }        
-
-        public static void OnUIThread<T>(this Action<T> action, T parameter, Action callback = null)
-        {
-            PlatformProvider.Services.Dispatcher.UIDispatcher.Run(action, parameter, callback);
+            return IoCProvider.Container.Resolve<IPlatformUiDispatcher>().RunAsync(action, callback);
         }
 
-        public static Task OnUIThreadAsync<T>(this Action<T> action, T parameter, Action<Task> callback = null)
+        public static void OnUiThread<T>(this Action<T> action, T parameter, Action callback = null)
         {
-            return PlatformProvider.Services.Dispatcher.UIDispatcher.RunAsync(action, parameter, callback);
+            IoCProvider.Container.Resolve<IPlatformUiDispatcher>().Run(action, parameter, callback);
+        }
+
+        public static Task OnUiThreadAsync<T>(this Action<T> action, T parameter, Action<Task> callback = null)
+        {
+            return IoCProvider.Container.Resolve<IPlatformUiDispatcher>().RunAsync(action, parameter, callback);
         }
         #endregion
 
         #region BackgroundThread
         public static void OnNewThread(this Action action, Action callback = null)
         {
-            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action, callback);
+            IoCProvider.Container.Resolve<IPlatformBackgroundDispatcher>().Run(action, callback);
         }
 
         public static Task OnNewThreadAsync(this Action action, Action<Task> callback = null)
         {
-            return PlatformProvider.Services.Dispatcher.BackgroundDispatcher.RunAsync(action, callback);
+            return IoCProvider.Container.Resolve<IPlatformBackgroundDispatcher>().RunAsync(action, callback);
         }
 
         public static void OnNewThread<T>(this Action<T> action, T parameter, Action callback = null)
         {
-            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action, parameter, callback);
+            IoCProvider.Container.Resolve<IPlatformBackgroundDispatcher>().Run(action, parameter, callback);
         }
 
         public static Task OnNewThreadAsync<T>(this Action<T> action, T parameter, Action<Task> callback = null)
         {
-            return PlatformProvider.Services.Dispatcher.BackgroundDispatcher.RunAsync(action, parameter, callback);
+            return IoCProvider.Container.Resolve<IPlatformBackgroundDispatcher>().RunAsync(action, parameter, callback);
+        }
+        #endregion
+
+        #region ContextThread
+        public static void OnNewThread(this Action action, SynchronizationContext context, Action callback = null)
+        {
+            IoCProvider.Container.Resolve<IPlatformContextDispatcher>().SetContext(context).Run(action, callback);
+        }
+
+        public static Task OnNewThreadAsync(this Action action, SynchronizationContext context, Action<Task> callback = null)
+        {
+            return IoCProvider.Container.Resolve<IPlatformContextDispatcher>().SetContext(context).RunAsync(action, callback);
+        }
+
+        public static void OnNewThread<T>(this Action<T> action, SynchronizationContext context, T parameter, Action callback = null)
+        {
+            IoCProvider.Container.Resolve<IPlatformContextDispatcher>().SetContext(context).Run(action, parameter, callback);
+        }
+
+        public static Task OnNewThreadAsync<T>(this Action<T> action, SynchronizationContext context, T parameter, Action<Task> callback = null)
+        {
+            return IoCProvider.Container.Resolve<IPlatformContextDispatcher>().SetContext(context).RunAsync(action, parameter, callback);
         }
         #endregion
     }

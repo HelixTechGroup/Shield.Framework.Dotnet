@@ -97,7 +97,7 @@ namespace Shield.Framework.Validation
 
         public Exception GenerateException(string name, KeyValuePair<string, object>[] exceptionData)
         {
-            return ExceptionFactory.GenerateArgumentException<TException>(name, m_message, exceptionData);
+            return ExceptionProvider.GenerateArgumentException<TException>(name, m_message, exceptionData);
         }
         #endregion
     }

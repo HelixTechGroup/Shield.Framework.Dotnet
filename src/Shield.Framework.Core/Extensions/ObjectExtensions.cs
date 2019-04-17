@@ -1,5 +1,6 @@
 ﻿#region Usings
 using System;
+using Shield.Framework.Exceptions;
 using Shield.Framework.Validation;
 #endregion
 
@@ -8,21 +9,17 @@ namespace Shield.Framework.Extensions
     internal static class ObjectExtensions
     {
         #region Methods
-        internal static void ThrowIfNull<T>(this T obj)
+        internal static void ThrowIfNull<T, TException>(this T obj, string message = null) where TException : Exception, new()
         {
             if (obj == null)
-#pragma warning disable S112 // General exceptions should never be thrown
-                throw new NullReferenceException();
-#pragma warning restore S112 // General exceptions should never be thrown
+                throw ExceptionProvider.GenerateException<TException>();
         }
 
-        internal static void ThrowIfNull<T>(this T obj, string message)
+        internal static void ThrowIfNull<T>(this T obj, string message = null)
         {
-            if (obj == null)
-#pragma warning disable S112 // General exceptions should never be thrown
-                throw new NullReferenceException(message);
-#pragma warning restore S112 // General exceptions should never be thrown
+            obj.ThrowIfNull<T, NullReferenceException>(message);
         }
+
 
         public static IValidationTarget<T> Guard<T>(this T obj)
         {

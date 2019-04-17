@@ -10,6 +10,6 @@ namespace Shield.Framework.Platform.Threading
 
         SynchronizationContext CreateContext();
 
-        void SetContext(SynchronizationContext context);
+        IPlatformContextDispatcher SetContext(SynchronizationContext context);
     }
 }

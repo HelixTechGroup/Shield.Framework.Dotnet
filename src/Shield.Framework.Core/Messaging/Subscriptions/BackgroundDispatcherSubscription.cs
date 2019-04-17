@@ -1,5 +1,7 @@
-﻿using System;
-using Shield.Framework.Platform;
+﻿#region Usings
+using System;
+using Shield.Framework.Extensions;
+#endregion
 
 namespace Shield.Framework.Messaging.Subscriptions
 {
@@ -10,18 +12,19 @@ namespace Shield.Framework.Messaging.Subscriptions
 
         protected override void InvokeAction(Action action)
         {
-            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action);
+            action.OnNewThread();
         }
     }
 
     internal sealed class BackgroundDispatcherSubscription<TPayload> : Subscription<TPayload>
     {
-        public BackgroundDispatcherSubscription(IDelegateReference actionReference, IDelegateReference filterReference) :
+        public BackgroundDispatcherSubscription(IDelegateReference actionReference,
+                                                IDelegateReference filterReference) :
             base(actionReference, filterReference) { }
 
         protected override void InvokeAction(Action<TPayload> action, TPayload argument)
         {
-            PlatformProvider.Services.Dispatcher.BackgroundDispatcher.Run(action, argument);
-        }        
+            action.OnNewThread(argument);
+        }
     }
 }

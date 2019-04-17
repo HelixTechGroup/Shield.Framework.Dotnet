@@ -1,70 +1,53 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Shield.Framework.Platform.IO.Default;
+﻿#region Usings
+using Shield.Framework.Platform.IO.Collections;
+using Shield.Framework.Platform.IO.FileSystems;
+#endregion
 
 namespace Shield.Framework.Platform.IO
 {
-    public abstract class PlatformStorageProvider : IPlatformStorageProvider
+    public class PlatformStorageProvider : MountPointCollection, IPlatformStorageProvider
     {
-        protected IPlatformStorage m_privateStorage = new DefaultPlatformPrivateStorage();
-        protected IPlatformStorage m_localStorage;
-        protected IPlatformStorage m_roamingStorage;
+        #region Members
+        protected readonly IStorageManager<ILocalApplicationFileSystem> m_localStorage;
+        protected readonly IStorageManager<IPrivateApplicationFileSystem> m_privateStorage;
+        protected readonly IStorageManager m_roamingStorage;
+        #endregion
 
-        public IPlatformStorage this[string index] => throw new NotImplementedException();
-
-        public IPlatformStorage PrivateApplicationStorage
-        {
-            get { return m_privateStorage; }
-        }
-
-        public IPlatformStorage LocalApplicationStorage
+        #region Properties
+        public IStorageManager<ILocalApplicationFileSystem> Local
         {
             get { return m_localStorage; }
         }
 
-        public IPlatformStorage RoamingApplicationStorage
+        public IStorageManager<IPrivateApplicationFileSystem> Private
+        {
+            get { return m_privateStorage; }
+        }
+
+        public IStorageManager Roaming
         {
             get { return m_roamingStorage; }
         }
+        #endregion
 
-        public bool Disposed => throw new NotImplementedException();
-
-        public event Action<IDispose> OnDispose;
-
-        public void Dispose()
+        protected PlatformStorageProvider(ILocalApplicationFileSystem localStorage,
+                                          IPrivateApplicationFileSystem privateStorage) :
+            base(StoragePath.RootPath)
         {
-            throw new NotImplementedException();
+            m_localStorage = new StorageManager<ILocalApplicationFileSystem>(localStorage);
+            m_privateStorage = new StorageManager<IPrivateApplicationFileSystem>(privateStorage);
         }
 
-        public IEnumerator<IPlatformStorage> GetEnumerator()
+        protected override void Dispose(bool disposing)
         {
-            throw new NotImplementedException();
-        }
+            if (disposing)
+            {
+                m_localStorage.Dispose();
+                m_privateStorage.Dispose();
+                m_roamingStorage.Dispose();
+            }
 
-        public IPlatformStorage GetStorage(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string MountStorage(string path, IPlatformStorage storageManager)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string MountStorage(IPlatformStorage storageManager)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UnmountStorage(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
+            base.Dispose(disposing);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Shield.Framework.MVVM
                 return;
             ((Action)(
                 () => OnPropertyChanged(new PropertyChangedEventArgs(propertyName))))
-                .OnUIThread();
+                .OnUiThread();
         }
 
         public virtual void Refresh()

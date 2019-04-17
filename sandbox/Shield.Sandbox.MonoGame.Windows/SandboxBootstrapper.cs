@@ -1,5 +1,6 @@
 ﻿#region Usings
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Shield.Framework.Platform;
@@ -11,6 +12,11 @@ namespace Shield.Sandbox.MonoGame.Windows
     {
         protected override void OnGameInitialize(object sender, EventArgs e)
         {
+            var root = PlatformProvider.Services.Storage.Private.RootDirectory;
+            var tmp = root.CreateDirectory("tmp");
+            var tmp2 = root.CreateFile("a.tmp");
+            var tmp3 = root.GetFile("tmp/b.tmp");
+            var dirs = root.GetEntities().ToArray();
             base.OnGameInitialize(sender, e);
         }
 

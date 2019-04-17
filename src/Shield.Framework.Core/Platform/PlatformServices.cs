@@ -1,35 +1,32 @@
-﻿using Shield.Framework.Platform.IO;
+﻿#region Usings
+using Shield.Framework.Platform.IO;
 using Shield.Framework.Platform.Logging;
 using Shield.Framework.Platform.Threading;
+#endregion
 
 namespace Shield.Framework.Platform
 {
-	public class PlatformServices : IPlatformServices
-	{
-		protected IPlatformLogProvider m_logger;
-		protected IPlatformDispatcherProvider m_dispatcher;
-		protected IPlatformStorageProvider m_storage;
+    public abstract class PlatformServices<TLoggProvider, TDispatcherProvider, TStorageProvider>
+        : IPlatformServices<TLoggProvider, TDispatcherProvider, TStorageProvider>
+        where TLoggProvider : IPlatformLogProvider
+        where TDispatcherProvider : IPlatformDispatcherProvider
+        where TStorageProvider : IPlatformStorageProvider
+    {
+        #region Properties
+        public TDispatcherProvider Dispatcher
+        {
+            get { return IoCProvider.Container.Resolve<TDispatcherProvider>(); }
+        }
 
-		public PlatformServices(IPlatformLogProvider logger, IPlatformDispatcherProvider dispatcher, IPlatformStorageProvider storage)
-		{
-			m_logger = logger;
-			m_dispatcher = dispatcher;
-			m_storage = storage;
-		}
+        public TLoggProvider Logger
+        {
+            get { return IoCProvider.Container.Resolve<TLoggProvider>(); }
+        }
 
-		public IPlatformLogProvider Logger
-		{
-			get { return m_logger; }
-		}
-
-		public IPlatformDispatcherProvider Dispatcher
-		{
-			get { return m_dispatcher; }
-		}
-
-		public IPlatformStorageProvider Storage
-		{
-			get { return m_storage; }
-		}
-	}
+        public TStorageProvider Storage
+        {
+            get { return IoCProvider.Container.Resolve<TStorageProvider>(); }
+        }
+        #endregion
+    }
 }

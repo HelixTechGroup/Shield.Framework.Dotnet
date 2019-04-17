@@ -6,23 +6,28 @@
 //			Copyright (c) 2017 HelixDesign, llc. All rights reserved.
 #endregion
 
-using System.Collections.Generic;
+#region Usings
+using Shield.Framework.Platform.IO.Collections;
+using Shield.Framework.Platform.IO.FileSystems;
+#endregion
 
 namespace Shield.Framework.Platform.IO
 {
     /// <summary>Interface for storage provider.</summary>
-    public interface IPlatformStorageProvider : IPlatformStorageCollection
+    public interface IPlatformStorageProvider : IMountPointCollection
     {
+        #region Properties
+        /// <summary>Gets the application data storage which is local to the current application.</summary>
+        /// <value>The local application storage.</value>
+        IStorageManager<ILocalApplicationFileSystem> Local { get; }
+
         /// <summary>Gets the Isolated user data storage which is local to the current device.</summary>
         /// <value>The private user storage.</value>
-        IPlatformStorage PrivateApplicationStorage { get; }
+        IStorageManager<IPrivateApplicationFileSystem> Private { get; }
 
         /// <summary>Gets the user data storage which may be synced with other devices for the same user.</summary>
         /// <value>The roaming user storage.</value>
-        IPlatformStorage RoamingApplicationStorage { get; }
-
-        /// <summary>Gets the application data storage which is local to the current application.</summary>
-        /// <value>The local application storage.</value>
-        IPlatformStorage LocalApplicationStorage { get; }       
+        IStorageManager Roaming { get; }
+        #endregion
     }
 }

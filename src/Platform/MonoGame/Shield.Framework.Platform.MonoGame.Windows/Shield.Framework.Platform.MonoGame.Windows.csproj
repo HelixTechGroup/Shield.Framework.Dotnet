@@ -88,6 +88,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="MonoGameWindowsBootstrapper.cs" />
+    <Compile Include="PlatformProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\" />
   </ItemGroup>
   <Import Project="..\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems" Label="Shared" />
   <Import Project="..\..\Shield.Framework.Platform.Windows\Shield.Framework.Platform.Windows.projitems" Label="Shared" />

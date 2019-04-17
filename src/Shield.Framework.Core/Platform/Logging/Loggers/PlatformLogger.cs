@@ -18,8 +18,7 @@ namespace Shield.Framework.Platform.Logging.Loggers
             if (m_disposed)
                 return;
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 

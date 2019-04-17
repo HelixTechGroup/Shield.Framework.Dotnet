@@ -1,32 +1,41 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Shield.Framework.Collections;
+using Shield.Framework.Extensions;
+#endregion
 
 namespace Shield.Framework.Platform.Logging.Default
 {
     public sealed class DefaultPlatformLogProvider : IPlatformLogProvider
     {
+        #region Events
         public event Action<IDispose> OnDispose;
+        #endregion
 
+        #region Members
         private const int m_queueSize = 2;
-        private bool m_disposed;
-        private readonly ConcurrentQueue<IPlatformLogEntry> m_logQueue;
-        private Task m_LogTask;
-        private readonly object m_logLock;
         private readonly ConcurrentList<IPlatformLogger> m_loggers;
+        private readonly object m_logLock;
+        private readonly ConcurrentQueue<IPlatformLogEntry> m_logQueue;
+        private bool m_disposed;
+        private Task m_logTask;
+        #endregion
 
+        #region Properties
         public bool Disposed
         {
             get { return m_disposed; }
         }
+        #endregion
 
         public DefaultPlatformLogProvider()
         {
             m_logQueue = new ConcurrentQueue<IPlatformLogEntry>();
             m_logLock = new object();
             m_loggers = new ConcurrentList<IPlatformLogger>();
-            m_LogTask = Task.CompletedTask;
+            m_logTask = Task.CompletedTask;
             //m_LogThread = new BackgroundWorker();
             //m_LogThread.WorkerSupportsCancellation = false;
             //m_LogThread.DoWork += (s, e) => Flush();
@@ -37,6 +46,7 @@ namespace Shield.Framework.Platform.Logging.Default
             Dispose(false);
         }
 
+        #region Methods
         public void AddLogger(IPlatformLogger logProvider)
         {
             if (!m_loggers.Contains(logProvider))
@@ -71,9 +81,9 @@ namespace Shield.Framework.Platform.Logging.Default
                 trace = exception.StackTrace.Substring(0, 1300) + " [...] (traceback cut short)";
 
             LogError(string.Format("{0}\n{1}\n{2}",
-                                     exception.Message,
-                                     exception.Source + " raised a " + exception.GetType(),
-                                     trace));
+                                   exception.Message,
+                                   exception.Source + " raised a " + exception.GetType(),
+                                   trace));
         }
 
         public void Log(string message, PlatformLogCategory category, PlatformLogPriority priority)
@@ -86,41 +96,41 @@ namespace Shield.Framework.Platform.Logging.Default
             Enqueue(entry);
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         private void Dispose(bool disposing)
         {
             if (m_disposed)
                 return;
 
             m_loggers.Dispose();
-            
-            if (OnDispose != null)
-                OnDispose(this);
+
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }        
-        
         private void Enqueue(IPlatformLogEntry entry)
         {
-            lock (m_logLock)
+            lock(m_logLock)
             {
-                m_logQueue.Enqueue(entry);               
+                m_logQueue.Enqueue(entry);
             }
 
-            lock(m_LogTask)
+            lock(m_logTask)
             {
-                if (m_LogTask.IsCompleted)
-                    m_LogTask = PlatformProvider.Services.Dispatcher.BackgroundDispatcher.RunAsync(Flush);
+                Action flush = Flush;
+                if (m_logTask.IsCompleted)
+                    m_logTask = flush.OnNewThreadAsync();
             }
         }
 
         private void Flush()
         {
-            lock (m_logLock)
+            lock(m_logLock)
             {
                 if (m_logQueue.Count < m_queueSize)
                     return;
@@ -136,5 +146,6 @@ namespace Shield.Framework.Platform.Logging.Default
                 }
             }
         }
+        #endregion
     }
 }

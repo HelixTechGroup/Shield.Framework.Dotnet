@@ -8,7 +8,7 @@ using Shield.Framework.Extensions;
 
 namespace Shield.Framework.Exceptions
 {
-    public static partial class ExceptionFactory
+    internal static partial class ExceptionProvider
     {
         #region Methods
         public static TException GenerateArgumentException<TException>(string argumentName,

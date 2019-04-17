@@ -8,6 +8,11 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Platform\IO\Managers\**" />
+    <EmbeddedResource Remove="Platform\IO\Managers\**" />
+    <None Remove="Platform\IO\Managers\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Validation\CollectionsGuard.cs" />
     <Compile Remove="Validation\NumbersGuard.cs" />
     <Compile Remove="Validation\TimeGuard.cs" />

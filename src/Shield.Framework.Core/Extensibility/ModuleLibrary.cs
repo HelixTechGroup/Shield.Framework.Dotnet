@@ -308,8 +308,7 @@ namespace Shield.Framework.Extensibility
             
             m_items.Clear();
 
-            if (OnDispose != null)
-                OnDispose(this);
+            OnDispose?.Invoke(this);
             m_disposed = true;
         }        
     }

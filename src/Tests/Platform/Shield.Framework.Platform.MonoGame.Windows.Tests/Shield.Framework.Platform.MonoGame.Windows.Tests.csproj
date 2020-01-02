@@ -48,10 +48,6 @@
       <Project>{5e467272-a8b3-4bc7-a999-570f160a42da}</Project>
       <Name>Shield.Framework.Platform.MonoGame.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Shield.Framework.Core\Shield.Framework.Core.csproj">
-      <Project>{8a526556-5b67-439d-a9a9-49e769663b11}</Project>
-      <Name>Shield.Framework.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

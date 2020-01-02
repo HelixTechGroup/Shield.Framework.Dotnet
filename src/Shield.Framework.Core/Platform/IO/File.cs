@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using System.IO;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO
@@ -91,17 +92,17 @@ namespace Shield.Framework.Platform.IO
 
         public Stream Open()
         {
-            return m_fileSystem.OpenFile(Extension, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            return m_fileSystem.OpenFile(ExpandedPath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
         }
 
         public Stream OpenRead()
         {
-            return m_fileSystem.OpenFile(Extension, FileMode.Open, FileAccess.Read, FileShare.None);
+            return m_fileSystem.OpenFile(ExpandedPath, FileMode.Open, FileAccess.Read, FileShare.None);
         }
 
         public Stream OpenWrite()
         {
-            return m_fileSystem.OpenFile(Extension, FileMode.Open, FileAccess.Write, FileShare.None);
+            return m_fileSystem.OpenFile(ExpandedPath, FileMode.Open, FileAccess.Write, FileShare.None);
         }
 
         public void Replace(string destinationPath, string destinationBackupPath, bool ignoreMetadataErrors)
@@ -157,7 +158,7 @@ namespace Shield.Framework.Platform.IO
         {
             unchecked
             {
-                return (base.GetHashCode() * 397) ^ (Directory != null ? Directory.GetHashCode() : 0);
+                return (base.GetHashCode() * 397) ^ (Directory?.GetHashCode() ?? 0);
             }
         }
         #endregion

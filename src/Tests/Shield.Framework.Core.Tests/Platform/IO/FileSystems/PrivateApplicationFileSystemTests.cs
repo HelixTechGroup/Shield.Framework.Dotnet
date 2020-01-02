@@ -1,7 +1,7 @@
 using NSubstitute;
 using NUnit.Framework;
-using Shield.Framework.Platform.IO.FileSystems;
 using System;
+using Shield.Framework.Platform.IO.FileSystems;
 
 namespace Shield.Framework.Core.Tests.Platform.IO.FileSystems
 {

@@ -3,6 +3,9 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
+[assembly:
+    System.Diagnostics.CodeAnalysis.SuppressMessage("Simplification",
+        "RCS1085:Use auto-implemented property.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S2292:Trivial properties should be auto-implemented")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1172:Unused method parameters should be removed")]
 [assembly:

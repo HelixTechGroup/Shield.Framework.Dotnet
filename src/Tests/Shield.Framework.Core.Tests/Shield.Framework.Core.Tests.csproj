@@ -70,12 +70,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Shield.Framework.Core\Shield.Framework.Core.csproj">
-      <Project>{8a526556-5b67-439d-a9a9-49e769663b11}</Project>
-      <Name>Shield.Framework.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

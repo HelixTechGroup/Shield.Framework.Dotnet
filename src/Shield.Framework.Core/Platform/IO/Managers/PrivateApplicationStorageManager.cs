@@ -1,6 +1,7 @@
 ﻿#region Usings
 using Shield.Framework.IoC;
-using Shield.Framework.Platform.IO.FileSystems;
+using Shield.Framework.Platform.Services.IO;
+using Shield.Framework.Platform.Services.IO.FileSystems;
 #endregion
 
 namespace Shield.Framework.Platform.IO.Managers

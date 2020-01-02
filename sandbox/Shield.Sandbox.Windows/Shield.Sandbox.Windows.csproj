@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NetStandard\Platform\Shield.Framework.Windows.NetStandard\Shield.Framework.Windows.NetStandard.csproj" />
+    <ProjectReference Include="..\..\src\NetStandard\Shield.Framework.NetStandard\Shield.Framework.NetStandard.csproj" />
+  </ItemGroup>
+
+</Project>

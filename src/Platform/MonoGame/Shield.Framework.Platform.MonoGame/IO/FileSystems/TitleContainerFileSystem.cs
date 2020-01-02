@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using System.IO;
+using Microsoft.Xna.Framework;
 #endregion
 
 namespace Shield.Framework.Platform.IO.FileSystems
@@ -8,27 +9,23 @@ namespace Shield.Framework.Platform.IO.FileSystems
     public sealed class TitleContainerFileSystem : ReadOnlyFileSystem, ILocalApplicationFileSystem, IEquatable<TitleContainerFileSystem>
     {
         #region Methods
-        public override bool DirectoryExists(string path)
+        protected override void MapDelegates()
         {
-            throw new NotImplementedException();
+            //m_copyFile = m_container.CopyFile;
+            //m_createFile = m_container.CreateFile;
+            //m_createDirectory = m_container.CreateDirectory;
+            //m_getDirectories = m_container.GetDirectoryNames;
+            //m_getFiles = m_container.GetFileNames;
+            //m_deleteDirectory = m_container.DeleteDirectory;
+            //m_deleteFile = m_container.DeleteFile;
+            //m_directoryExists = m_container.DirectoryExists;
+            //m_fileExists = m_container.FileExists;
+            //m_moveDirectory = m_container.MoveDirectory;
+            //m_moveFile = m_container.MoveFile;
+            //m_openFile = TitleContainer.OpenStream;
         }
 
-        public override long GetFileLength(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool FileIsInUse(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool FileExists(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override Stream OpenFile(string path, FileMode mode, FileAccess access, FileShare share)
+        public override long GetFileLength(string filePath)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +55,7 @@ namespace Shield.Framework.Platform.IO.FileSystems
             throw new NotImplementedException();
         }
 
-        public override string ConvertFromInternal(string systemPath)
+        public override string ConvertFromInternal(string fileSystemPath)
         {
             throw new NotImplementedException();
         }

@@ -1,90 +1,97 @@
-﻿using System;
+﻿#region Usings
+using System;
 using System.IO;
-using System.Linq;
-using Shield.Framework.Platform.Environment;
+using Shield.Framework.Environment;
 using SysEnv = System.Environment;
+#endregion
 
 namespace Shield.Framework.Platform
 {
-	public class PlatformEnvironment : IPlatformEnvironment
-	{                       
-		protected PlatformApplicationType m_applicationType;
-		protected PlatformFronendType m_frontendType;        	    	    
-		protected IPlatformOperatingSystemInformation m_operatingSystem;
-		protected PlatformRuntimeInformation m_runtime;
+    public class PlatformEnvironment : IPlatformEnvironment
+    {
+        #region Members
+        protected ApplicationType m_applicationType;
+        protected PlatformFronendType m_frontendType;
+        protected IOperatingSystemInformation m_operatingSystem;
+        protected RuntimeInformation m_runtime;
+        #endregion
 
-		public PlatformType Platform
-		{
-			get { return m_operatingSystem.Platform; }
-		}        
+        #region Properties
+        public ApplicationType ApplicationType
+        {
+            get { return m_applicationType; }
+            set { m_applicationType = value; }
+        }
 
-		public PlatformApplicationType ApplicationType
-		{
-			get { return m_applicationType; }
-			set { m_applicationType = value; }
-		}
+        public string DirectorySeparator
+        {
+            get { return new string(Path.DirectorySeparatorChar, 1); }
+        }
 
-		public PlatformFronendType Frontend
-		{
-			get { return m_frontendType; }
-			set { m_frontendType = value; }
-		}
+        public PlatformFronendType Frontend
+        {
+            get { return m_frontendType; }
+            set { m_frontendType = value; }
+        }
 
-		public bool IsUnixBased
-		{
-			get { return m_operatingSystem.IsUnixBased; }
-		}
+        public bool Is64Bit
+        {
+            get { return SysEnv.Is64BitProcess; }
+        }
 
-		public bool Is64Bit
-		{
-			get { return SysEnv.Is64BitProcess; }
-		}
+        public bool IsUnixBased
+        {
+            get { return m_operatingSystem.IsUnixBased; }
+        }
 
-		public string RootDirectory
-		{
-			get { return AppDomain.CurrentDomain.BaseDirectory; }
-		}
+        public string NewLine
+        {
+            get { return SysEnv.NewLine; }
+        }
 
-		public string WorkingDirectory
-		{
-			get { return SysEnv.CurrentDirectory; }
-		}
+        public IOperatingSystemInformation OperatingSystem
+        {
+            get { return m_operatingSystem; }
+        }
 
-		public string NewLine
-		{
-			get { return SysEnv.NewLine; }
-		}
+        public string PathSeperator
+        {
+            get { return new string(Path.PathSeparator, 1); }
+        }
 
-		public string DirectorySeperator
-		{
-			get { return new string(Path.DirectorySeparatorChar, 1); }
-		}
+        public PlatformType Platform
+        {
+            get { return m_operatingSystem.Platform; }
+        }
 
-		public string PathSeperator
-		{
-			get { return new string(Path.PathSeparator, 1); }
-		}
+        public string RootDirectory
+        {
+            get { return AppDomain.CurrentDomain.BaseDirectory; }
+        }
 
-		public IPlatformOperatingSystemInformation OperatingSystem
-		{
-			get { return m_operatingSystem; }    
-		}
+        public RuntimeInformation Runtime
+        {
+            get { return m_runtime; }
+        }
 
-		public PlatformRuntimeInformation Runtime
-		{
-			get { return m_runtime; }
-		}
+        public string WorkingDirectory
+        {
+            get { return SysEnv.CurrentDirectory; }
+        }
+        #endregion
 
-		protected PlatformEnvironment(IPlatformOperatingSystemInformation operatingSystem)
-		{		    
-			m_operatingSystem = operatingSystem;
-			m_runtime = new PlatformRuntimeInformation();
-		}
+        protected PlatformEnvironment(IOperatingSystemInformation operatingSystem)
+        {
+            m_operatingSystem = operatingSystem;
+            m_runtime = new RuntimeInformation();
+        }
 
-		public virtual void DetectPlatform()
-		{
-			m_runtime.DetectRuntime();		
-			m_operatingSystem.DetectOperatingSystem();
-		}	    
-	}
+        #region Methods
+        public virtual void DetectPlatform()
+        {
+            m_runtime.DetectRuntime();
+            m_operatingSystem.DetectOperatingSystem();
+        }
+        #endregion
+    }
 }

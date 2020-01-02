@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>dacee021-d8ce-4684-b53f-2b9e36920f03</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shield.Framework.Validation</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ValidationPredicateSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collections\ValidationRuleSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ExceptionMessages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ExceptionProvider.Validation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ValidationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ValidationExceptionSelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Guard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IValidate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IValidateThrow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IValidationPredicate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IValidationRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IValidationTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Predicates\DefaultValidationPredicate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Predicates\NullValidationPredicate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Predicates\OutOfRangeValidationPredicate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationPredicate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValidationTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\BooleanValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Collections\ArrayValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Collections\CollectionValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Collections\DictionaryValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Collections\EnumerableValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\GuidValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\ByteValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\DecimalValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\DoubleValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\Int16Validators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\Int32Validators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\Int64Validators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\SbyteValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Numbers\SingleValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\StringValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Time\DateTimeOffsetValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Time\DateTimeValidators.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\Time\TimeSpanValidators.cs" />
+  </ItemGroup>
+</Project>

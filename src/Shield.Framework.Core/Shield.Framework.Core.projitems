@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>84a468a8-d16d-45f9-96ba-c3b26ea6f33a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shield.Framework.Core</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Application.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ServiceLocatorExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\IModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\INotifyPropertyChangedExtended.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\IView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\IViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MVVM\NotifyPropertyChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Collections\MountPointCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Directory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Exceptions\DuplicateMountPointException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Exceptions\MountPointException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\File.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystems\ILocalApplicationFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystems\IPhysicalFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystems\IPrivateApplicationFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystems\PhysicalFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystems\PrivateApplicationFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\FileSystems\ReadOnlyFileSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Managers\ILocalApplicationStorageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Managers\IPrivateApplicationStorageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Managers\LocalApplicationStorageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\Managers\PrivateApplicationStorageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\MountPoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\PlatformStorageProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\StorageEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\StorageManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\IO\StoragePath.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\PlatformEnvironment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\PlatformServices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Threading\Default\DefaultPlatformBackgroundDispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Threading\Default\DefaultPlatformContextDispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Threading\Default\DefaultPlatformUIDispatcher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Threading\PlatformDispatcherProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Configuration\" />
+  </ItemGroup>
+</Project>

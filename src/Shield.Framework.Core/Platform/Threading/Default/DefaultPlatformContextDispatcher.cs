@@ -2,11 +2,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Shield.Framework.Services.Threading;
 #endregion
 
 namespace Shield.Framework.Platform.Threading.Default
 {
-    public sealed class DefaultPlatformContextDispatcher : PlatformDispatcher, IPlatformContextDispatcher
+    public sealed class DefaultPlatformContextDispatcher : PlatformDispatcher, ISynchronizationContextThreadDispatcherService
     {
         #region Members
         private SynchronizationContext m_context;
@@ -32,19 +33,7 @@ namespace Shield.Framework.Platform.Threading.Default
         }
 
         #region Methods
-        public SynchronizationContext CreateContext()
-        {
-            m_context = new SynchronizationContext();
-            return m_context;
-        }
-
-        public IPlatformContextDispatcher SetContext(SynchronizationContext context)
-        {
-            m_context = context;
-            return this;
-        }
-
-        public override void Run(Action action, Action callback = null, CancellationToken cancellationToken = default(CancellationToken))
+        public override void Run(Action action, Action callback = null, CancellationToken cancellationToken = default)
         {
             if (CheckAccess())
             {
@@ -58,6 +47,7 @@ namespace Shield.Framework.Platform.Threading.Default
                 }
             }
             else
+            {
                 RunAsync(action,
                          t =>
                          {
@@ -68,9 +58,10 @@ namespace Shield.Framework.Platform.Threading.Default
                              }
                          },
                          cancellationToken);
+            }
         }
 
-        public override Task RunAsync(Action action, Action<Task> callback = null, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task RunAsync(Action action, Action<Task> callback = null, CancellationToken cancellationToken = default)
         {
             VerifyDispatcher();
             Task task;
@@ -102,7 +93,7 @@ namespace Shield.Framework.Platform.Threading.Default
         public override void Run<T>(Action<T> action,
                                     T parameter,
                                     Action callback = null,
-                                    CancellationToken cancellationToken = default(CancellationToken))
+                                    CancellationToken cancellationToken = default)
         {
             if (CheckAccess())
             {
@@ -134,7 +125,7 @@ namespace Shield.Framework.Platform.Threading.Default
         public override Task RunAsync<T>(Action<T> action,
                                          T parameter,
                                          Action<Task> callback = null,
-                                         CancellationToken cancellationToken = default(CancellationToken))
+                                         CancellationToken cancellationToken = default)
         {
             VerifyDispatcher();
             Task task;
@@ -162,7 +153,6 @@ namespace Shield.Framework.Platform.Threading.Default
 
             return task;
         }
-        #endregion
 
         protected override void VerifyDispatcher()
         {
@@ -174,5 +164,18 @@ namespace Shield.Framework.Platform.Threading.Default
         {
             return SynchronizationContext.Current == m_context;
         }
+
+        public SynchronizationContext CreateContext()
+        {
+            m_context = new SynchronizationContext();
+            return m_context;
+        }
+
+        public ISynchronizationContextThreadDispatcherService SetContext(SynchronizationContext context)
+        {
+            m_context = context;
+            return this;
+        }
+        #endregion
     }
 }

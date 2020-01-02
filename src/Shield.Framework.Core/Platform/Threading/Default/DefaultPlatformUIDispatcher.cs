@@ -2,11 +2,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Shield.Framework.Services.Threading;
 #endregion
 
 namespace Shield.Framework.Platform.Threading.Default
 {
-    public sealed class DefaultPlatformUiDispatcher : PlatformDispatcher, IPlatformUiDispatcher
+    public sealed class DefaultPlatformUiDispatcher : PlatformDispatcher, IPlatformMainDispatcher
     {
         #region Methods
         public override void Run(Action action, Action callback = null, CancellationToken cancellationToken = default(CancellationToken))

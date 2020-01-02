@@ -7,6 +7,7 @@ using Ninject;
 using Ninject.Activation.Caching;
 using Ninject.Modules;
 using Shield.Framework.Collections;
+using Shield.Framework.IoC.DependencyInjection;
 using Shield.Framework.IoC.Exceptions;
 using Shield.Framework.IoC.Extensions;
 using Shield.Framework.IoC.Extensions.ChildKernel;
@@ -14,14 +15,14 @@ using Shield.Framework.IoC.Extensions.ChildKernel;
 
 namespace Shield.Framework.IoC
 {
-    public sealed class NinjectContainer : IIoCContainer
+    public sealed class NinjectContainer : IContainer
     {
         public event Action<IDispose> OnDispose;
 
         #region Members
         private readonly IKernel m_kernel;        
-        private readonly ConcurrentList<IIoCContainer> m_childrenContainers;
-        private readonly IIoCContainer m_parentContainer;
+        private readonly ConcurrentList<IContainer> m_childrenContainers;
+        private readonly IContainer m_parentContainer;
         private bool m_disposed;
         #endregion
 
@@ -35,14 +36,14 @@ namespace Shield.Framework.IoC
             try
             {
                 m_kernel = new StandardKernel();
-                m_childrenContainers = new ConcurrentList<IIoCContainer>();
+                m_childrenContainers = new ConcurrentList<IContainer>();
             }
             catch (FileLoadException fex)
             {
                 throw new NinjectModuleNotFoundException(string.Format("Could not load module: {0}", fex.FileName));
             }
 
-            m_kernel.RegisterTypeWithValue<IIoCContainer>(this, true);
+            m_kernel.RegisterTypeWithValue<IContainer>(this, true);
         }
 
         private NinjectContainer(NinjectContainer parentContainer)
@@ -52,14 +53,14 @@ namespace Shield.Framework.IoC
                 m_kernel = new ChildKernel(parentContainer.m_kernel);
                 parentContainer.m_childrenContainers.Add(this);
                 m_parentContainer = parentContainer;
-                m_childrenContainers = new ConcurrentList<IIoCContainer>();
+                m_childrenContainers = new ConcurrentList<IContainer>();
             }
             catch (FileLoadException fex)
             {
                 throw new NinjectModuleNotFoundException(string.Format("Could not load module: {0}", fex.FileName));
             }
 
-            m_kernel.RegisterTypeWithValue<IIoCContainer>(this, true);
+            m_kernel.RegisterTypeWithValue<IContainer>(this, true);
         }
 
         ~NinjectContainer()
@@ -68,18 +69,18 @@ namespace Shield.Framework.IoC
         }
 
         #region Methods
-        public IIoCContainer CreateChildContainer()
+        public IContainer CreateChildContainer()
         {
             return new NinjectContainer(this);
         }
 
-        public void Load(params IIoCBindings[] bindings)
+        public void Load(params IBindings[] bindings)
         {
             var modules = bindings.Cast<INinjectModule>();
             m_kernel.Load(modules);
         }
 
-        public void Unload(params IIoCBindings[] bindings)
+        public void Unload(params IBindings[] bindings)
         {
             var modules = bindings.Cast<INinjectModule>();
             m_kernel.Unload(modules);
@@ -185,7 +186,7 @@ namespace Shield.Framework.IoC
         public void Release()
         {
             var mods = m_kernel.GetModules()
-                .Where(m => m is IIoCBindings);
+                .Where(m => m is IApplicationBindings);
 
             foreach (var m in mods)
                 m_kernel.Unload(m.Name);

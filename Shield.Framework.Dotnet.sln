@@ -1,0 +1,270 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D7074C5-8CF4-40B5-A7EB-5A30E53406EE}"
+	ProjectSection(SolutionItems) = preProject
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		src\GlobalSuppressions.cs = src\GlobalSuppressions.cs
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+		src\SharedAssemblyInfo.cs = src\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ioc", "Ioc", "{83A057B0-EB72-49E9-A253-AC82D7FFD38F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.IoC.Ninject", "src\IoC\Shield.Framework.IoC.Ninject\Shield.Framework.IoC.Ninject.csproj", "{53D48941-7ACA-42B1-B2B5-F466460AC0E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{FCB0080E-6C85-4036-BEB8-35E45F63B365}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MonoGame", "MonoGame", "{2DCF410E-AF1F-481D-96F1-06FF15FF4154}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.MonoGame", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.shproj", "{D76606D1-60C3-41E4-8931-870700D9FF29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.MonoGame.Windows", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Windows\Shield.Framework.Platform.MonoGame.Windows.csproj", "{5E467272-A8B3-4BC7-A999-570F160A42DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{52595DA4-E21D-420D-A1D5-B18D4CE43839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Core.Tests", "src\Tests\Shield.Framework.Core.Tests\Shield.Framework.Core.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{8CB278CB-FC0A-4C24-8AC3-4258B9023EB0}"
+	ProjectSection(SolutionItems) = preProject
+		licenses\Ensure.That.LICENSE.md = licenses\Ensure.That.LICENSE.md
+		licenses\Guard.LICENSE.md = licenses\Guard.LICENSE.md
+		licenses\Prism.LICENSE.md = licenses\Prism.LICENSE.md
+		licenses\Valit.LICENSE.md = licenses\Valit.LICENSE.md
+	EndProjectSection
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Platform.MonoGame.Desktop", "src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.shproj", "{1634DF77-AAFF-4313-9DA3-453C7AF270BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Sandbox.MonoGame.Windows", "sandbox\Shield.Sandbox.MonoGame.Windows\Shield.Sandbox.MonoGame.Windows.csproj", "{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuspec", "Nuspec", "{E29884B7-2DA2-4A32-89A3-811409C9CF71}"
+	ProjectSection(SolutionItems) = preProject
+		nuspecs\generate-nuget.ps1 = nuspecs\generate-nuget.ps1
+		nuspecs\projects.json = nuspecs\projects.json
+		nuspecs\Shield.Framework.Core.nuspec = nuspecs\Shield.Framework.Core.nuspec
+		nuspecs\Shield.Framework.IoC.Ninject.nuspec = nuspecs\Shield.Framework.IoC.Ninject.nuspec
+		nuspecs\Shield.Framework.Platform.MonoGame.Windows.nuspec = nuspecs\Shield.Framework.Platform.MonoGame.Windows.nuspec
+		nuspecs\Shield.Framework.Platform.Windows.nuspec = nuspecs\Shield.Framework.Platform.Windows.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{F515222E-59E6-42B4-BCCF-B59FAC06DBF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Framework.Platform.MonoGame.Windows.Tests", "src\Tests\Platform\Shield.Framework.Platform.MonoGame.Windows.Tests\Shield.Framework.Platform.MonoGame.Windows.Tests.csproj", "{B68969D3-16FE-4569-A934-61B02044CF21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shield.Sandbox.Windows.Wpf", "sandbox\Shield.Sandbox.Windows.Wpf\Shield.Sandbox.Windows.Wpf.csproj", "{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Validation", "src\Shield.Framework.Validation\Shield.Framework.Validation.shproj", "{DACEE021-D8CE-4684-B53F-2B9E36920F03}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Extensibility", "src\Shield.Framework.Extensibility\Shield.Framework.Extensibility.shproj", "{D020BED4-66F0-4FBA-9540-0C7A6ADDE8D9}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Core", "src\Shield.Framework.Core\Shield.Framework.Core.shproj", "{84A468A8-D16D-45F9-96BA-C3B26EA6F33A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework", "src\Shield.Framework\Shield.Framework.shproj", "{5C0002A1-4045-490B-AA45-29E3ED6ECBC0}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Windows", "src\Platform\Shield.Framework.Windows\Shield.Framework.Windows.shproj", "{E4609D0B-3A70-4AE1-9462-042A72263376}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Desktop", "src\Platform\Shield.Framework.Desktop\Shield.Framework.Desktop.shproj", "{6E5462B8-0293-4944-8229-DF5D4FDF1183}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{FBBA3548-F2D2-4499-B6AC-BEF24A27CA35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.Validation.NetStandard", "src\NetStandard\Shield.Framework.Validation.NetStandard\Shield.Framework.Validation.NetStandard.csproj", "{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.NetStandard", "src\NetStandard\Shield.Framework.NetStandard\Shield.Framework.NetStandard.csproj", "{B1FD6134-7047-41CF-A44A-0C7FDEC26844}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.Extensibility.NetStandard", "src\NetStandard\Shield.Framework.Extensibility.NetStandard\Shield.Framework.Extensibility.NetStandard.csproj", "{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.Core.NetStandard", "src\NetStandard\Shield.Framework.Core.NetStandard\Shield.Framework.Core.NetStandard.csproj", "{82EB172F-F997-4553-B50E-5ABC3785545A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{55159AF8-D1AF-452C-8BBF-17791E9DAA55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.Windows.NetStandard", "src\NetStandard\Platform\Shield.Framework.Windows.NetStandard\Shield.Framework.Windows.NetStandard.csproj", "{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetCore", "NetCore", "{0BE9DD50-CA9F-4618-836C-20CA285EBF91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Sandbox.Windows", "sandbox\Shield.Sandbox.Windows\Shield.Sandbox.Windows.csproj", "{4FCB74DB-A90C-474C-B775-5E1F671615D3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Android", "src\Platform\Shield.Framework.Android\Shield.Framework.Android.shproj", "{5CD3F1A7-43D7-4FB2-BEC0-81FF1EE8704B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Mobile", "src\Platform\Shield.Framework.Mobile\Shield.Framework.Mobile.shproj", "{2FEF6F21-FCA7-4282-8FED-CEA9B0261A83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shield.Framework.Android.NetStandard", "src\NetStandard\Platform\Shield.Framework.Android.NetStandard\Shield.Framework.Android.NetStandard.csproj", "{2895D74B-4571-4B90-A943-41DA3EBE8541}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.SDL2", "src\Platform\Shield.Framework.SDL2\Shield.Framework.SDL2.shproj", "{5FC769D5-C816-4AD9-A6F6-3A9977F35F26}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.DirectX", "src\Platform\Shield.Framework.DirectX\Shield.Framework.DirectX.shproj", "{1B5D1859-9372-45DD-A5E9-830B392418D2}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Controls", "src\Shield.Framework.Controls\Shield.Framework.Controls.shproj", "{C988BC09-3617-4993-AE51-3383BDEE5555}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{6A90EA12-0A89-46FC-9FB7-B873B65E369E}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{1634df77-aaff-4313-9da3-453c7af270bf}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.DirectX\Shield.Framework.DirectX.projitems*{1b5d1859-9372-45dd-a5e9-830b392418d2}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Mobile\Shield.Framework.Mobile.projitems*{2fef6f21-fca7-4282-8fed-cea9b0261a83}*SharedItemsImports = 13
+		src\Shield.Framework\Shield.Framework.projitems*{5c0002a1-4045-490b-aa45-29e3ed6ecbc0}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Android\Shield.Framework.Android.projitems*{5cd3f1a7-43d7-4fb2-bec0-81ff1ee8704b}*SharedItemsImports = 13
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
+		src\Platform\Shield.Framework.SDL2\Shield.Framework.SDL2.projitems*{5fc769d5-c816-4ad9-a6f6-3a9977f35f26}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Desktop\Shield.Framework.Desktop.projitems*{6e5462b8-0293-4944-8229-df5d4fdf1183}*SharedItemsImports = 13
+		src\Shield.Framework.Core\Shield.Framework.Core.projitems*{84a468a8-d16d-45f9-96ba-c3b26ea6f33a}*SharedItemsImports = 13
+		src\Shield.Framework.Controls\Shield.Framework.Controls.projitems*{c988bc09-3617-4993-ae51-3383bdee5555}*SharedItemsImports = 13
+		src\Shield.Framework.Extensibility\Shield.Framework.Extensibility.projitems*{d020bed4-66f0-4fba-9540-0c7a6adde8d9}*SharedItemsImports = 13
+		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{d76606d1-60c3-41e4-8931-870700d9ff29}*SharedItemsImports = 13
+		src\Shield.Framework.Validation\Shield.Framework.Validation.projitems*{dacee021-d8ce-4684-b53f-2b9e36920f03}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Windows\Shield.Framework.Windows.projitems*{e4609d0b-3a70-4ae1-9462-042a72263376}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|x86.ActiveCfg = Release|Any CPU
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2}.Release|x86.Build.0 = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Debug|x86.Build.0 = Debug|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E467272-A8B3-4BC7-A999-570F160A42DA}.Release|x86.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|x86.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|x86.Build.0 = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Debug|x86.Build.0 = Debug|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F}.Release|x86.Build.0 = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Debug|x86.Build.0 = Debug|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|x86.ActiveCfg = Release|Any CPU
+		{B68969D3-16FE-4569-A934-61B02044CF21}.Release|x86.Build.0 = Release|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A}.Release|x86.Build.0 = Release|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Debug|x86.Build.0 = Debug|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Release|x86.ActiveCfg = Release|Any CPU
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E}.Release|x86.Build.0 = Release|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Debug|x86.Build.0 = Debug|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844}.Release|x86.Build.0 = Release|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Debug|x86.Build.0 = Debug|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960}.Release|x86.Build.0 = Release|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Debug|x86.Build.0 = Debug|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Release|x86.ActiveCfg = Release|Any CPU
+		{82EB172F-F997-4553-B50E-5ABC3785545A}.Release|x86.Build.0 = Release|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Debug|x86.Build.0 = Debug|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Release|x86.ActiveCfg = Release|Any CPU
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E}.Release|x86.Build.0 = Release|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Debug|x86.Build.0 = Debug|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Release|x86.ActiveCfg = Release|Any CPU
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3}.Release|x86.Build.0 = Release|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Debug|x86.Build.0 = Debug|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|x86.ActiveCfg = Release|Any CPU
+		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{53D48941-7ACA-42B1-B2B5-F466460AC0E2} = {83A057B0-EB72-49E9-A253-AC82D7FFD38F}
+		{2DCF410E-AF1F-481D-96F1-06FF15FF4154} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{D76606D1-60C3-41E4-8931-870700D9FF29} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
+		{5E467272-A8B3-4BC7-A999-570F160A42DA} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
+		{8EDF4429-251A-416D-BB68-93F227191BCF} = {52595DA4-E21D-420D-A1D5-B18D4CE43839}
+		{8CB278CB-FC0A-4C24-8AC3-4258B9023EB0} = {2D7074C5-8CF4-40B5-A7EB-5A30E53406EE}
+		{1634DF77-AAFF-4313-9DA3-453C7AF270BF} = {2DCF410E-AF1F-481D-96F1-06FF15FF4154}
+		{D1FF7BD3-49D7-4CE7-8756-EEF31C9B1A7F} = {FCB0080E-6C85-4036-BEB8-35E45F63B365}
+		{F515222E-59E6-42B4-BCCF-B59FAC06DBF0} = {52595DA4-E21D-420D-A1D5-B18D4CE43839}
+		{B68969D3-16FE-4569-A934-61B02044CF21} = {F515222E-59E6-42B4-BCCF-B59FAC06DBF0}
+		{8F0B8A7C-6DB7-4A3D-8BEB-EB4279A04E6A} = {FCB0080E-6C85-4036-BEB8-35E45F63B365}
+		{E4609D0B-3A70-4AE1-9462-042A72263376} = {6A90EA12-0A89-46FC-9FB7-B873B65E369E}
+		{6E5462B8-0293-4944-8229-DF5D4FDF1183} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{2DF959FA-473F-4BF5-8079-8A01EFAE1A4E} = {FBBA3548-F2D2-4499-B6AC-BEF24A27CA35}
+		{B1FD6134-7047-41CF-A44A-0C7FDEC26844} = {FBBA3548-F2D2-4499-B6AC-BEF24A27CA35}
+		{FC50BBA9-9D14-4ACC-A486-C6854ADA6960} = {FBBA3548-F2D2-4499-B6AC-BEF24A27CA35}
+		{82EB172F-F997-4553-B50E-5ABC3785545A} = {FBBA3548-F2D2-4499-B6AC-BEF24A27CA35}
+		{55159AF8-D1AF-452C-8BBF-17791E9DAA55} = {FBBA3548-F2D2-4499-B6AC-BEF24A27CA35}
+		{DD6A8277-72E6-4D9E-B86B-B17C0C96E84E} = {55159AF8-D1AF-452C-8BBF-17791E9DAA55}
+		{4FCB74DB-A90C-474C-B775-5E1F671615D3} = {FCB0080E-6C85-4036-BEB8-35E45F63B365}
+		{5CD3F1A7-43D7-4FB2-BEC0-81FF1EE8704B} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{2FEF6F21-FCA7-4282-8FED-CEA9B0261A83} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{2895D74B-4571-4B90-A943-41DA3EBE8541} = {55159AF8-D1AF-452C-8BBF-17791E9DAA55}
+		{5FC769D5-C816-4AD9-A6F6-3A9977F35F26} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{1B5D1859-9372-45DD-A5E9-830B392418D2} = {6A90EA12-0A89-46FC-9FB7-B873B65E369E}
+		{6A90EA12-0A89-46FC-9FB7-B873B65E369E} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44BFD568-0EBB-4A03-B460-D4B1E1B52753}
+	EndGlobalSection
+EndGlobal

@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO.FileSystems
@@ -11,39 +12,24 @@ namespace Shield.Framework.Platform.IO.FileSystems
         #region Members
         private const string m_isolatedStoreRootDir = "m_RootDir";
         private IsolatedStorageFile m_container;
-        #endregion
-
-        public PrivateApplicationFileSystem()
-        {
-            OpenContainer();
-            MapDelegates();
-            GetContainerFilePath();
-        }
+        #endregion        
 
         #region Methods
-        public bool Equals(PrivateApplicationFileSystem other)
-        {
-            if (other == null)
-                return false;
-
-            return m_container.Equals(other.m_container);
-        }
-
         public override void CopyDirectory(string sourcePath, string destinationPath, bool overwrite, bool isRecursive)
         {
             throw new NotImplementedException();
         }
 
-        public override void ReplaceFile(string srcPath, string destPath, string destBackupPath, bool ignoreMetadataErrors)
+        public override void ReplaceFile(string sourcePath, string destinationPath, string destinationBackupPath, bool ignoreMetadataErrors)
         {
             throw new NotSupportedException();
         }
 
-        public override long GetFileLength(string path)
+        public override long GetFileLength(string filePath)
         {
-            Throw.IfNullOrEmpty(path).ArgumentException(nameof(path));
+            Throw.IfNullOrEmpty(filePath).ArgumentException(nameof(filePath));
 
-            return FileExists(path) ? GetFile(path).Length : 0;
+            return FileExists(filePath) ? GetFile(filePath).Length : 0;
         }
 
         public override FileAttributes GetAttributes(string path)
@@ -114,12 +100,7 @@ namespace Shield.Framework.Platform.IO.FileSystems
             return fileSystemPath.Replace(m_rootDirectory, StoragePath.RootPath).Replace(Path.DirectorySeparatorChar, StoragePath.PathSeparatorChar);
         }
 
-        public bool Equals(IPrivateApplicationFileSystem other)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MapDelegates()
+        protected override void MapDelegates()
         {
             m_copyFile = m_container.CopyFile;
             m_createFile = m_container.CreateFile;
@@ -133,6 +114,27 @@ namespace Shield.Framework.Platform.IO.FileSystems
             m_moveDirectory = m_container.MoveDirectory;
             m_moveFile = m_container.MoveFile;
             m_openFile = m_container.OpenFile;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!m_disposed && disposing)
+                CloseContainer();
+
+            base.Dispose(disposing);
+        }
+
+        public bool Equals(PrivateApplicationFileSystem other)
+        {
+            if (other == null)
+                return false;
+
+            return m_container.Equals(other.m_container);
+        }
+
+        public bool Equals(IPrivateApplicationFileSystem other)
+        {
+            throw new NotImplementedException();
         }
 
         private void GetContainerFilePath()
@@ -163,14 +165,13 @@ namespace Shield.Framework.Platform.IO.FileSystems
             m_container.Dispose();
             m_container = null;
         }
-        #endregion
 
-        protected override void Dispose(bool disposing)
+        protected override void CreateFileSystem()
         {
-            if (!m_disposed && disposing)
-                CloseContainer();
-
-            base.Dispose(disposing);
+            base.CreateFileSystem();
+            OpenContainer();
+            GetContainerFilePath();
         }
+        #endregion
     }
 }

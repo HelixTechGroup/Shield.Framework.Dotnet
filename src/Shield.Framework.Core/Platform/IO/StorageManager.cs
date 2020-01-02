@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using Shield.Framework.Collections;
 using Shield.Framework.IoC;
+using Shield.Framework.IoC.DependencyInjection;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO
@@ -156,7 +158,7 @@ namespace Shield.Framework.Platform.IO
 
         public IEnumerable<IStorageEntity> GetEntities(string path, string searchPattern, SearchOption searchOption)
         {
-            var results = new List<IStorageEntity>();
+            var results = new ConcurrentList<IStorageEntity>();
             results.AddRange(GetFiles(path, searchPattern, searchOption));
             results.AddRange(GetDirectories(path, searchPattern, searchOption));
 

@@ -1,7 +1,7 @@
 ﻿#region Usings
 using System;
-using System.Collections.Generic;
 using System.IO;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO.FileSystems

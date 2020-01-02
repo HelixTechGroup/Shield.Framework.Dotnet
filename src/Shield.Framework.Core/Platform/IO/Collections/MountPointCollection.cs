@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Shield.Framework.Platform.IO.Exceptions;
+using Shield.Framework.Services.IO;
+using Shield.Framework.Services.IO.Collections;
 #endregion
 
 namespace Shield.Framework.Platform.IO.Collections
@@ -119,7 +121,7 @@ namespace Shield.Framework.Platform.IO.Collections
         {
             Throw.IfNull(storageManagers).ArgumentNullException(nameof(storageManagers));
 
-            var paths = new List<string>();
+            var paths = new ConcurrentList<string>();
             foreach (var storageManager in storageManagers)
             {
                 var path = "test";

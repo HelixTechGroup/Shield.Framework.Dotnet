@@ -1,6 +1,7 @@
 ﻿#region Usings
 using Shield.Framework.Platform.IO.Collections;
 using Shield.Framework.Platform.IO.FileSystems;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO

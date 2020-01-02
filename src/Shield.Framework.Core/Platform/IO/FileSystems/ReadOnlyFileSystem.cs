@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using System.IO;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO.FileSystems
@@ -88,11 +89,6 @@ namespace Shield.Framework.Platform.IO.FileSystems
             throw new NotSupportedException();
         }
 
-        public bool Equals(ReadOnlyFileSystem other)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -105,6 +101,11 @@ namespace Shield.Framework.Platform.IO.FileSystems
         }
 
         public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(ReadOnlyFileSystem other)
         {
             throw new NotImplementedException();
         }

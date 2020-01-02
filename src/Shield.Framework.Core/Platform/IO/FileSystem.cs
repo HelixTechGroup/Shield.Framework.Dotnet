@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Shield.Framework.Services.IO;
 #endregion
 
 namespace Shield.Framework.Platform.IO
@@ -83,6 +84,7 @@ namespace Shield.Framework.Platform.IO
         protected FileSystem()
         {
             m_id = Guid.NewGuid();
+            InitializeFileSystem();
         }
 
         ~FileSystem()
@@ -140,6 +142,8 @@ namespace Shield.Framework.Platform.IO
         public abstract string ConvertPathToInternal(string path);
 
         public abstract string ConvertFromInternal(string fileSystemPath);
+
+        protected abstract void MapDelegates();
 
         public virtual void CreateDirectory(string directoryPath)
         {
@@ -241,7 +245,7 @@ namespace Shield.Framework.Platform.IO
             Throw.IfNullOrEmpty(filePath).ArgumentNullException(nameof(filePath));
             Throw.If(!(mode.HasFlag(FileMode.Create) || mode.HasFlag(FileMode.CreateNew) || mode.HasFlag(FileMode.OpenOrCreate))
                      && !FileExists(filePath))
-                .InvalidOperationException();
+                 .InvalidOperationException();
 
             return m_openFile(filePath, mode, access, share);
         }
@@ -273,7 +277,7 @@ namespace Shield.Framework.Platform.IO
             if (root != "")
                 root += "/";
 
-            var results = new List<string>();
+            var results = new ConcurrentList<string>();
             if (searchTarget == StorageSearchTarget.Directory || searchTarget == StorageSearchTarget.Both)
                 results.AddRange(m_getDirectories(path + searchPattern));
             if (searchTarget == StorageSearchTarget.File || searchTarget == StorageSearchTarget.Both)
@@ -282,7 +286,7 @@ namespace Shield.Framework.Platform.IO
             if (searchOption != SearchOption.AllDirectories)
                 return results;
 
-            var directoryList = new List<string>(m_getDirectories(path + searchPattern));
+            var directoryList = new ConcurrentList<string>(m_getDirectories(path + searchPattern));
             for (int i = 0, max = directoryList.Count; i < max; i++)
             {
                 var directory = directoryList[i] + "/";
@@ -325,6 +329,26 @@ namespace Shield.Framework.Platform.IO
             return !FileExists(path) ? null : new FileInfo(Path.Combine(m_rootDirectory, NormalizeStoragePathToInternal(path)));
         }
 
+        protected virtual void CreateFileSystem() { }
+
+        protected virtual void PreinitializeFileSystem() { }
+
+        protected virtual void PostinitializeFileSystem() { }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (m_id.GetHashCode() + Root.GetHashCode()) * 397;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            var p = obj as FileSystem;
+            return p != null && Equals(p);
+        }
+
         public long GetDirectoryLenth(string directoryPath, bool isRecursive)
         {
             throw new NotImplementedException();
@@ -334,14 +358,6 @@ namespace Shield.Framework.Platform.IO
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (m_id.GetHashCode() + Root.GetHashCode()) * 397;
-            }
         }
 
         public bool Equals(IFileSystem other)
@@ -360,10 +376,12 @@ namespace Shield.Framework.Platform.IO
             return m_id == other.Id && m_rootDirectory == other.Root;
         }
 
-        public override bool Equals(object obj)
+        protected void InitializeFileSystem()
         {
-            var p = obj as FileSystem;
-            return p != null && Equals(p);
+            CreateFileSystem();
+            PreinitializeFileSystem();
+            MapDelegates();
+            PostinitializeFileSystem();
         }
         #endregion
     }

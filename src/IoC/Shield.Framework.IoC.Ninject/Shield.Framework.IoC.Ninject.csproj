@@ -15,7 +15,4 @@
   <ItemGroup>
     <PackageReference Include="Ninject" Version="3.3.4" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shield.Framework.Core\Shield.Framework.Core.csproj" />
-  </ItemGroup>
 </Project>

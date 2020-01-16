@@ -1,4 +1,5 @@
 ﻿using System;
+using Shin.Framework;
 
 namespace Shield.Framework.Services.Extensibility
 {

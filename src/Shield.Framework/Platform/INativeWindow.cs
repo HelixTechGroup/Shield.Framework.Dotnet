@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using Shin.Framework;
+using Shin.Framework.ComponentModel;
 
 namespace Shield.Framework.Platform
 {
-    public interface INativeWindow : INativeObject, IDisposable
+    public interface INativeWindow : INativeObject, IInitialize, IDispose
     {
         event EventHandler Closing;
         event EventHandler Closed;
@@ -13,28 +15,30 @@ namespace Shield.Framework.Platform
         event EventHandler Activated;
         event EventHandler Deactivating;
         event EventHandler Deactivated;
+        event EventHandler<PropertyChangedEventArgs<string>> TitleChanged;
 
         #region Properties
+        NativeWindowType Type { get; }
         string Title { get; set; }
-        int Width { get; set; }
-        int Height { get; set; }
-        bool IsApplicationWindow { get; }
-        bool IsChildWindow { get; }
-        bool IsForegroundWindow { get; }
+        bool IsMainApplicationWindow { get; }
+        bool IsActive { get; }
+        bool IsVisible { get; }
         Size ClientSize { get; }
+        Rectangle ClientArea { get; }
         Size MaxClientSize { get; }
-        INativeHandle ParentHandle { get; }
-        INativeRender Renderer { get; }
+        INativeObject Parent { get; }
+        INativeRenderer Renderer { get; }
         INativeInput Input { get; }
         #endregion
 
         void Show();
         void Hide();
         void Create();
-        void Create(INativeObject parent);
         void Destroy();
+        void Activate();
+        void Deactivate();
         bool IsPointInWindow(Point point);
-        bool BringToForeground();
-        bool MoveToBackground();
+        Point PointToClient(Point point);
+        Point PointToScreen(Point point);
     }
 }

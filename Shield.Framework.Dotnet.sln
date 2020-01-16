@@ -103,6 +103,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shield.Framework.Controls",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{6A90EA12-0A89-46FC-9FB7-B873B65E369E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{A6051622-6A73-44AB-B667-B44922F3D635}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shin.Framework", "third-party\shin\src\Shin.Framework\Shin.Framework.shproj", "{F7EF21B1-EE13-4B24-99B6-CB79BBCB71CE}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{1634df77-aaff-4313-9da3-453c7af270bf}*SharedItemsImports = 13
@@ -120,6 +124,7 @@ Global
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{d76606d1-60c3-41e4-8931-870700d9ff29}*SharedItemsImports = 13
 		src\Shield.Framework.Validation\Shield.Framework.Validation.projitems*{dacee021-d8ce-4684-b53f-2b9e36920f03}*SharedItemsImports = 13
 		src\Platform\Shield.Framework.Windows\Shield.Framework.Windows.projitems*{e4609d0b-3a70-4ae1-9462-042a72263376}*SharedItemsImports = 13
+		third-party\shin\src\Shin.Framework\Shin.Framework.projitems*{f7ef21b1-ee13-4b24-99b6-cb79bbcb71ce}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -263,6 +268,7 @@ Global
 		{5FC769D5-C816-4AD9-A6F6-3A9977F35F26} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
 		{1B5D1859-9372-45DD-A5E9-830B392418D2} = {6A90EA12-0A89-46FC-9FB7-B873B65E369E}
 		{6A90EA12-0A89-46FC-9FB7-B873B65E369E} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
+		{F7EF21B1-EE13-4B24-99B6-CB79BBCB71CE} = {A6051622-6A73-44AB-B667-B44922F3D635}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44BFD568-0EBB-4A03-B460-D4B1E1B52753}

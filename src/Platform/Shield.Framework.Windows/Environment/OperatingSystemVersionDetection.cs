@@ -2,6 +2,11 @@
 using System;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using Shield.Framework.Platform.Interop;
+using Shield.Framework.Platform.Interop.Kernel32;
+using Shield.Framework.Platform.Interop.User32;
+using static Shield.Framework.Platform.Interop.User32.Methods;
+using static Shield.Framework.Platform.Interop.Kernel32.Methods;
 #endregion
 
 namespace Shield.Framework.Environment
@@ -23,9 +28,9 @@ namespace Shield.Framework.Environment
             get
             {
                 string servicePack = string.Empty;
-                OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX();
+                OsVersionInfoEx osVersionInfo = new OsVersionInfoEx();
 
-                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(typeof(OSVERSIONINFOEX));
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(typeof(OsVersionInfoEx));
 
                 if (GetVersionEx(ref osVersionInfo)) servicePack = osVersionInfo.szCSDVersion;
 
@@ -113,8 +118,8 @@ namespace Shield.Framework.Environment
                 string edition = string.Empty;
 
                 //OperatingSystem osVersion = Environment.OSVersion;
-                OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX();
-                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(typeof(OSVERSIONINFOEX));
+                OsVersionInfoEx osVersionInfo = new OsVersionInfoEx();
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(typeof(OsVersionInfoEx));
 
                 if (GetVersionEx(ref osVersionInfo))
                 {
@@ -156,7 +161,7 @@ namespace Shield.Framework.Environment
                                 edition = "Home";
                             else
                             {
-                                if (GetSystemMetrics(86) == 0) // 86 == SM_TABLETPC
+                                if (GetSystemMetrics(SystemMetrics.SM_TABLETPC) == 0) // 86 == SM_TABLETPC
                                     edition = "Professional";
                                 else
                                     edition = "Tablet Edition";
@@ -458,8 +463,8 @@ namespace Shield.Framework.Environment
 
                 string name = "unknown";
 
-                OSVERSIONINFOEX osVersionInfo = new OSVERSIONINFOEX();
-                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(typeof(OSVERSIONINFOEX));
+                OsVersionInfoEx osVersionInfo = new OsVersionInfoEx();
+                osVersionInfo.dwOSVersionInfoSize = Marshal.SizeOf(typeof(OsVersionInfoEx));
 
                 if (GetVersionEx(ref osVersionInfo))
                 {
@@ -661,26 +666,13 @@ namespace Shield.Framework.Environment
 
         #region VERSION
         [DllImport("kernel32.dll")]
-        private static extern bool GetVersionEx(ref OSVERSIONINFOEX osVersionInfo);
+        private static extern bool GetVersionEx(ref OsVersionInfoEx osVersionInfo);
         #endregion VERSION
-
-        #region SYSTEMMETRICS
-        [DllImport("user32")]
-        public static extern int GetSystemMetrics(int nIndex);
-        #endregion SYSTEMMETRICS
-
-        #region SYSTEMINFO
-        [DllImport("kernel32.dll")]
-        public static extern void GetSystemInfo(ref SYSTEM_INFO lpSystemInfo);
-
-        [DllImport("kernel32.dll")]
-        public static extern void GetNativeSystemInfo(ref SYSTEM_INFO lpSystemInfo);
-        #endregion SYSTEMINFO
         #endregion GET
 
         #region OSVERSIONINFOEX
         [StructLayout(LayoutKind.Sequential)]
-        private struct OSVERSIONINFOEX
+        private struct OsVersionInfoEx
         {
             #region Members
             public readonly int dwBuildNumber;
@@ -701,28 +693,9 @@ namespace Shield.Framework.Environment
         }
         #endregion OSVERSIONINFOEX
 
-        #region SYSTEM_INFO
-        [StructLayout(LayoutKind.Sequential)]
-        public struct SYSTEM_INFO
-        {
-            #region Members
-            public IntPtr dwActiveProcessorMask;
-            public uint dwAllocationGranularity;
-            public uint dwNumberOfProcessors;
-            public uint dwPageSize;
-            public ushort dwProcessorLevel;
-            public ushort dwProcessorRevision;
-            public uint dwProcessorType;
-            public IntPtr lpMaximumApplicationAddress;
-            public IntPtr lpMinimumApplicationAddress;
-            internal _PROCESSOR_INFO_UNION uProcessorInfo;
-            #endregion
-        }
-        #endregion SYSTEM_INFO
-
         #region _PROCESSOR_INFO_UNION
         [StructLayout(LayoutKind.Explicit)]
-        public struct _PROCESSOR_INFO_UNION
+        public struct ProcessorInfoUnion
         {
             #region Members
             [FieldOffset(0)]

@@ -1,5 +1,6 @@
 ﻿#region Usings
 using System;
+using Shin.Framework;
 #endregion
 
 namespace Shield.Framework.Services.IO

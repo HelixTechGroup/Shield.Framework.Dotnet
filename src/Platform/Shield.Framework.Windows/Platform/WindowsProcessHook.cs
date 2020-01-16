@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Shield.Framework.Platform.Interop.User32;
 using Shield.Framework.Threading;
+using Shin.Framework;
 using static Shield.Framework.Platform.Interop.User32.Methods;
 using static Shield.Framework.Platform.Interop.Kernel32.Methods;
 

@@ -1,7 +1,8 @@
 ﻿#region Usings
 using System;
 using System.Collections.Concurrent;
-using Shield.Framework.Extensions;
+using Shin.Framework;
+using Shin.Framework.Extensions;
 #endregion
 
 namespace Shield.Framework.IoC.Native.DependencyInjection

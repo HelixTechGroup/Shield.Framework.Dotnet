@@ -2,12 +2,13 @@
 using System;
 using System.Linq;
 using Shield.Framework.Environment;
-using Shield.Framework.Extensions;
+using Shin.Framework;
+using Shin.Framework.Extensions;
 #endregion
 
 namespace Shield.Framework.Platform
 {
-    internal class PlatformManager : DisposableInitializable
+    internal class PlatformManager : Initializable
     {
         #region Members
         private static PlatformManager m_platform;

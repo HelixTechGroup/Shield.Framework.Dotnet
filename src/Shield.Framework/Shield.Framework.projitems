@@ -11,17 +11,11 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Application.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ApplicationContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ConcurrentCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ConcurrentHashSet.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ConcurrentList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ListDictionary.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Disposable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DisposableInitializable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Drawing\Thickness.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawing\Margins.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawing\PointS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawing\RectangleS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawing\SizeS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\UintExceptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeGraphicsDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawing\IRenderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Environment\ApplicationEnvironment.cs" />
@@ -35,27 +29,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Environment\PlatformType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Environment\RuntimeInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Environment\RuntimeType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ExceptionNotRegisteredException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ExceptionProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ExceptionProvider.Defaults.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\FrameworkExceptionProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\TypeArguementException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ActionExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\AssemblyExtionsions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CollectionExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DictionaryExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumerableExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EventHandlerExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ExceptionExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ExpressionExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObjectExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\TypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IApplicationContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IDispose.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)IInitialize.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initializable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IoC\Native\DependencyInjection\ConstructorInvokeInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IoC\Native\DependencyInjection\IoCContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IoC\Native\DependencyInjection\Exceptions\IoCRegistrationException.cs" />
@@ -71,9 +46,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)IoC\DependencyInjection\InjectConstructorAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IoC\DependencyInjection\InjectPropertyAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\AssemblyPlatformAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeInputHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeObject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeRenderHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeScreen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\PlatformManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeApplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeThreadDispatcher.cs" />
@@ -104,8 +83,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\Extensibility\ModuleState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IApplicationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ILifeCycleService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\ILogService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IMessageAggregatorService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Extensibility\IModuleLoaderService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IO\Collections\IMountPointCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IO\FileChangedEventArgs.cs" />
@@ -134,31 +111,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\ApplicationShutdownEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\ApplicationStartupEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\ApplicationState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\ApplicationStateChangedEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\ApplicationStateChangeEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\Native\LifeCycleService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\Native\LogService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\ILogEntry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\ILogProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\LogCategory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\LogEntry.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\Loggers\ConsoleLogger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\Loggers\PlatformLogger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\Loggers\TextLogger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Logging\LogPriority.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\DelegateReference.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\IActionMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\IDelegateReference.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\IMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\ISubscription.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\MessageAggregator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\Messages\ActionMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\Messages\Message.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\Subscriptions\BackgroundDispatcherSubscription.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\Subscriptions\ContextDispatcherSubscription.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\Subscriptions\Subscription.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\SubscriptionToken.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Messaging\ThreadOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LifeCycle\ApplicationShutdownMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Threading\Native\DefaultPlatformBackgroundDispatcher.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Threading\Native\DefaultPlatformContextDispatcher.cs" />
@@ -178,12 +131,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Threading\IDispatcher.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Threading\JobRunner.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Threading\ThreadSafeObjectPool.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Throw.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Throw.DefaultConditions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ThrowExceptionSelector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Collections\Concurrent\" />
     <Folder Include="$(MSBuildThisFileDirectory)IoC\Native\DependencyInjection\" />
   </ItemGroup>
 </Project>

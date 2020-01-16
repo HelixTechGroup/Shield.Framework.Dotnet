@@ -512,7 +512,7 @@ namespace Shield.Framework.Platform.Interop.User32
         public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         [DllImport(LibraryName, ExactSpelling = true)]
-        public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy,
+        public static extern bool SetWindowPos(IntPtr hwnd, HwndZOrder hWndInsertAfter, int x, int y, int cx, int cy,
             WindowPositionFlags flags);
 
         [DllImport(LibraryName, CharSet = Properties.BuildCharSet)]
@@ -550,6 +550,8 @@ namespace Shield.Framework.Platform.Interop.User32
         [DllImport(LibraryName, ExactSpelling = true)]
         public static extern bool CloseWindow(IntPtr hwnd);
 
+        [DllImport(LibraryName, ExactSpelling = true)]
+        public static extern bool EnableWindow(IntPtr hWnd, bool bEnable);
         #endregion
 
         #region Window Class Functions
@@ -565,7 +567,7 @@ namespace Shield.Framework.Platform.Interop.User32
 
         // This static method is required because Win32 does not support
         // GetWindowLongPtr directly
-        public static IntPtr GetWindowLongPtr(IntPtr hwnd, int nIndex)
+        public static IntPtr GetWindowLongPtr(IntPtr hwnd, WindowLongFlags nIndex)
         {
             return IntPtr.Size > 4
                 ? GetWindowLongPtr_x64(hwnd, nIndex)
@@ -573,14 +575,14 @@ namespace Shield.Framework.Platform.Interop.User32
         }
 
         [DllImport(LibraryName, CharSet = Properties.BuildCharSet)]
-        private static extern int GetWindowLong(IntPtr hwnd, int nIndex);
+        private static extern int GetWindowLong(IntPtr hwnd, WindowLongFlags nIndex);
 
         [DllImport(LibraryName, CharSet = Properties.BuildCharSet, EntryPoint = "GetWindowLongPtr")]
-        private static extern IntPtr GetWindowLongPtr_x64(IntPtr hwnd, int nIndex);
+        private static extern IntPtr GetWindowLongPtr_x64(IntPtr hwnd, WindowLongFlags nIndex);
 
         // This static method is required because Win32 does not support
         // GetWindowLongPtr directly
-        public static IntPtr SetWindowLongPtr(IntPtr hwnd, int nIndex, IntPtr dwNewLong)
+        public static IntPtr SetWindowLongPtr(IntPtr hwnd, WindowLongFlags nIndex, IntPtr dwNewLong)
         {
             return IntPtr.Size > 4
                 ? SetWindowLongPtr_x64(hwnd, nIndex, dwNewLong)
@@ -588,10 +590,10 @@ namespace Shield.Framework.Platform.Interop.User32
         }
 
         [DllImport(LibraryName, CharSet = Properties.BuildCharSet)]
-        private static extern int SetWindowLong(IntPtr hwnd, int nIndex, int dwNewLong);
+        private static extern int SetWindowLong(IntPtr hwnd, WindowLongFlags nIndex, int dwNewLong);
 
         [DllImport(LibraryName, CharSet = Properties.BuildCharSet, EntryPoint = "SetWindowLongPtr")]
-        private static extern IntPtr SetWindowLongPtr_x64(IntPtr hwnd, int nIndex, IntPtr dwNewLong);
+        private static extern IntPtr SetWindowLongPtr_x64(IntPtr hwnd, WindowLongFlags nIndex, IntPtr dwNewLong);
 
         [DllImport(LibraryName, CharSet = Properties.BuildCharSet)]
         public static extern bool GetClassInfoEx(IntPtr hInstance, string lpClassName,

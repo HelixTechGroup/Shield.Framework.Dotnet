@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Shield.Framework.Collections;
 using Shield.Framework.IoC.DependencyInjection;
 using Shield.Framework.IoC.Native.DependencyInjection.Exceptions;
+using Shin.Framework;
+using Shin.Framework.Collections.Concurrent;
 #endregion
 
 namespace Shield.Framework.IoC.Native.DependencyInjection

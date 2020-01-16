@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using Shield.Framework.Platform;
 using Shield.Framework.Threading;
+using Shin.Framework.ComponentModel;
 using SysEnv = System.Environment;
 #endregion
 
@@ -36,10 +37,10 @@ namespace Shield.Framework.Services.LifeCycle.Native
         public event EventHandler Deactivated;
 
         /// <inheritdoc />
-        public event EventHandler<ApplicationStateChangeEventArgs> StateChanging;
+        public event EventHandler<PropertyChangingEventArgs<ApplicationState>> StateChanging;
 
         /// <inheritdoc />
-        public event EventHandler<ApplicationStateChangedEventArgs> StateChanged;
+        public event EventHandler<PropertyChangedEventArgs<ApplicationState>> StateChanged;
         #endregion
 
         #region Members

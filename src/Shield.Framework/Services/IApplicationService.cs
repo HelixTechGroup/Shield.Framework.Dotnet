@@ -1,4 +1,6 @@
-﻿namespace Shield.Framework.Services
+﻿using Shin.Framework;
+
+namespace Shield.Framework.Services
 {
     public interface IApplicationService : IDispose, IInitialize { }
 }

@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿#region Usings
+using System;
 using System.Drawing;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using Shield.Framework.Drawing;
-using Shield.Framework.Extensions;
 using Shield.Framework.Platform.Interop.User32;
 using static Shield.Framework.Platform.Interop.User32.Methods;
-using static Shield.Framework.Platform.Interop.Kernel32.Methods;
+#endregion
 
 namespace Shield.Framework.Platform
 {
-    public class NativeRenderer : WindowsProcessHook, INativeRender
+    public class NativeRenderer : WindowsProcessHook, INativeRenderer
     {
-        private double m_scaling;
-        private Size m_clientSize;
-        private double m_scaling1;
-
+        #region Events
         /// <inheritdoc />
         public event EventHandler Painting;
 
@@ -27,90 +18,37 @@ namespace Shield.Framework.Platform
 
         /// <inheritdoc />
         public event EventHandler Painted;
+        #endregion
 
-        /// <inheritdoc />
-        public event EventHandler<Size> Resized;
+        #region Members
+        private INativeScreen m_screen;
+        private Size m_virutalSize;
+        private float m_aspectRatio;
+        #endregion
 
+        #region Properties
         /// <inheritdoc />
-        public event EventHandler<double> ScalingChanged;
-
-        /// <inheritdoc />
-        public event EventHandler<Point> PositionChanged;
-
-        /// <inheritdoc />
-        public Size ClientSize
+        public INativeScreen Screen
         {
-            get { return m_clientSize; }
+            get { return m_screen; }
         }
 
         /// <inheritdoc />
-        public double Scaling
+        public Size VirutalSize
         {
-            get { return m_scaling1; }
+            get { return m_virutalSize; }
         }
 
         /// <inheritdoc />
-        public void Invalidate(Rectangle rect)
+        public float AspectRatio
         {
-            throw new NotImplementedException();
+            get { return m_aspectRatio; }
         }
-
-        /// <inheritdoc />
-        public Point PointToClient(Point point)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public Point PointToScreen(Point point)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
         public NativeRenderer(IWindowsProcess window) : base(window, WindowHookType.WH_GETMESSAGE) { }
 
-        private IntPtr OnPaint(WindowMessage msg)
-        {
-            if (GetUpdateRect(m_process.Handle.Pointer, out var rec, false))
-                Validate();
-
-            //if (BeginPaint(m_process.Handle.Pointer, out var ps) == IntPtr.Zero) 
-            //    return IntPtr.Zero;
-
-            //var f = m_scaling;
-            //var r = ps.PaintRect;
-            //Painting.Raise(this, null);
-            //Paint.Raise(this, new Rectangle((int)Math.Floor(r.Left / f),
-            //                                (int)Math.Floor(r.Top / f),
-            //                                (int)Math.Floor((r.Right - r.Left) / f),
-            //                                (int)Math.Floor((r.Bottom - r.Top) / f)));
-            //Painted.Raise(this, null);
-            //EndPaint(m_process.Handle.Pointer, ref ps);
-            //Validate();
-
-            return IntPtr.Zero;
-        }
-
-        public bool Validate(ref Rectangle rect)
-        {
-            return ValidateRect(m_process.Handle.Pointer, ref rect);
-        }
-
-        public bool Validate()
-        {
-            return ValidateRect(m_process.Handle.Pointer, IntPtr.Zero);
-        }
-
-        public bool Invalidate(ref Rectangle rect, bool shouldErase = false)
-        {
-            return InvalidateRect(m_process.Handle.Pointer, ref rect, shouldErase);
-        }
-
-        public bool Invalidate(bool shouldErase = false)
-        {
-            return InvalidateRect(m_process.Handle.Pointer, IntPtr.Zero, shouldErase);
-        }
-
+        #region Methods
         /// <inheritdoc />
         protected override IntPtr OnGetMsg(WindowMessage message)
         {
@@ -134,5 +72,53 @@ namespace Shield.Framework.Platform
 
             return base.OnGetMsg(message);
         }
+
+        public bool Validate(ref Rectangle rect)
+        {
+            return ValidateRect(m_process.Handle.Pointer, ref rect);
+        }
+
+        public bool Validate()
+        {
+            return ValidateRect(m_process.Handle.Pointer, IntPtr.Zero);
+        }
+
+        public bool Invalidate(ref Rectangle rect, bool shouldErase)
+        {
+            return InvalidateRect(m_process.Handle.Pointer, ref rect, shouldErase);
+        }
+
+        public bool Invalidate(bool shouldErase)
+        {
+            return InvalidateRect(m_process.Handle.Pointer, IntPtr.Zero, shouldErase);
+        }
+
+        public bool Invalidate()
+        {
+            return Invalidate(false);
+        }
+
+        private IntPtr OnPaint(WindowMessage msg)
+        {
+            if (GetUpdateRect(m_process.Handle.Pointer, out var rec, false))
+                Validate();
+
+            //if (BeginPaint(m_process.Handle.Pointer, out var ps) == IntPtr.Zero) 
+            //    return IntPtr.Zero;
+
+            //var f = m_scaling;
+            //var r = ps.PaintRect;
+            //Painting.Raise(this, null);
+            //Paint.Raise(this, new Rectangle((int)Math.Floor(r.Left / f),
+            //                                (int)Math.Floor(r.Top / f),
+            //                                (int)Math.Floor((r.Right - r.Left) / f),
+            //                                (int)Math.Floor((r.Bottom - r.Top) / f)));
+            //Painted.Raise(this, null);
+            //EndPaint(m_process.Handle.Pointer, ref ps);
+            //Validate();
+
+            return IntPtr.Zero;
+        }
+        #endregion
     }
 }

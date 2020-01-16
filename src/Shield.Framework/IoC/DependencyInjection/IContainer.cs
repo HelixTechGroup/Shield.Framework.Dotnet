@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using System.Collections.Generic;
+using Shin.Framework;
 #endregion
 
 namespace Shield.Framework.IoC.DependencyInjection

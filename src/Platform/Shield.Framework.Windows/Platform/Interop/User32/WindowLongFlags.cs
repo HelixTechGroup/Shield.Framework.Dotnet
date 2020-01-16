@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace Shield.Framework.Platform.Interop.User32 {
+namespace Shield.Framework.Platform.Interop.User32 
+{
     [Flags]
     public enum WindowLongFlags
     {

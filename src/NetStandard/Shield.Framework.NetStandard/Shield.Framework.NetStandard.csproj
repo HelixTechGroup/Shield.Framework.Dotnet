@@ -16,4 +16,6 @@
 
   <Import Project="..\..\Shield.Framework\Shield.Framework.projitems" Label="Shared" />
 
+  <Import Project="..\..\..\third-party\shin\src\Shin.Framework\Shin.Framework.projitems" Label="Shared" />
+
 </Project>

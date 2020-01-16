@@ -8,11 +8,12 @@ using Shield.Framework.Environment;
 using Shield.Framework.IoC.DependencyInjection;
 using Shield.Framework.IoC.Native.DependencyInjection;
 using Shield.Framework.Platform;
-using Shield.Framework.Platform.Logging.Default;
-using Shield.Framework.Platform.Logging.Loggers;
 using Shield.Framework.Services;
 using Shield.Framework.Services.Extensibility;
 using Shield.Framework.Services.LifeCycle.Native;
+using Shin.Framework;
+using Shin.Framework.Logging.Loggers;
+using Shin.Framework.Logging.Native;
 
 //using CommonServiceLocator;
 #endregion

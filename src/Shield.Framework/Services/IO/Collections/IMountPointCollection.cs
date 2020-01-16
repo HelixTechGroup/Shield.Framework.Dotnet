@@ -1,5 +1,6 @@
 ﻿#region Usings
 using System.Collections.Generic;
+using Shin.Framework;
 #endregion
 
 namespace Shield.Framework.Services.IO.Collections

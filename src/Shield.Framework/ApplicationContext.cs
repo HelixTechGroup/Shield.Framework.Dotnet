@@ -3,17 +3,18 @@ using System;
 using Shield.Framework.Environment;
 using Shield.Framework.IoC.DependencyInjection;
 using Shield.Framework.Services;
+using Shin.Framework;
 #endregion
 
 namespace Shield.Framework
 {
-    public class ApplicationContext : DisposableInitializable, IApplicationContext
+    public class ApplicationContext : Initializable, IApplicationContext
     {
         #region Members
         private readonly IContainer m_container;
         private readonly IApplicationContext m_current;
         private ILogService m_log;
-        private IMessageAggregatorService m_messageAggregator;
+        private IMessageAggregator m_messageAggregator;
         private IModuleLoaderService m_module;
         private IThreadService m_thread;
         #endregion
@@ -50,9 +51,9 @@ namespace Shield.Framework
         }
 
         /// <inheritdoc />
-        public IMessageAggregatorService MessageAggregator
+        public IMessageAggregator MessageAggregator
         {
-            get { return m_container.Resolve<IMessageAggregatorService>(); }
+            get { return m_container.Resolve<IMessageAggregator>(); }
         }
 
         /// <inheritdoc />

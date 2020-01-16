@@ -1,7 +1,8 @@
 ﻿#region Usings
 using System;
-using Shield.Framework.Collections;
-using Shield.Framework.Extensions;
+using Shin.Framework.Collections.Concurrent;
+using Shin.Framework.Exceptions;
+using Shin.Framework.Extensions;
 #endregion
 
 namespace Shield.Framework.Exceptions

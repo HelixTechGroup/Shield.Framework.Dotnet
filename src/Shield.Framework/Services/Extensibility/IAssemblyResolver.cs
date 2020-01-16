@@ -1,4 +1,6 @@
-﻿namespace Shield.Framework.Services.Extensibility
+﻿using Shin.Framework;
+
+namespace Shield.Framework.Services.Extensibility
 {
     public interface IAssemblyResolver : IDispose
     {

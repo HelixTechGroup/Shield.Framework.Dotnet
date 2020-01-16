@@ -9,5 +9,6 @@
     <Import_RootNamespace>Shield.Framework</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeMobileWindow.cs" />
   </ItemGroup>
 </Project>

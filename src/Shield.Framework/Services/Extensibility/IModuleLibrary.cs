@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Shin.Framework;
 
 namespace Shield.Framework.Services.Extensibility
 {

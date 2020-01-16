@@ -1,4 +1,6 @@
-﻿namespace Shield.Framework.Services.IO
+﻿using Shin.Framework;
+
+namespace Shield.Framework.Services.IO
 {
     public interface IFileSystemMigrator : IDispose
     {

@@ -2,6 +2,7 @@
 using Shield.Framework.Environment;
 using Shield.Framework.IoC.DependencyInjection;
 using Shield.Framework.Services;
+using Shin.Framework;
 #endregion
 
 namespace Shield.Framework
@@ -14,7 +15,7 @@ namespace Shield.Framework
         IApplicationEnvironment Environment { get; }
         ILifeCycleService LifeCycle { get; }
         ILogService Log { get; }
-        IMessageAggregatorService MessageAggregator { get; }
+        IMessageAggregator MessageAggregator { get; }
         IModuleLoaderService Module { get; }
         IThreadService Thread { get; }
         #endregion

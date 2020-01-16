@@ -1,6 +1,7 @@
 ﻿#region Usings
 using System;
 using Shield.Framework.Services.LifeCycle;
+using Shin.Framework.ComponentModel;
 #endregion
 
 namespace Shield.Framework.Services
@@ -16,8 +17,8 @@ namespace Shield.Framework.Services
         event EventHandler Activated;
         event EventHandler Deactivating;
         event EventHandler Deactivated;
-        event EventHandler<ApplicationStateChangeEventArgs> StateChanging;
-        event EventHandler<ApplicationStateChangedEventArgs> StateChanged;
+        event EventHandler<PropertyChangingEventArgs<ApplicationState>> StateChanging;
+        event EventHandler<PropertyChangedEventArgs<ApplicationState>> StateChanged;
         #endregion
 
         #region Properties

@@ -1,7 +1,7 @@
 ﻿#region Usings
 using System;
 using System.Threading;
-using Shield.Framework.Platform;
+using Patchwork.Framework;
 using Shield.Framework.Threading;
 using Shin.Framework.ComponentModel;
 using SysEnv = System.Environment;
@@ -80,8 +80,8 @@ namespace Shield.Framework.Services.LifeCycle.Native
             Starting?.Invoke(this, new ApplicationStartupEventArgs());
             _cts = new CancellationTokenSource();
             //MainWindow?.Show();
-            PlatformManager.CurrentPlatform.Application.CreateWindow().Show();
-            Dispatcher.CurrentDispatcher.MainLoop(_cts.Token);
+            PlatformManager.Application.CreateWindow().Show();
+            PlatformManager.Run(_cts.Token);
             SysEnv.ExitCode = _exitCode;
             return _exitCode;
         }

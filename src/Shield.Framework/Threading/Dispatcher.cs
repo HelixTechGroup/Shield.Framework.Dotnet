@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
-using Shield.Framework.Platform;
+using Patchwork.Framework;
+using Patchwork.Framework.Platform;
 #endregion
 
 namespace Shield.Framework.Threading
@@ -35,7 +36,7 @@ namespace Shield.Framework.Threading
             {
                 lock(olock)
                 {
-                    var platform = PlatformManager.CurrentPlatform.Dispatcher;
+                    var platform = PlatformManager.Dispatcher;
                     var t = platform.Thread;
                     var dis = FromThread(t);
 
@@ -100,8 +101,8 @@ namespace Shield.Framework.Threading
         /// </param>
         public void MainLoop(CancellationToken cancellationToken)
         {
-            cancellationToken.Register(() => _platform.Signal(DispatcherPriority.Send));
-            _platform.RunLoop(cancellationToken);
+            cancellationToken.Register(() => _platform.Signal(NativeThreadDispatcherPriority.Normal));
+            //_platform.(cancellationToken);
         }
 
         /// <summary>
@@ -116,41 +117,41 @@ namespace Shield.Framework.Threading
         /// Use this method to ensure that more prioritized tasks are executed
         /// </summary>
         /// <param name="minimumPriority"></param>
-        public void RunJobs(DispatcherPriority minimumPriority)
+        public void RunJobs(NativeThreadDispatcherPriority minimumPriority)
         {
             _jobRunner.RunJobs(minimumPriority);
         }
 
         /// <inheritdoc/>
-        public Task InvokeAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        public Task InvokeAsync(Action action, NativeThreadDispatcherPriority priority = NativeThreadDispatcherPriority.Normal)
         {
             Contract.Requires<ArgumentNullException>(action != null);
             return _jobRunner.InvokeAsync(action, priority);
         }
 
         /// <inheritdoc/>
-        public Task<TResult> InvokeAsync<TResult>(Func<TResult> function, DispatcherPriority priority = DispatcherPriority.Normal)
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> function, NativeThreadDispatcherPriority priority = NativeThreadDispatcherPriority.Normal)
         {
             Contract.Requires<ArgumentNullException>(function != null);
             return _jobRunner.InvokeAsync(function, priority);
         }
 
         /// <inheritdoc/>
-        public Task InvokeAsync(Func<Task> function, DispatcherPriority priority = DispatcherPriority.Normal)
+        public Task InvokeAsync(Func<Task> function, NativeThreadDispatcherPriority priority = NativeThreadDispatcherPriority.Normal)
         {
             Contract.Requires<ArgumentNullException>(function != null);
             return _jobRunner.InvokeAsync(function, priority).Unwrap();
         }
 
         /// <inheritdoc/>
-        public Task<TResult> InvokeAsync<TResult>(Func<Task<TResult>> function, DispatcherPriority priority = DispatcherPriority.Normal)
+        public Task<TResult> InvokeAsync<TResult>(Func<Task<TResult>> function, NativeThreadDispatcherPriority priority = NativeThreadDispatcherPriority.Normal)
         {
             Contract.Requires<ArgumentNullException>(function != null);
             return _jobRunner.InvokeAsync(function, priority).Unwrap();
         }
 
         /// <inheritdoc/>
-        public void Post(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        public void Post(Action action, NativeThreadDispatcherPriority priority = NativeThreadDispatcherPriority.Normal)
         {
             Contract.Requires<ArgumentNullException>(action != null);
             _jobRunner.Post(action, priority);
@@ -161,9 +162,9 @@ namespace Shield.Framework.Threading
         /// To ensure that there are no jobs with higher priority
         /// </summary>
         /// <param name="currentPriority"></param>
-        internal void EnsurePriority(DispatcherPriority currentPriority)
+        internal void EnsurePriority(NativeThreadDispatcherPriority currentPriority)
         {
-            if (currentPriority == DispatcherPriority.MaxValue)
+            if (currentPriority == NativeThreadDispatcherPriority.MaxValue)
                 return;
             currentPriority += 1;
             _jobRunner.RunJobs(currentPriority);

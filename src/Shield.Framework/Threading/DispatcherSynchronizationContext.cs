@@ -3,6 +3,7 @@
 
 #region Usings
 using System.Threading;
+using Patchwork.Framework.Platform;
 #endregion
 
 namespace Shield.Framework.Threading
@@ -33,7 +34,7 @@ namespace Shield.Framework.Threading
         /// <inheritdoc/>
         public override void Post(SendOrPostCallback d, object state)
         {
-            Dispatcher.CurrentDispatcher.Post(() => d(state), DispatcherPriority.Send);
+            Dispatcher.CurrentDispatcher.Post(() => d(state), NativeThreadDispatcherPriority.Send);
         }
 
         /// <inheritdoc/>
@@ -42,7 +43,7 @@ namespace Shield.Framework.Threading
             if (Dispatcher.CurrentDispatcher.CheckAccess())
                 d(state);
             else
-                Dispatcher.CurrentDispatcher.InvokeAsync(() => d(state), DispatcherPriority.Send).Wait();
+                Dispatcher.CurrentDispatcher.InvokeAsync(() => d(state), NativeThreadDispatcherPriority.Send).Wait();
         }
         #endregion
     }

@@ -3,7 +3,8 @@
 
 #region Usings
 using System;
-using Shield.Framework.Platform;
+using Patchwork.Framework;
+using Patchwork.Framework.Platform;
 #endregion
 
 namespace Shield.Framework.Threading
@@ -21,7 +22,7 @@ namespace Shield.Framework.Threading
         #endregion
 
         #region Members
-        private readonly DispatcherPriority _priority;
+        private readonly NativeThreadDispatcherPriority _priority;
 
         private TimeSpan _interval;
         private IDisposable _timer;
@@ -72,13 +73,13 @@ namespace Shield.Framework.Threading
         /// <summary>
         /// Initializes a new instance of the <see cref="DispatcherTimer"/> class.
         /// </summary>
-        public DispatcherTimer() : this(DispatcherPriority.Background) { }
+        public DispatcherTimer() : this(NativeThreadDispatcherPriority.Background) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DispatcherTimer"/> class.
         /// </summary>
         /// <param name="priority">The priority to use.</param>
-        public DispatcherTimer(DispatcherPriority priority)
+        public DispatcherTimer(NativeThreadDispatcherPriority priority)
         {
             _priority = priority;
         }
@@ -89,7 +90,7 @@ namespace Shield.Framework.Threading
         /// <param name="interval">The interval at which to tick.</param>
         /// <param name="priority">The priority to use.</param>
         /// <param name="callback">The event to call when the timer ticks.</param>
-        public DispatcherTimer(TimeSpan interval, DispatcherPriority priority, EventHandler callback) : this(priority)
+        public DispatcherTimer(TimeSpan interval, NativeThreadDispatcherPriority priority, EventHandler callback) : this(priority)
         {
             _priority = priority;
             Interval = interval;
@@ -162,7 +163,7 @@ namespace Shield.Framework.Threading
         {
             if (!IsEnabled)
             {
-                var threading = Shield.CurrentApplication.Container.Resolve<INativeThreadDispatcher>();
+                var threading = PlatformManager.Dispatcher;//Shield.CurrentApplication.Container.Resolve<INativeThreadDispatcher>();
 
                 if (threading == null) throw new Exception("Could not start timer: IPlatformThreadingInterface is not registered.");
 

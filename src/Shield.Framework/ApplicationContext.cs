@@ -1,9 +1,10 @@
 ﻿#region Usings
 using System;
-using Shield.Framework.Environment;
-using Shield.Framework.IoC.DependencyInjection;
+using Patchwork.Framework;
+using Patchwork.Framework.Environment;
 using Shield.Framework.Services;
 using Shin.Framework;
+using Shin.Framework.IoC.DependencyInjection;
 #endregion
 
 namespace Shield.Framework
@@ -13,8 +14,8 @@ namespace Shield.Framework
         #region Members
         private readonly IContainer m_container;
         private readonly IApplicationContext m_current;
-        private ILogService m_log;
-        private IMessageAggregator m_messageAggregator;
+        private ILogger m_log;
+        //private IMessageAggregator m_messageAggregator;
         private IModuleLoaderService m_module;
         private IThreadService m_thread;
         #endregion
@@ -35,7 +36,7 @@ namespace Shield.Framework
         /// <inheritdoc />
         public IApplicationEnvironment Environment
         {
-            get { return m_container.Resolve<IApplicationEnvironment>(); }
+            get { return PlatformManager.Environment; }
         }
 
         /// <inheritdoc />
@@ -45,16 +46,16 @@ namespace Shield.Framework
         }
 
         /// <inheritdoc />
-        public ILogService Log
+        public ILogger Log
         {
-            get { return m_container.Resolve<ILogService>(); }
+            get { return m_container.Resolve<ILogger>(); }
         }
 
         /// <inheritdoc />
-        public IMessageAggregator MessageAggregator
-        {
-            get { return m_container.Resolve<IMessageAggregator>(); }
-        }
+        //public IMessageAggregator MessageAggregator
+        //{
+        //    get { return m_container.Resolve<IMessageAggregator>(); }
+        //}
 
         /// <inheritdoc />
         public IModuleLoaderService Module

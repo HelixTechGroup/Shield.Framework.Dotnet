@@ -1,7 +1,9 @@
 ﻿#region Usings
-using Shield.Framework.Environment;
-using Shield.Framework.IoC.DependencyInjection;
+
 #endregion
+
+using Patchwork.Framework.Environment;
+using Shin.Framework.IoC.DependencyInjection;
 
 namespace Shield.Framework
 {

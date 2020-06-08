@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text;
-using Shield.Framework.Extensions;
-using Shield.Framework.Services.Extensibility;
-using Shield.Framework.Collections;
+using Shin.Framework.Collections.Concurrent;
+using Shin.Framework.Extensions;
 
 namespace Shield.Framework.Extensibility.Collections
 {

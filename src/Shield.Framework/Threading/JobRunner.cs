@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Shield.Framework.Platform;
+using Patchwork.Framework;
+using Patchwork.Framework.Platform;
 #endregion
 
 namespace Shield.Framework.Threading
@@ -33,9 +34,9 @@ namespace Shield.Framework.Threading
         /// Runs continuations pushed on the loop.
         /// </summary>
         /// <param name="priority">Priority to execute jobs for. Pass null if platform doesn't have internal priority system</param>
-        public void RunJobs(DispatcherPriority? priority)
+        public void RunJobs(NativeThreadDispatcherPriority? priority)
         {
-            var minimumPriority = priority ?? DispatcherPriority.MinValue;
+            var minimumPriority = priority ?? NativeThreadDispatcherPriority.MinValue;
             while (true)
             {
                 var job = GetNextJob(minimumPriority);
@@ -52,7 +53,7 @@ namespace Shield.Framework.Threading
         /// <param name="action">The method.</param>
         /// <param name="priority">The priority with which to invoke the method.</param>
         /// <returns>A task that can be used to track the method's execution.</returns>
-        public Task InvokeAsync(Action action, DispatcherPriority priority)
+        public Task InvokeAsync(Action action, NativeThreadDispatcherPriority priority)
         {
             var job = new Job(action, priority, false);
             AddJob(job);
@@ -65,7 +66,7 @@ namespace Shield.Framework.Threading
         /// <param name="function">The method.</param>
         /// <param name="priority">The priority with which to invoke the method.</param>
         /// <returns>A task that can be used to track the method's execution.</returns>
-        public Task<TResult> InvokeAsync<TResult>(Func<TResult> function, DispatcherPriority priority)
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> function, NativeThreadDispatcherPriority priority)
         {
             var job = new Job<TResult>(function, priority);
             AddJob(job);
@@ -78,7 +79,7 @@ namespace Shield.Framework.Threading
         /// <param name="action">The method.</param>
         /// 
         /// <param name="priority">The priority with which to invoke the method.</param>
-        internal void Post(Action action, DispatcherPriority priority)
+        internal void Post(Action action, NativeThreadDispatcherPriority priority)
         {
             AddJob(new Job(action, priority, true));
         }
@@ -88,7 +89,7 @@ namespace Shield.Framework.Threading
         /// </summary>
         internal void UpdateServices()
         {
-            _platform = Shield.CurrentApplication.Container.Resolve<INativeThreadDispatcher>();
+            _platform = PlatformManager.Dispatcher;//Shield.CurrentApplication.Container.Resolve<INativeThreadDispatcher>();
         }
 
         private void AddJob(IJob job)
@@ -105,7 +106,7 @@ namespace Shield.Framework.Threading
                 _platform?.Signal(job.Priority);
         }
 
-        private IJob GetNextJob(DispatcherPriority minimumPriority)
+        private IJob GetNextJob(NativeThreadDispatcherPriority minimumPriority)
         {
             for (int c = (int)DispatcherPriority.MaxValue; c >= (int)minimumPriority; c--)
             {
@@ -128,7 +129,7 @@ namespace Shield.Framework.Threading
             /// <summary>
             /// Gets the job priority.
             /// </summary>
-            DispatcherPriority Priority { get; }
+            NativeThreadDispatcherPriority Priority { get; }
             #endregion
 
             #region Methods
@@ -158,7 +159,7 @@ namespace Shield.Framework.Threading
 
             #region Properties
             /// <inheritdoc/>
-            public DispatcherPriority Priority { get; }
+            public NativeThreadDispatcherPriority Priority { get; }
 
             /// <summary>
             /// The task.
@@ -175,7 +176,7 @@ namespace Shield.Framework.Threading
             /// <param name="action">The method to call.</param>
             /// <param name="priority">The job priority.</param>
             /// <param name="throwOnUiThread">Do not wrap exception in TaskCompletionSource</param>
-            public Job(Action action, DispatcherPriority priority, bool throwOnUiThread)
+            public Job(Action action, NativeThreadDispatcherPriority priority, bool throwOnUiThread)
             {
                 _action = action;
                 Priority = priority;
@@ -217,7 +218,7 @@ namespace Shield.Framework.Threading
 
             #region Properties
             /// <inheritdoc/>
-            public DispatcherPriority Priority { get; }
+            public NativeThreadDispatcherPriority Priority { get; }
 
             /// <summary>
             /// The task.
@@ -233,7 +234,7 @@ namespace Shield.Framework.Threading
             /// </summary>
             /// <param name="function">The method to call.</param>
             /// <param name="priority">The job priority.</param>
-            public Job(Func<TResult> function, DispatcherPriority priority)
+            public Job(Func<TResult> function, NativeThreadDispatcherPriority priority)
             {
                 _function = function;
                 Priority = priority;

@@ -1,8 +1,8 @@
 ﻿#region Usings
-using Shield.Framework.Environment;
-using Shield.Framework.IoC.DependencyInjection;
+using Patchwork.Framework.Environment;
 using Shield.Framework.Services;
 using Shin.Framework;
+using Shin.Framework.IoC.DependencyInjection;
 #endregion
 
 namespace Shield.Framework
@@ -14,8 +14,8 @@ namespace Shield.Framework
         IApplicationContext Current { get; }
         IApplicationEnvironment Environment { get; }
         ILifeCycleService LifeCycle { get; }
-        ILogService Log { get; }
-        IMessageAggregator MessageAggregator { get; }
+        ILogger Log { get; }
+        //IMessageAggregator MessageAggregator { get; }
         IModuleLoaderService Module { get; }
         IThreadService Thread { get; }
         #endregion

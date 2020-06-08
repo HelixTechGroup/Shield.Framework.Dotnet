@@ -105,26 +105,39 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{6A90
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{A6051622-6A73-44AB-B667-B44922F3D635}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shin.Framework", "third-party\shin\src\Shin.Framework\Shin.Framework.shproj", "{F7EF21B1-EE13-4B24-99B6-CB79BBCB71CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shin.Framework.NetStandard", "third-party\shin\src\Netstandard\Shin.Framework.NetStandard\Shin.Framework.NetStandard.csproj", "{3C44F27B-E098-47CE-9B8A-10FFC20D2886}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Patchwork.Framework.Windows.NetStandard", "third-party\patchwork\src\Netstandard\Platform\Patchwork.Framework.Windows.NetStandard\Patchwork.Framework.Windows.NetStandard.csproj", "{599E0416-1717-4589-A2F7-4644DA8FAA6D}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{1634df77-aaff-4313-9da3-453c7af270bf}*SharedItemsImports = 13
 		src\Platform\Shield.Framework.DirectX\Shield.Framework.DirectX.projitems*{1b5d1859-9372-45dd-a5e9-830b392418d2}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Android\Shield.Framework.Android.projitems*{2895d74b-4571-4b90-a943-41da3ebe8541}*SharedItemsImports = 5
+		src\Platform\Shield.Framework.Mobile\Shield.Framework.Mobile.projitems*{2895d74b-4571-4b90-a943-41da3ebe8541}*SharedItemsImports = 5
+		src\Shield.Framework.Validation\Shield.Framework.Validation.projitems*{2df959fa-473f-4bf5-8079-8a01efae1a4e}*SharedItemsImports = 5
 		src\Platform\Shield.Framework.Mobile\Shield.Framework.Mobile.projitems*{2fef6f21-fca7-4282-8fed-cea9b0261a83}*SharedItemsImports = 13
+		third-party\shin\src\Shin.Framework\Shin.Framework.projitems*{3c44f27b-e098-47ce-9b8a-10ffc20d2886}*SharedItemsImports = 5
+		third-party\patchwork\src\Patchwork.Framework\Patchwork.Framework.projitems*{599e0416-1717-4589-a2f7-4644da8faa6d}*SharedItemsImports = 5
+		third-party\patchwork\src\Platform\Patchwork.Framework.Desktop\Patchwork.Framework.Desktop.projitems*{599e0416-1717-4589-a2f7-4644da8faa6d}*SharedItemsImports = 5
+		third-party\patchwork\src\Platform\Patchwork.Framework.Windows\Patchwork.Framework.Windows.projitems*{599e0416-1717-4589-a2f7-4644da8faa6d}*SharedItemsImports = 5
 		src\Shield.Framework\Shield.Framework.projitems*{5c0002a1-4045-490b-aa45-29e3ed6ecbc0}*SharedItemsImports = 13
 		src\Platform\Shield.Framework.Android\Shield.Framework.Android.projitems*{5cd3f1a7-43d7-4fb2-bec0-81ff1ee8704b}*SharedItemsImports = 13
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame.Desktop\Shield.Framework.Platform.MonoGame.Desktop.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{5e467272-a8b3-4bc7-a999-570f160a42da}*SharedItemsImports = 4
 		src\Platform\Shield.Framework.SDL2\Shield.Framework.SDL2.projitems*{5fc769d5-c816-4ad9-a6f6-3a9977f35f26}*SharedItemsImports = 13
 		src\Platform\Shield.Framework.Desktop\Shield.Framework.Desktop.projitems*{6e5462b8-0293-4944-8229-df5d4fdf1183}*SharedItemsImports = 13
+		src\Shield.Framework.Core\Shield.Framework.Core.projitems*{82eb172f-f997-4553-b50e-5abc3785545a}*SharedItemsImports = 5
 		src\Shield.Framework.Core\Shield.Framework.Core.projitems*{84a468a8-d16d-45f9-96ba-c3b26ea6f33a}*SharedItemsImports = 13
 		src\Shield.Framework.Controls\Shield.Framework.Controls.projitems*{c988bc09-3617-4993-ae51-3383bdee5555}*SharedItemsImports = 13
 		src\Shield.Framework.Extensibility\Shield.Framework.Extensibility.projitems*{d020bed4-66f0-4fba-9540-0c7a6adde8d9}*SharedItemsImports = 13
 		src\Platform\MonoGame\Shield.Framework.Platform.MonoGame\Shield.Framework.Platform.MonoGame.projitems*{d76606d1-60c3-41e4-8931-870700d9ff29}*SharedItemsImports = 13
 		src\Shield.Framework.Validation\Shield.Framework.Validation.projitems*{dacee021-d8ce-4684-b53f-2b9e36920f03}*SharedItemsImports = 13
+		src\Platform\Shield.Framework.Desktop\Shield.Framework.Desktop.projitems*{dd6a8277-72e6-4d9e-b86b-b17c0c96e84e}*SharedItemsImports = 5
+		src\Platform\Shield.Framework.Windows\Shield.Framework.Windows.projitems*{dd6a8277-72e6-4d9e-b86b-b17c0c96e84e}*SharedItemsImports = 5
+		src\Shield.Framework\Shield.Framework.projitems*{dd6a8277-72e6-4d9e-b86b-b17c0c96e84e}*SharedItemsImports = 5
 		src\Platform\Shield.Framework.Windows\Shield.Framework.Windows.projitems*{e4609d0b-3a70-4ae1-9462-042a72263376}*SharedItemsImports = 13
-		third-party\shin\src\Shin.Framework\Shin.Framework.projitems*{f7ef21b1-ee13-4b24-99b6-cb79bbcb71ce}*SharedItemsImports = 13
+		src\Shield.Framework.Extensibility\Shield.Framework.Extensibility.projitems*{fc50bba9-9d14-4acc-a486-c6854ada6960}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +250,22 @@ Global
 		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|x86.ActiveCfg = Release|Any CPU
 		{2895D74B-4571-4B90-A943-41DA3EBE8541}.Release|x86.Build.0 = Release|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886}.Release|x86.Build.0 = Release|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Debug|x86.Build.0 = Debug|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -268,7 +297,8 @@ Global
 		{5FC769D5-C816-4AD9-A6F6-3A9977F35F26} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
 		{1B5D1859-9372-45DD-A5E9-830B392418D2} = {6A90EA12-0A89-46FC-9FB7-B873B65E369E}
 		{6A90EA12-0A89-46FC-9FB7-B873B65E369E} = {C19B6D99-6E7A-4A8B-8D54-ADB50755E22A}
-		{F7EF21B1-EE13-4B24-99B6-CB79BBCB71CE} = {A6051622-6A73-44AB-B667-B44922F3D635}
+		{3C44F27B-E098-47CE-9B8A-10FFC20D2886} = {A6051622-6A73-44AB-B667-B44922F3D635}
+		{599E0416-1717-4589-A2F7-4644DA8FAA6D} = {A6051622-6A73-44AB-B667-B44922F3D635}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44BFD568-0EBB-4A03-B460-D4B1E1B52753}

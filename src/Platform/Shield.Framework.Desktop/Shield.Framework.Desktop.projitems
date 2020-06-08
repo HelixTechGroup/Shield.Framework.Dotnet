@@ -8,16 +8,4 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Shield.Framework</Import_RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeDesktopRenderer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativeDesktopWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\INativePopupWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeDesktopWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowDecorations.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeDesktopWindowDefinition.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowActivationPolicy.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowSizeLimits.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\NativeWindowTransparency.cs" />
-  </ItemGroup>
 </Project>

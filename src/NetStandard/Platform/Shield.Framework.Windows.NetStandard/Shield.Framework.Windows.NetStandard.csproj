@@ -17,9 +17,11 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Shield.Framework.NetStandard\Shield.Framework.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\..\third-party\patchwork\src\Netstandard\Platform\Patchwork.Framework.Windows.NetStandard\Patchwork.Framework.Windows.NetStandard.csproj" />
+    <ProjectReference Include="..\..\..\..\third-party\shin\src\Netstandard\Shin.Framework.NetStandard\Shin.Framework.NetStandard.csproj" />
   </ItemGroup>
   <Import Project="..\..\..\Platform\Shield.Framework.Desktop\Shield.Framework.Desktop.projitems" Label="Shared" />
   <Import Project="..\..\..\Platform\Shield.Framework.Windows\Shield.Framework.Windows.projitems" Label="Shared" />
+  <Import Project="..\..\..\Shield.Framework\Shield.Framework.projitems" Label="Shared" />
 
 </Project>

@@ -4,9 +4,9 @@ using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using Shield.Framework.Extensibility.Collections;
-using Shield.Framework.Extensions;
-using Shield.Framework.Services.Extensibility;
-using Shield.Framework.Services.Extensibility.Exceptions;
+using Shin.Framework;
+using Shin.Framework.Collections.Concurrent;
+using Shin.Framework.Extensions;
 
 namespace Shield.Framework.Extensibility
 {

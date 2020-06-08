@@ -2,3 +2,7 @@
 	path = third-party/shin
 	url = git@github.com:HelixTechGroup/Shin.Framework.Dotnet.git
 	branch = develop
+[submodule "third-party/patchwork"]
+	path = third-party/patchwork
+	url = git@github.com:HelixTechGroup/Patchwork.Framework.Dotnet.git
+	branch = develop

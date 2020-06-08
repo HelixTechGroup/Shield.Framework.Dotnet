@@ -4,14 +4,15 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Security;
-using Shield.Framework.Environment;
-using Shield.Framework.IoC.DependencyInjection;
+using Patchwork.Framework;
+using Patchwork.Framework.Environment;
+using Patchwork.Framework.Messaging;
 using Shield.Framework.IoC.Native.DependencyInjection;
-using Shield.Framework.Platform;
 using Shield.Framework.Services;
 using Shield.Framework.Services.Extensibility;
 using Shield.Framework.Services.LifeCycle.Native;
 using Shin.Framework;
+using Shin.Framework.IoC.DependencyInjection;
 using Shin.Framework.Logging.Loggers;
 using Shin.Framework.Logging.Native;
 
@@ -27,7 +28,7 @@ namespace Shield.Framework
         protected IContainer m_container;
         protected IApplicationEnvironment m_environment;
         protected IModuleLibrary m_library;
-        protected ILogService m_logger;
+        protected ILogger m_logger;
         #endregion
 
         #region Methods
@@ -37,8 +38,7 @@ namespace Shield.Framework
 
         protected virtual void CreatePlatform()
         {
-            m_environment = new ApplicationEnvironment();
-            m_environment.DetectPlatform();
+            PlatformManager.Create();
         }
 
         protected virtual void CreateApplication()
@@ -82,7 +82,8 @@ namespace Shield.Framework
 
         protected virtual void CreateLogger()
         {
-            m_logger = new LogService();
+            m_logger = new Logger();
+            m_logger.Initialize();
 #if DEBUG
             m_logger.AddLogProvider(new ConsoleLogger());
 #endif
@@ -125,7 +126,7 @@ namespace Shield.Framework
             //m_container.Register<IMessageAggregator, MessageAggregator>();
             //m_container.Register<IPlatformEnvironment, PlatformEnvironment>();
             //m_container.Register<IPrivateApplicationFileSystem, PrivateApplicationFileSystem>();
-            m_container.Register(m_environment);
+            //m_container.Register(m_environment);
             m_container.Register<ILifeCycleService, LifeCycleService>();
 
             ////Defaults
@@ -138,7 +139,25 @@ namespace Shield.Framework
 
         protected virtual void InitializePlatform()
         {
-            PlatformManager.CurrentPlatform.Initialize();
+            PlatformManager.Initialize(m_logger);
+            PlatformManager.ProcessMessage += OnPlatformMessage;
+        }
+
+        protected virtual void OnPlatformMessage(object sender, IPlatformMessage e)
+        {
+            PlatformManager.Logger.LogDebug("Message type: " + e.Id);
+
+            switch (e.Id)
+            {
+                case MessageIds.Window:
+                    var wmsg = e as WindowMessage;
+                    Throw.IfNull(wmsg);
+                    PlatformManager.Logger.LogDebug("--Message sub type: " + wmsg.MessageId);
+                    break;
+                case MessageIds.Quit:
+                    StopApplication();
+                    break;
+            }
         }
 
         protected virtual void RegisterApplicationEvents()
@@ -179,7 +198,9 @@ namespace Shield.Framework
         /// <inheritdoc />
         protected override void OnDisposed(object sender, EventArgs e)
         {
+            PlatformManager.Dispose();
             m_container.Release();
+            PlatformManager.Dispose();
             base.OnDisposed(sender, e);
         }
 
